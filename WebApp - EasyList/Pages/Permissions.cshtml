@@ -1,0 +1,105 @@
+﻿@page
+@model WebApp___EasyList.Pages.PermissionsModel
+@{
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Control de Permisos | EasyList</title>
+    <!-- Importamos los estilos de Bootstrap y Bootswatch -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1>Tabla de control de permisos</h1>
+                <p>Usuario a editar: <span id="nombre-usuario">Nombre de usuario</span></p>
+                    <table id="tblPermisos" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th style=" width: 75%; ">Permiso</th>
+                            <th>
+                                <div>
+                                    <div class="form-group">
+                                        <select class="form-control" id="selector">
+                                            <option value="">Seleccionar por rol...</option>
+                                            <option value="oferente">Oferente</option>
+                                            <option value="analista">Analista</option>
+                                            <option value="administrador">Administrador</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Permiso 1</td>
+                            <td style="text-align: center;"><input type="checkbox" class="form-check-input" /></td>
+                        </tr>
+                        <tr>
+                            <td>Permiso 2</td>
+                            <td style="text-align: center;"><input type="checkbox" class="form-check-input" /></td>
+                        </tr>
+                        <tr>
+                            <td>Permiso 3</td>
+                            <td style="text-align: center;"><input type="checkbox" class="form-check-input" /></td>
+                        </tr>
+                        <tr>
+                            <td>Permiso 4</td>
+                            <td style="text-align: center;"><input type="checkbox" class="form-check-input" /></td>
+                        </tr>
+                        <tr>
+                            <td>Permiso 5</td>
+                            <td style="text-align: center;"><input type="checkbox" class="form-check-input" /></td>
+                        </tr>
+                        <tr>
+                            <td>Permiso 6</td>
+                            <td style="text-align: center;"><input type="checkbox" class="form-check-input" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const permisos = document.querySelectorAll('input[type="checkbox"]');
+
+        document.getElementById('selector').addEventListener('change', function () {
+            switch (this.value) {
+                case 'oferente':
+                    permisos.forEach((permiso, i) => {
+                        if (i > 2) {
+                            permiso.checked =false;
+                } else {
+                    permiso.checked = true;
+                }
+            });
+            break;
+        case 'analista':
+            permisos.forEach((permiso, i) => {
+                if (i < 3) {
+                    permiso.checked = false;
+                } else {
+                    permiso.checked = true;
+                }
+            });
+            break;
+        case 'administrador':
+            permisos.forEach(permiso => {
+                permiso.checked = true;
+            });
+            break;
+        default:
+            break;
+    }
+});
+</script>
+</body>
+</html>
