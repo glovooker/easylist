@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace WebApp___EasyList.Pages.Shared
+namespace WebApp___EasyList.Pages
 {
     public class LoginModel : PageModel
     {
