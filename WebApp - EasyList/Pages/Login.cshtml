@@ -4,24 +4,27 @@
 }
 <script src="~/js/login.js"></script>
 <div class="container-fluid p-5 m-auto">
-    <div class="col-xs-12 col-md-5 mx-auto my-5 p-4 bg-light rounded-3 shadow border">
-        <h2 class="fs-3">Iniciar Sesión</h2>
+    <div class="col-xs-12 col-md-5 mx-auto my-5 p-4  shadow border" style="border-radius:2.5rem; background-color:#e4e4e4">
+        <h2 class="fs-3" style="color:#F5805D">Iniciar Sesión</h2>
         <div class="form-group">
-            <label for="txtEmail" class="form-label mt-3">Correo electrónico:</label>
+            <label for="txtEmail" class="form-label mt-3 fw-semibold">Correo electrónico:</label>
             <input type="email" class="form-control" id="txtEmail" aria-describedby="emailHelp">
             <div id="error-messageEmail" style="display: none; color: red; font-size:0.7rem"></div>
         </div>
         <div class="form-group">
-            <label for="txtPassword" class="form-label mt-3">Contraseña:</label>
+            <label for="txtPassword" class="form-label mt-3 fw-semibold fs-6">Contraseña:</label>
             <input type="password" class="form-control" id="txtPassword">
             <div id="error-messagePass" style="display: none; color: red;font-size:0.7rem"></div>
         </div>
-        <a class="nav-link" style="font-size:0.8rem;margin-top:0.4rem" href="/Index">¿Olvidó su contraseña?</a>
+        <a class="nav-link fw-semibold mt-2" style="font-size:0.8rem;" href="/Index">¿Olvidó su contraseña?</a>
         <div style="display:flex; justify-content:space-evenly; align-items: center; margin-top:1rem">
-            <button type="button" class="btn btn-primary" style="width:6rem" id="btnRegresar">Regresar</button>
-            <button type="button" class="btn btn-primary" style="width:6rem" id="btnLogin">Iniciar</button>
+            <button type="button" class="btn" style="width:6rem; background-color:#642D3D; color:#fff" id="btnRegresar">Regresar</button>
+            <button type="button" class="btn" style="width:6rem; background-color:#642D3D; color:#fff" id="btnLogin">Iniciar</button>
         </div>
-
+        <div class="d-flex justify-content-center align-items-center">
+            <h3 class="mt-4" style="font-size:0.9rem">¿Aún no tienes cuenta? <a class="fw-bold text-decoration-none" style="color:#F5805D" href="/">Regístrate</a></h3>
+        </div>
+        
     </div>
 
 </div>
