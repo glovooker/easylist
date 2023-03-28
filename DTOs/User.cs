@@ -9,6 +9,7 @@
         public string secondLastName { get; set; }
         public string email { get; set; }
         public string password { get; set; }
+        public string phone { get; set; }
         public string userPicture { get; set; }
         public DateTime registrationDate { get; set; }
         public Status status { get; set; }

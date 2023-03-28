@@ -14,6 +14,7 @@ namespace EasyListDataAccess.Mapper
                 firstLastName = (string)row["PRIMERAPELLIDO"],
                 secondLastName = (string)row["SEGUNDOAPELLIDO"],
                 email = (string)row["EMAIL"],
+                phone = (string)row["TELEFONO"],
                 userPicture = (string)row["FOTOUSUARIO"],
                 registrationDate = (DateTime)row["FECHACREACION"],
                 status = (User.Status)Enum.Parse(typeof(User.Status), (string)row["ESTADO"])
@@ -74,6 +75,7 @@ namespace EasyListDataAccess.Mapper
             sqlOperation.AddVarcharParam("P_PRIMERAPELLIDO", user.firstLastName);
             sqlOperation.AddVarcharParam("P_SEGUNDOAPELLIDO", user.secondLastName);
             sqlOperation.AddVarcharParam("P_EMAIL", user.email);
+            sqlOperation.AddVarcharParam("P_PHONE", user.phone);
             sqlOperation.AddVarcharParam("P_FOTOUSUARIO", user.userPicture);
             sqlOperation.AddVarcharParam("P_ESTADO", user.status.ToString());
 
@@ -120,6 +122,7 @@ namespace EasyListDataAccess.Mapper
             sqlOperation.AddVarcharParam("P_PRIMERAPELLIDO", user.firstLastName);
             sqlOperation.AddVarcharParam("P_SEGUNDOAPELLIDO", user.secondLastName);
             sqlOperation.AddVarcharParam("P_EMAIL", user.email);
+            sqlOperation.AddVarcharParam("P_PHONE", user.phone);
             sqlOperation.AddVarcharParam("P_FOTOUSUARIO", user.userPicture);
             sqlOperation.AddVarcharParam("P_ESTADO", user.status.ToString());
 
