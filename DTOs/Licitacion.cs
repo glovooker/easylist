@@ -13,20 +13,21 @@ namespace DTOs
 
         //Atributos de la Licitacion
 
-        public int idLicitacion { get; set; }
+        public enum Status { ABIERTA, CERRADA, ENPROCESO, TERMINADA, ELIMINADA }
+
         public string titulo { get; set; }
         public string descripcion { get; set; }
-        public string estado { get; set; }
+        public Status estado { get; set; }
         public DateTime fechaMaxOferta { get; set; }
         public DateTime fechaMaxEntrega { get; set; }
         public float presupuesto { get; set; }
         public string codigoQr { get; set; }
-        public Boolean automatica { get; set; }
+        public bool automatica { get; set; }
 
         //Asociacion con las clases Analista y Oferta
 
-        // public int idAnalista { get; set; }
-        // public int idOferta { get; set; }
+        public int idAnalista { get; set; }
+        public int? idOferta { get; set; }
 
     }
 

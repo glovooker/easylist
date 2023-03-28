@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DTOs;
+using EasyListCORE;
+using Microsoft.AspNetCore.Mvc;
 
 namespace EasyListAPI
 {
@@ -20,7 +22,7 @@ namespace EasyListAPI
 
                 pm.Create(licitacion);
 
-                return Ok(pm);
+                return Ok();
 
             }catch(Exception ex)
             {
@@ -28,6 +30,66 @@ namespace EasyListAPI
             }
 
         }
-    }
 
+        //Update de la Licitacion
+
+        [HttpPut]
+        [Route("Update")]
+        public async Task<IActionResult> Update(Licitacion licitacion)
+        {
+            try
+            {
+                var pm = new LicitacionManager();
+
+                pm.Update(licitacion);
+
+                return Ok();
+
+            }catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        //RetrieveById de la Licitacion
+
+        [HttpGet]
+        [Route("RetrieveLicitacionById")]
+        public async Task<IActionResult> RetrieveLicitacionById(int idLicitacion)
+        {
+            try
+            {
+
+                var pm = new LicitacionManager();
+
+                var licitacion = pm.RetrieveById(idLicitacion);
+
+                return Ok(licitacion);
+
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+
+        //RetrieveAll de la Licitacion
+
+        [HttpGet]
+        [Route("RetrieveAllLicitacion")]
+        public async Task<IActionResult> RetrieveAllLicitacion()
+        {
+            try
+            {
+                var cm = new LicitacionManager();
+
+                return Ok(cm.RetrieveAll());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+    }
 }
