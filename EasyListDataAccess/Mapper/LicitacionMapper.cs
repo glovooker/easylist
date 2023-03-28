@@ -70,7 +70,7 @@ namespace EasyListDataAccess.Mapper
             return null;
         }
 
-        //SQL
+        //SQL ---
 
         public SqlOperation GetCreateStatement(BaseEntity entity)
         {
@@ -95,22 +95,6 @@ namespace EasyListDataAccess.Mapper
             return sqlOperation;
         }
 
-        public SqlOperation GetRetrieveByIdStatement(int idLicitacion)
-        {
-            var sqlOperation = new SqlOperation { ProcedureName = "RET_LICITACION_BY_ID_PR" };
-
-            sqlOperation.AddIntParam("P_ID_LICITACION", idLicitacion);
-
-            return sqlOperation;
-        }
-
-        public SqlOperation GetRetrieveAllStatement()
-        {
-            var sqlOperation = new SqlOperation { ProcedureName = "RET_ALL_LICITACION_PR" };
-
-            return sqlOperation;
-        }
-
         public SqlOperation GetUpdateStatement(BaseEntity entity)
         {
             var licitacion = (Licitacion)entity;
@@ -118,7 +102,7 @@ namespace EasyListDataAccess.Mapper
             var sqlOperation = new SqlOperation();
 
             sqlOperation.ProcedureName = "UPD_LICITACION_PR";
-            //(Identity) sqlOperation.AddIntParam("P_ID_LICITACION", licitacion.idLicitacion);
+            sqlOperation.AddIntParam("P_ID_LICITACION", licitacion.idLicitacion);
             sqlOperation.AddVarcharParam("P_TITULO", licitacion.titulo);
             sqlOperation.AddVarcharParam("P_DESCRIPCION", licitacion.descripcion);
             sqlOperation.AddVarcharParam("P_ESTADO", licitacion.estado.ToString());
@@ -136,12 +120,29 @@ namespace EasyListDataAccess.Mapper
 
         public SqlOperation GetDeleteStatement(BaseEntity entity)
         {
-            throw new NotImplementedException();
+            var sqlOperation = new SqlOperation { ProcedureName = "DEL_LICITACION_PR" };
+
+            var licitacion = (Licitacion)entity;
+
+            sqlOperation.AddIntParam("P_ID_LICITACION", licitacion.idLicitacion);
+
+            return sqlOperation;
         }
 
-        public SqlOperation GetRetrieveByEmailStatement(string email)
+        public SqlOperation GetRetrieveByIdStatement(int idLicitacion)
         {
-            throw new NotImplementedException();
+            var sqlOperation = new SqlOperation { ProcedureName = "RET_LICITACION_BY_ID_PR" };
+
+            sqlOperation.AddIntParam("P_ID_LICITACION", idLicitacion);
+
+            return sqlOperation;
+        }
+
+        public SqlOperation GetRetrieveAllStatement()
+        {
+            var sqlOperation = new SqlOperation { ProcedureName = "RET_ALL_LICITACION_PR" };
+
+            return sqlOperation;
         }
 
     }

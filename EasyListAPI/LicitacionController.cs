@@ -38,10 +38,32 @@ namespace EasyListAPI
         public async Task<IActionResult> Update(Licitacion licitacion)
         {
             try
-            {
+            { 
+
                 var pm = new LicitacionManager();
 
                 pm.Update(licitacion);
+
+                return Ok();
+
+            }catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        //Delete de la Licitacion
+
+        [HttpDelete]
+        [Route("Delete")]
+        public async Task<IActionResult> Delete(Licitacion licitacion)
+        {
+            try
+            {
+
+                var pm = new LicitacionManager();
+
+                pm.Delete(licitacion);
 
                 return Ok();
 

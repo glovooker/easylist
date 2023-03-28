@@ -166,3 +166,15 @@ Log Entry :
   :
   :Licitacion: 0, titulo: Ocupo llevar estas manzanas a la escuela enrique pinto, descripcion: Necesito de 20 manzanas para un evento especial, estado: CERRADA, fechaMaxOferta: 3/27/2023 6:37:23 PM, fechaMaxEntrega: 3/27/2023 6:37:23 PM, presupuesto: 14500, codigoQr: WWWer, automatica: True,idAnalista: 1, idOferta: 
 -----------------------------
+
+Log Entry : 
+8:33:00 AM Tuesday, March 28, 2023
+  :
+  :Licitacion: 0, titulo: Ocupo llevar estas manzanas a la escuela enrique p, descripcion: Necesito de 20 manzanas para un evento especial, estado: CERRADA, fechaMaxOferta: 3/27/2023 6:37:23 PM, fechaMaxEntrega: 3/27/2023 6:37:23 PM, presupuesto: 14500, codigoQr: WWWqwdqwer, automatica: True,idAnalista: 1, idOferta: 
+-----------------------------
+
+Log Entry : 
+8:33:37 AM Tuesday, March 28, 2023
+  :
+  :Licitacion: 0, titulo: Ocupo llevar estas manzanas a la escuela enrique p, descripcion: Necesito de 20 manzanas para un evento especial, estado: CERRADA, fechaMaxOferta: 3/27/2023 6:37:23 PM, fechaMaxEntrega: 3/27/2023 6:37:23 PM, presupuesto: 1.4234235E+13, codigoQr: WWWqwdqwer, automatica: False,idAnalista: 3, idOferta: 
+-----------------------------

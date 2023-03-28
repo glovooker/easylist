@@ -27,8 +27,35 @@ namespace EasyListDataAccess.CRUD
         public override void Create(BaseEntity dto)
         {
             var licitacion = (Licitacion)dto;
+
             var sqlOperationToCreate = _mapper.GetCreateStatement(licitacion);
+
             dao.ExecuteProcedure(sqlOperationToCreate);
+
+        }
+
+        //Update
+
+        public override void Update(BaseEntity dto)
+        {
+            var update = (Licitacion)dto;
+
+            var sqlOperation = _mapper.GetUpdateStatement(update);
+
+            dao.ExecuteProcedure(sqlOperation);
+        }
+
+        //Delete
+
+        public override void Delete(BaseEntity dto)
+        {
+
+            var delete = (Licitacion)dto;
+
+            var sqlOperation = _mapper.GetDeleteStatement(delete);
+
+            dao.ExecuteProcedure(sqlOperation);
+
         }
 
         //RetrieveById
@@ -73,27 +100,9 @@ namespace EasyListDataAccess.CRUD
                     licitacion.Add((Licitacion)Convert.ChangeType(op, typeof(Licitacion)));
                 }
             }
+
             return licitacion;
-        }
 
-        //Update
-        public override void Update(BaseEntity dto)
-        {
-            var update = (Licitacion)dto;
-
-            var sqlOperation = _mapper.GetUpdateStatement(update);
-
-            dao.ExecuteProcedure(sqlOperation); 
-        }
-
-        public override void Delete(BaseEntity dto)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override T RetrieveByEmail<T>(string email)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -57,6 +57,22 @@ namespace EasyListCORE
             crudLicitacion.Update(licitacion);
 
         }
+
+        //Delete manager
+
+        public void Delete(Licitacion licitacion)
+        {
+            var crudLicitacion = new LicitacionCrudFactory();
+            var existLicitacion = crudLicitacion.RetrieveById<Licitacion>(licitacion.idLicitacion);
+
+            if(existLicitacion == null )
+            {
+                throw new Exception("Licitacion does not exist!");
+            }
+
+            crudLicitacion.Delete(licitacion);
+
+        }
         
         //Retrieve by ID
 
