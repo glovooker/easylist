@@ -1,69 +1,54 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DTOs;
+﻿using DTOs;
 using EasyListDataAccess.DAOs;
 using EasyListDataAccess.Mapper;
 
 namespace EasyListDataAccess.CRUD
 {
-    public class LicitacionCrudFactory : CrudFactory
+    public class TenderCrudFactory : CrudFactory
     {
 
-        //Instancia de la clase LicitacionMapper
+        private TenderMapper _mapper;
 
-        private LicitacionMapper _mapper;
-
-        public LicitacionCrudFactory()
+        public TenderCrudFactory()
         {
-            _mapper = new LicitacionMapper();
+            _mapper = new TenderMapper();
             dao = SqlDao.GetInstance();
         }
 
-        //Create CrudFactory
-
         public override void Create(BaseEntity dto)
         {
-            var licitacion = (Licitacion)dto;
+            var tender = (Tender)dto;
 
-            var sqlOperationToCreate = _mapper.GetCreateStatement(licitacion);
+            var sqlOperationToCreate = _mapper.GetCreateStatement(tender);
 
             dao.ExecuteProcedure(sqlOperationToCreate);
 
         }
 
-        //Update
-
         public override void Update(BaseEntity dto)
         {
-            var update = (Licitacion)dto;
+            var tender = (Tender)dto;
 
-            var sqlOperation = _mapper.GetUpdateStatement(update);
+            var sqlOperation = _mapper.GetUpdateStatement(tender);
 
             dao.ExecuteProcedure(sqlOperation);
         }
-
-        //Delete
 
         public override void Delete(BaseEntity dto)
         {
 
-            var delete = (Licitacion)dto;
+            var tender = (Tender)dto;
 
-            var sqlOperation = _mapper.GetDeleteStatement(delete);
+            var sqlOperation = _mapper.GetDeleteStatement(tender);
 
             dao.ExecuteProcedure(sqlOperation);
 
         }
 
-        //RetrieveById
-
-        public override T RetrieveById<T>(int idLicitacion)
+        public override T RetrieveById<T>(int id)
         {
 
-            var sqlOperationToRetrieve = _mapper.GetRetrieveByIdStatement(idLicitacion);
+            var sqlOperationToRetrieve = _mapper.GetRetrieveByIdStatement(id);
             var results = dao.ExecuteQueryProcedure(sqlOperationToRetrieve);
 
             var dic = new Dictionary<string, object>();
@@ -79,11 +64,9 @@ namespace EasyListDataAccess.CRUD
 
         }
 
-        //RetrieveAll
-
-        public override List<Licitacion> RetrieveAll<Licitacion>()
+        public override List<Tender> RetrieveAll<Tender>()
         {
-            var licitacion = new List<Licitacion>();
+            var tenders = new List<Tender>();
 
             //Buscamos el statement para hacer un retrieve all
             var sqlOperation = _mapper.GetRetrieveAllStatement();
@@ -97,12 +80,17 @@ namespace EasyListDataAccess.CRUD
 
                 foreach (var op in objsUsersOperation)
                 {
-                    licitacion.Add((Licitacion)Convert.ChangeType(op, typeof(Licitacion)));
+                    tenders.Add((Tender)Convert.ChangeType(op, typeof(Tender)));
                 }
             }
 
-            return licitacion;
+            return tenders;
 
+        }
+
+        public override T RetrieveByEmail<T>(string email)
+        {
+            throw new NotImplementedException();
         }
     }
 }

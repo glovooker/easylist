@@ -1,5 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace EasyListDataAccess.DAOs
 {

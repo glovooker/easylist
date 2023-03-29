@@ -1,4 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
+using System.Data.SqlClient;
 
 namespace EasyListDataAccess.DAOs
 {
@@ -14,11 +14,6 @@ namespace EasyListDataAccess.DAOs
         }
 
         public void AddVarcharParam(string paramName, string paramValue)
-        {
-            Parameters.Add(new SqlParameter(paramName, paramValue));
-        }
-
-        public void AddIntParam(string paramName, int paramValue)
         {
             Parameters.Add(new SqlParameter(paramName, paramValue));
         }
