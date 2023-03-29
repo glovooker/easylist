@@ -47,7 +47,7 @@ function UsersView() {
     user.password = '';
     user.phone = $('#txtPhone').val();
     user.registrationDate = new Date().toISOString();
-    user.status = parseInt($('#drpStatus').val());
+    user.userStatus = parseInt($('#drpStatus').val());
 
     // Call CaptureImageURL with a callback function
     CaptureImageURL('userPic', function (imageUrl) {
@@ -80,7 +80,7 @@ function UsersView() {
     user.password = '';
     user.phone = $('#txtPhone').val();
     user.registrationDate = new Date().toISOString();
-    user.status = parseInt($('#drpStatus').val());
+    user.userStatus = parseInt($('#drpStatus').val());
 
     // Call CaptureImageURL with a callback function
     CaptureImageURL('userPic', function (imageUrl) {
@@ -113,7 +113,7 @@ function UsersView() {
     user.password = '';
     user.phone = $('#txtPhone').val();
     user.registrationDate = new Date().toISOString();
-    user.status = parseInt($('#drpStatus').val());
+    user.userStatus = parseInt($('#drpStatus').val());
     user.userPicture = $('#userPic').val();
 
     var ctrlActions = new ControlActions();
@@ -143,7 +143,7 @@ function UsersView() {
     arrayColumnsData[4] = { 'data': 'email' };
     arrayColumnsData[5] = { 'data': 'phone' };
     arrayColumnsData[6] = { 'data': 'registrationDate' };
-    arrayColumnsData[7] = { 'data': 'status' };
+    arrayColumnsData[7] = { 'data': 'userStatus' };
 
     $('#tblUsers').dataTable({
       'ajax': {
@@ -164,7 +164,7 @@ function UsersView() {
       $('#txtSecondLastname').val(data.secondLastName);
       $('#txtEmail').val(data.email);
       $('#txtPhone').val(data.phone);
-      $('#drpStatus').val(data.status);
+      $('#drpStatus').val(data.userStatus);
       document.getElementById('imgUser').src = data.userPicture;
 
       $('#btnCreate').prop('disabled', true);

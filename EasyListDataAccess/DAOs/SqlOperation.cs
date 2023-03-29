@@ -1,4 +1,4 @@
-﻿using System.Data.SqlClient;
+using System.Data.SqlClient;
 
 namespace EasyListDataAccess.DAOs
 {
@@ -18,7 +18,7 @@ namespace EasyListDataAccess.DAOs
             Parameters.Add(new SqlParameter(paramName, paramValue));
         }
 
-        public void AddIntParam(string paramName, int paramValue)
+        public void AddIntParam(string paramName, int? paramValue)
         {
             Parameters.Add(new SqlParameter(paramName, paramValue));
         }
@@ -27,5 +27,16 @@ namespace EasyListDataAccess.DAOs
         {
             Parameters.Add(new SqlParameter(paramName, paramValue));
         }
+
+        public void AddFloatParam(string paramName, float paramValue)
+        {
+            Parameters.Add(new SqlParameter(paramName, paramValue));
+        }
+
+        public void AddBoolParam(string paramName, bool paramValue)
+        {
+            Parameters.Add(new SqlParameter(paramName, paramValue));
+        }
+
     }
 }
