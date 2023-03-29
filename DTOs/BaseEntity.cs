@@ -1,4 +1,5 @@
-﻿namespace DTOs
+
+namespace DTOs
 {
     public class BaseEntity
     {
