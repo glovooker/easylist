@@ -1,105 +1,45 @@
 ﻿@page
-@model WebApp___EasyList.Pages.PermissionsModel
+@model WebApp___EasyList.Pages.UsersModel
 @{
 }
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Control de Permisos | EasyList</title>
-    <!-- Importamos los estilos de Bootstrap y Bootswatch -->
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-
-</head>
-<body>
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <h1>Tabla de control de permisos</h1>
-                <p>Usuario a editar: <span id="nombre-usuario">Nombre de usuario</span></p>
-                    <table id="tblPermisos" class="table table-striped table-bordered" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th style=" width: 75%; ">Permiso</th>
-                            <th>
-                                <div>
-                                    <div class="form-group">
-                                        <select class="form-control" id="selector">
-                                            <option value="">Seleccionar por rol...</option>
-                                            <option value="oferente">Oferente</option>
-                                            <option value="analista">Analista</option>
-                                            <option value="administrador">Administrador</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Permiso 1</td>
-                            <td style="text-align: center;"><input type="checkbox" class="form-check-input" /></td>
-                        </tr>
-                        <tr>
-                            <td>Permiso 2</td>
-                            <td style="text-align: center;"><input type="checkbox" class="form-check-input" /></td>
-                        </tr>
-                        <tr>
-                            <td>Permiso 3</td>
-                            <td style="text-align: center;"><input type="checkbox" class="form-check-input" /></td>
-                        </tr>
-                        <tr>
-                            <td>Permiso 4</td>
-                            <td style="text-align: center;"><input type="checkbox" class="form-check-input" /></td>
-                        </tr>
-                        <tr>
-                            <td>Permiso 5</td>
-                            <td style="text-align: center;"><input type="checkbox" class="form-check-input" /></td>
-                        </tr>
-                        <tr>
-                            <td>Permiso 6</td>
-                            <td style="text-align: center;"><input type="checkbox" class="form-check-input" /></td>
-                        </tr>
-                    </tbody>
-                </table>
+<script src="~/js/permission.js"></script>
+<div class="bs-docs-section d-flex flex-column">
+    <br />
+    <legend>Permissions</legend>
+    <div class="row">
+        <table id="tblPermission" class="display" style="width:100%">
+            <thead>
+            <th>Id</th>
+            <th>Permission</th>
+            <th>Description</th>
+            </thead>
+        </table>
+        <br />
+    </div>
+<div class="row d-flex justify-content-center">
+    <div class="col-lg-10">
+        <div class="bs-component">
+            <form>
+                <fieldset>
+                    <legend>Permission Form</legend>
+                        <div class="col-md-6 offset-md-3">
+                        <div class="mb-3">
+                            <label for="txtName" class="form-label mt-1">Name</label>
+                            <input type="text" class="form-control" id="txtName" aria-describedby="emailHelp" placeholder="Enter the name." />
+                        </div>
+                            <div class="mb-3">
+                            <label for="txtDescription" class="form-label mt-1">Description</label>
+                                <input type="text" class="form-control" id="txtDescription" aria-describedby="emailHelp" placeholder="Enter the description." />
+                        </div>
+            </form>
+            <br />
+            <div class="d-flex flex-row justify-content-around">
+                <button id="btnNew" class="source-button btn btn-info w-25 mx-4" type="button" tabindex="0"><i class="bi bi-code">New</i></button>
+                <button id="btnCreate" class="source-button btn btn-primary w-25 mx-4" type="button" tabindex="0"><i class="bi bi-code">Save</i></button>
+                <button id="btnUpdate" class="source-button btn btn-warning w-25 mx-4" type="button" tabindex="0"><i class="bi bi-code">Update</i></button>
+                <button id="btnDelete" class="source-button btn btn-danger w-25 mx-4" type="button" tabindex="0"><i class="bi bi-code">Delete</i></button>
             </div>
         </div>
     </div>
-
-    <script>
-        const permisos = document.querySelectorAll('input[type="checkbox"]');
-
-        document.getElementById('selector').addEventListener('change', function () {
-            switch (this.value) {
-                case 'oferente':
-                    permisos.forEach((permiso, i) => {
-                        if (i > 2) {
-                            permiso.checked =false;
-                } else {
-                    permiso.checked = true;
-                }
-            });
-            break;
-        case 'analista':
-            permisos.forEach((permiso, i) => {
-                if (i < 3) {
-                    permiso.checked = false;
-                } else {
-                    permiso.checked = true;
-                }
-            });
-            break;
-        case 'administrador':
-            permisos.forEach(permiso => {
-                permiso.checked = true;
-            });
-            break;
-        default:
-            break;
-    }
-});
-</script>
-</body>
-</html>
+</div>
+</div>
