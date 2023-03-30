@@ -1,8 +1,8 @@
 ﻿//Controla el comportamiento de la página/vista de Users.cshtml
 
-//Definición de la clase UsersView
-function UsersView() {
-  this.ViewName = 'UsersView';
+//Definición de la clase PermissionsView
+function PermissionsView() {
+  this.ViewName = 'PermissionsView';
   this.ApiService = 'User';
 
   this.InitView = function () {
@@ -10,25 +10,25 @@ function UsersView() {
 
     //Asignación del evento de click del botón
     $('#btnCreate').click(function () {
-      var view = new UsersView();
+      var view = new PermissionsView();
       view.Create();
     });
 
     //Asignación del evento de click del botón
     $('#btnUpdate').click(function () {
-      var view = new UsersView();
+      var view = new PermissionsView();
       view.Update();
     });
 
     //Asignación del evento de click del botón
     $('#btnNew').click(function () {
-      var view = new UsersView();
+      var view = new PermissionsView();
       view.New();
     });
 
     //Asignación del evento de click del botón
     $('#btnDelete').click(function () {
-      var view = new UsersView();
+      var view = new PermissionsView();
       view.Delete();
     });
 
@@ -51,7 +51,7 @@ function UsersView() {
 
     // Call CaptureImageURL with a callback function
     CaptureImageURL('userPic', function (imageUrl) {
-      var view = new UsersView();
+      var view = new PermissionsView();
       if (imageUrl === undefined) {
         imageUrl = document.getElementById('imgUser').src;
       }
@@ -62,7 +62,7 @@ function UsersView() {
 
       ctrlActions.PostToAPIv1(serviceCreate, user, function () {
         alert('Usuario creado con éxito');
-        var view = new UsersView();
+        var view = new PermissionsView();
 
         view.ReloadTable();
         view.CleanForm();
@@ -84,7 +84,7 @@ function UsersView() {
 
     // Call CaptureImageURL with a callback function
     CaptureImageURL('userPic', function (imageUrl) {
-      var view = new UsersView();
+      var view = new PermissionsView();
       if (imageUrl === undefined) {
         imageUrl = document.getElementById('imgUser').src;
       }
@@ -95,7 +95,7 @@ function UsersView() {
 
       ctrlActions.PutToAPI(serviceCreate, user, function () {
         alert('Usuario actualizado con éxito');
-        var view = new UsersView();
+        var view = new PermissionsView();
 
         view.ReloadTable();
         view.CleanForm();
@@ -121,7 +121,7 @@ function UsersView() {
 
     ctrlActions.DeleteToAPI(serviceDelete, user, function () {
       alert('Usuario eliminado con éxito');
-      var view = new UsersView();
+      var view = new PermissionsView();
 
       view.ReloadTable();
       view.CleanForm();
@@ -145,7 +145,7 @@ function UsersView() {
     arrayColumnsData[6] = { 'data': 'registrationDate' };
     arrayColumnsData[7] = { 'data': 'userStatus' };
 
-    $('#tblUsers').dataTable({
+    $('#tblPermission').dataTable({
       'ajax': {
         'url': urlService,
         'dataSrc': '',
@@ -153,10 +153,10 @@ function UsersView() {
       'columns': arrayColumnsData,
     });
 
-    $('#tblUsers tbody').on('click', 'tr', function () {
+    $('#tblPermission tbody').on('click', 'tr', function () {
       var tr = $(this).closest('tr');
 
-      var data = $('#tblUsers').DataTable().row(tr).data();
+      var data = $('#tblPermission').DataTable().row(tr).data();
 
       $('#txtID').val(data.id);
       $('#txtName').val(data.name);
@@ -189,7 +189,7 @@ function UsersView() {
   }
 
   this.ReloadTable = () => {
-    $('#tblUsers').DataTable().ajax.reload();
+    $('#tblPermission').DataTable().ajax.reload();
   };
 
   this.New = function () {
@@ -216,6 +216,6 @@ function UsersView() {
 //Instanciamiento inicial de la clase
 //se ejecuta siempre al finalizar la carga de la vista.
 $(document).ready(function () {
-  var view = new UsersView();
+  var view = new PermissionsView();
   view.InitView();
 });

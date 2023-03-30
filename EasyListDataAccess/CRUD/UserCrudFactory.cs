@@ -24,9 +24,9 @@ namespace EasyListDataAccess.CRUD
         {
             var lstOperations = new List<T>();
 
-            var sqlUser = _mapper.GetRetrieveAllStatement();
+            var sqlPermission = _mapper.GetRetrieveAllStatement();
 
-            var lstResults = dao.ExecuteQueryProcedure(sqlUser);
+            var lstResults = dao.ExecuteQueryProcedure(sqlPermission);
 
             if (lstResults.Count > 0)
             {
@@ -79,18 +79,18 @@ namespace EasyListDataAccess.CRUD
         {
             var userToUpdate = (User)dto;
 
-            var sqlUser = _mapper.GetUpdateStatement(userToUpdate);
+            var sqlPermission = _mapper.GetUpdateStatement(userToUpdate);
 
-            dao.ExecuteProcedure(sqlUser);
+            dao.ExecuteProcedure(sqlPermission);
         }
 
         public override void Delete(BaseEntity dto)
         {
             var userToDelete = (User)dto;
 
-            var sqlUser = _mapper.GetDeleteStatement(userToDelete);
+            var sqlPermission = _mapper.GetDeleteStatement(userToDelete);
 
-            dao.ExecuteProcedure(sqlUser);
+            dao.ExecuteProcedure(sqlPermission);
         }
     }
 }
