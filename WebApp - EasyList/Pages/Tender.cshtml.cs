@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace WebApp___EasyList.Pages
 {
-    public class LicitacionModel : PageModel
+    public class TenderModel : PageModel
     {
         public void OnGet()
         {

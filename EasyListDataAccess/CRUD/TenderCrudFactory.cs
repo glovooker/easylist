@@ -68,10 +68,8 @@ namespace EasyListDataAccess.CRUD
         {
             var tenders = new List<Tender>();
 
-            //Buscamos el statement para hacer un retrieve all
             var sqlOperation = _mapper.GetRetrieveAllStatement();
 
-            //Retrieve all
             var lstResults = dao.ExecuteQueryProcedure(sqlOperation);
 
             if (lstResults.Count > 0)
