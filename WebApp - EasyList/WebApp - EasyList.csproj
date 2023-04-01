@@ -7,4 +7,11 @@
     <RootNamespace>WebApp___EasyList</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Update="Pages\ManagePermissions.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

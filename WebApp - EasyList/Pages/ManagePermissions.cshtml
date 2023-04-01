@@ -1,0 +1,36 @@
+﻿@page
+@model WebApp___EasyList.Pages.ManagePermissions
+@{
+}
+<script src="~/js/ManagePermissions.js"></script>
+<div class="bs-docs-section d-flex flex-column">
+    <br />
+    <legend>Users</legend>
+    <div class="row">
+        <table id="tblManagePermission" class="display" style="width:100%">
+            <thead>
+            <th>ID</th>
+            <th>Name</th>
+            <th>First Lastname</th>
+            <th>Second Lastname</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Registration Date</th>
+            <th>Status</th>
+            </thead>
+        </table>
+        <br />
+    </div>
+    <legend>Permissions Control Table</legend>
+    <p>User to edit: <span id="username">No user selected yet.</span></p>
+    <div class="">
+        <table id="tblPermission" class="display" style="width:100%">
+            <thead>
+            <th>Id</th>
+            <th>Permission</th>
+            <th>Description</th>
+            <th>Status</th>
+            </thead>     
+        </table>
+    </div>
+</div>
