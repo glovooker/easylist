@@ -8,7 +8,6 @@ namespace EasyListDataAccess.CRUD
     {
 
         private TenderMapper _mapper;
-
         public TenderCrudFactory()
         {
             _mapper = new TenderMapper();
@@ -18,38 +17,19 @@ namespace EasyListDataAccess.CRUD
         public override void Create(BaseEntity dto)
         {
             var tender = (Tender)dto;
-
-            var sqlOperationToCreate = _mapper.GetCreateStatement(tender);
-
-            dao.ExecuteProcedure(sqlOperationToCreate);
-
+            var sqlTender = _mapper.GetCreateStatement(tender);
+            dao.ExecuteProcedure(sqlTender);
         }
 
-        public override void Update(BaseEntity dto)
+        public override T RetrieveByEmail<T>(string email)
         {
-            var tender = (Tender)dto;
-
-            var sqlOperation = _mapper.GetUpdateStatement(tender);
-
-            dao.ExecuteProcedure(sqlOperation);
-        }
-
-        public override void Delete(BaseEntity dto)
-        {
-
-            var tender = (Tender)dto;
-
-            var sqlOperation = _mapper.GetDeleteStatement(tender);
-
-            dao.ExecuteProcedure(sqlOperation);
-
+            throw new NotImplementedException();
         }
 
         public override T RetrieveById<T>(int id)
         {
-
-            var sqlOperationToRetrieve = _mapper.GetRetrieveByIdStatement(id);
-            var results = dao.ExecuteQueryProcedure(sqlOperationToRetrieve);
+            var sqlTender = _mapper.GetRetrieveByIdStatement(id);
+            var results = dao.ExecuteQueryProcedure(sqlTender);
 
             var dic = new Dictionary<string, object>();
 
@@ -61,36 +41,39 @@ namespace EasyListDataAccess.CRUD
             }
 
             return default(T);
-
         }
 
         public override List<Tender> RetrieveAll<Tender>()
         {
-            var tenders = new List<Tender>();
-
-            //Buscamos el statement para hacer un retrieve all
-            var sqlOperation = _mapper.GetRetrieveAllStatement();
-
-            //Retrieve all
-            var lstResults = dao.ExecuteQueryProcedure(sqlOperation);
+            var lstTenders = new List<Tender>();
+            var sqlTender = _mapper.GetRetrieveAllStatement();
+            var lstResults = dao.ExecuteQueryProcedure(sqlTender);
 
             if (lstResults.Count > 0)
             {
-                var objsUsersOperation = _mapper.BuildObjects(lstResults);
+                var objsTenders = _mapper.BuildObjects(lstResults);
 
-                foreach (var op in objsUsersOperation)
+                foreach (var op in objsTenders)
                 {
-                    tenders.Add((Tender)Convert.ChangeType(op, typeof(Tender)));
+                    lstTenders.Add((Tender)Convert.ChangeType(op, typeof(Tender)));
                 }
             }
 
-            return tenders;
-
+            return lstTenders;
         }
 
-        public override T RetrieveByEmail<T>(string email)
+        public override void Update(BaseEntity dto)
         {
-            throw new NotImplementedException();
+            var tender = (Tender)dto;
+            var sqlTender = _mapper.GetUpdateStatement(tender);
+            dao.ExecuteProcedure(sqlTender);
+        }
+
+        public override void Delete(BaseEntity dto)
+        {
+            var tender = (Tender)dto;
+            var sqlTender = _mapper.GetDeleteStatement(tender);
+            dao.ExecuteProcedure(sqlTender);
         }
     }
 }

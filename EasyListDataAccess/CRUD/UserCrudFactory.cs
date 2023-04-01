@@ -16,17 +16,50 @@ namespace EasyListDataAccess.CRUD
         public override void Create(BaseEntity dto)
         {
             var user = (User)dto;
-            var sqlOperation = _mapper.GetCreateStatement(user);
-            dao.ExecuteProcedure(sqlOperation);
+            var sqlUser = _mapper.GetCreateStatement(user);
+            dao.ExecuteProcedure(sqlUser);
+        }
+
+        public override T RetrieveByEmail<T>(string email)
+        {
+            var sqlUser = _mapper.GetRetrieveByEmailStatement(email);
+            var results = dao.ExecuteQueryProcedure(sqlUser);
+
+            var dic = new Dictionary<string, object>();
+
+            if (results.Count > 0)
+            {
+                dic = results[0];
+                var obj = _mapper.BuildObject(dic);
+                return (T)Convert.ChangeType(obj, typeof(T));
+            }
+
+            return default(T);
+        }
+
+
+        public override T RetrieveById<T>(int id)
+        {
+            var sqlUser = _mapper.GetRetrieveByIdStatement(id);
+            var results = dao.ExecuteQueryProcedure(sqlUser);
+
+            var dic = new Dictionary<string, object>();
+
+            if (results.Count > 0)
+            {
+                dic = results[0];
+                var obj = _mapper.BuildObject(dic);
+                return (T)Convert.ChangeType(obj, typeof(T));
+            }
+
+            return default(T);
         }
 
         public override List<T> RetrieveAll<T>()
         {
-            var lstOperations = new List<T>();
-
-            var sqlPermission = _mapper.GetRetrieveAllStatement();
-
-            var lstResults = dao.ExecuteQueryProcedure(sqlPermission);
+            var lstUsers = new List<T>();
+            var sqlUser = _mapper.GetRetrieveAllStatement();
+            var lstResults = dao.ExecuteQueryProcedure(sqlUser);
 
             if (lstResults.Count > 0)
             {
@@ -34,63 +67,25 @@ namespace EasyListDataAccess.CRUD
 
                 foreach (var op in objsUsers)
                 {
-                    lstOperations.Add((T)Convert.ChangeType(op, typeof(T)));
+                    lstUsers.Add((T)Convert.ChangeType(op, typeof(T)));
                 }
             }
 
-            return lstOperations;
-        }
-
-        public override T RetrieveByEmail<T>(string email)
-        {
-            var sqlOperationToRetrieve = _mapper.GetRetrieveByEmailStatement(email);
-            var results = dao.ExecuteQueryProcedure(sqlOperationToRetrieve);
-
-            var dic = new Dictionary<string, object>();
-
-            if (results.Count > 0)
-            {
-                dic = results[0];
-                var obj = _mapper.BuildObject(dic);
-                return (T)Convert.ChangeType(obj, typeof(T));
-            }
-
-            return default(T);
-        }
-
-        public override T RetrieveById<T>(int id)
-        {
-            var sqlOperationToRetrieve = _mapper.GetRetrieveByIdStatement(id);
-            var results = dao.ExecuteQueryProcedure(sqlOperationToRetrieve);
-
-            var dic = new Dictionary<string, object>();
-
-            if (results.Count > 0)
-            {
-                dic = results[0];
-                var obj = _mapper.BuildObject(dic);
-                return (T)Convert.ChangeType(obj, typeof(T));
-            }
-
-            return default(T);
+            return lstUsers;
         }
 
         public override void Update(BaseEntity dto)
         {
-            var userToUpdate = (User)dto;
-
-            var sqlPermission = _mapper.GetUpdateStatement(userToUpdate);
-
-            dao.ExecuteProcedure(sqlPermission);
+            var user = (User)dto;
+            var sqlUser = _mapper.GetUpdateStatement(user);
+            dao.ExecuteProcedure(sqlUser);
         }
 
         public override void Delete(BaseEntity dto)
         {
-            var userToDelete = (User)dto;
-
-            var sqlPermission = _mapper.GetDeleteStatement(userToDelete);
-
-            dao.ExecuteProcedure(sqlPermission);
+            var user = (User)dto;
+            var sqlUser = _mapper.GetDeleteStatement(user);
+            dao.ExecuteProcedure(sqlUser);
         }
     }
 }

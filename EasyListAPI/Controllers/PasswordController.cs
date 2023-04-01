@@ -41,14 +41,62 @@ namespace EasyListAPI.Controllers
         }
 
         [HttpGet]
-        [Route("getPasswordByUserEmail")]
-        public async Task<IActionResult> RetrievePasswordByUserEmail(string email)
+        [Route("getPasswordByEmail")]
+        public async Task<IActionResult> RetrievePasswordByEmail(string email)
         {
             try
             {
                 var pm = new PasswordManager();
-                var password = pm.RetrieveByUserEmail(email);
+                var password = pm.RetrieveByEmail(email);
                 return Ok(password);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("getLastFivePasswordsByUser")]
+        public async Task<IActionResult> RetrieveLastFivePasswordsByUser(int id)
+        {
+            try
+            {
+                var pm = new PasswordManager();
+                var passwords = pm.RetrieveLastFive(id);
+                return Ok(passwords);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut]
+        [Route("updatePassword")]
+        public async Task<IActionResult> UpdatePassword(Password password)
+        {
+            try
+            {
+                var pm = new PasswordManager();
+                pm.Update(password);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete]
+        [Route("deletePassword")]
+        public async Task<IActionResult> DeletePassword(Password password)
+        {
+            try
+            {
+                var pm = new PasswordManager();
+                pm.Delete(password);
+                return Ok();
             }
             catch (Exception ex)
             {
