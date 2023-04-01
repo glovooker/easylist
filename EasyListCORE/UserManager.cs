@@ -69,5 +69,26 @@ namespace EasyListCORE
 
             crudUser.Delete(user);
         }
+
+        public User Login(string email, string password)
+        {
+            var crudUser = new UserCrudFactory();
+            var existUser = crudUser.RetrieveByEmail<User>(email);
+
+            if (existUser == null)
+            {
+                throw new Exception("User does not exist!");
+            }
+
+            var pm = new PasswordManager();
+            var isRightPassword = pm.ValidatePassword(email, password);
+
+            if (!isRightPassword)
+            {
+                throw new Exception("Wrong password!");
+            }
+
+            return existUser;
+        }
     }
 }

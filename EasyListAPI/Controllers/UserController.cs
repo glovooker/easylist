@@ -103,5 +103,21 @@ namespace EasyListAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet]
+        [Route("login")]
+        public async Task<IActionResult> Login(string email, string password)
+        {
+            try
+            {
+                var um = new UserManager();
+                var user = um.Login(email, password);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

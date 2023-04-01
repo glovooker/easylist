@@ -1,4 +1,7 @@
-﻿using DTOs;
+﻿using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using DTOs;
 using EasyListDataAccess.CRUD;
 
 namespace EasyListCORE
@@ -8,6 +11,7 @@ namespace EasyListCORE
         public void Create(Password password)
         {
             var crudPassword = new PasswordCrudFactory();
+
             var previousPasswords = crudPassword.RetrieveLastFive<Password>(password.idUser);
 
             if (previousPasswords != null)
@@ -84,6 +88,21 @@ namespace EasyListCORE
             }
 
             crudPassword.Delete(password);
+        }
+
+        public bool ValidatePassword(string email, string password)
+        {
+            var crudPassword = new PasswordCrudFactory();
+            var hashedPassword = crudPassword.RetrieveByEmail<Password>(email).password;
+
+            password = Convert.ToBase64String(MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(password)));
+
+            if (password == hashedPassword)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using DTOs;
+﻿using System.Security.Cryptography;
+using System.Text;
+using DTOs;
 using EasyListDataAccess.DAOs;
 
 namespace EasyListDataAccess.Mapper
@@ -59,6 +61,14 @@ namespace EasyListDataAccess.Mapper
             return null;
         }
 
+        public string EncryptPassword(string password)
+        {
+            var md5 = MD5.Create();
+            var hash = md5.ComputeHash(Encoding.UTF8.GetBytes(password));
+            return Convert.ToBase64String(hash);
+        }
+
+
         #region "SQL_Statements"
         public SqlOperation GetCreateStatement(BaseEntity entity)
         {
@@ -68,7 +78,7 @@ namespace EasyListDataAccess.Mapper
 
             sqlOperation.ProcedureName = "CRE_CONTRASENIA_PR";
             sqlOperation.AddIntParam("P_ID_USUARIO", password.idUser);
-            sqlOperation.AddVarcharParam("P_CONTRASENIA", password.password);
+            sqlOperation.AddVarcharParam("P_CONTRASENIA", EncryptPassword(password.password));
             sqlOperation.AddBoolParam("P_ACTIVA", password.isActive);
 
             return sqlOperation;
