@@ -53,6 +53,7 @@
 
             var view = new TenderView();
 
+            view.ReloadTable();
             view.CleanForm();
 
         });
@@ -82,6 +83,7 @@
 
             var view = new TenderView();
 
+            view.ReloadTable();
             view.CleanForm();
 
         });
@@ -110,6 +112,7 @@
 
             var view = new TenderView();
 
+            view.ReloadTable();
             view.CleanForm();
 
         });
