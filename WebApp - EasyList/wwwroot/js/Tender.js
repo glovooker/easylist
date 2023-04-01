@@ -180,14 +180,14 @@
     };
 
     this.CleanForm = function () {
-        $('#txtID').val('');
-        $("#txtTitle").val();
-        $("#txtDescription").val();
-        $("#drpStatus").val();
-        $("#txtMaxOfferDate").val();
-        $("#txtMaxDeliverDate").val();
-        $("#txtBudget").val();
-        $("#drpAutomatic").val();
+        $('#txtID').val("");
+        $("#txtTitle").val("");
+        $("#txtDescription").val("");
+        $("#drpStatus").val("");
+        $("#txtMaxOfferDate").val("");
+        $("#txtMaxDeliverDate").val("");
+        $("#txtBudget").val("");
+        $("#drpAutomatic").val("");
     };
 
 }
