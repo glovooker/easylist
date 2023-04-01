@@ -2,6 +2,9 @@
 
 var fullName;
 var user_id;
+var permissionValue = [];
+var newPermissions = [];
+var actionsPending;
 
 //Definición de la clase ManagePermissions
 function ManagePermissions() {
@@ -41,6 +44,9 @@ function ManagePermissions() {
         });
 
         $('#tblManagePermission tbody').on('click', 'tr', function () {
+
+            permissionValue = [];
+
             var tr = $(this).closest('tr');
 
             var data = $('#tblManagePermission').DataTable().row(tr).data();
@@ -86,8 +92,114 @@ function PermissionsView() {
     this.InitView = function () {
         console.log('Permission init');
 
-        //Llamado al evento de cargar la tabla con toda la data de permisos
-        this.LoadTable();
+        //Asignación del evento de click del botón
+        $('#btnSave').click(function () {
+            var view = new PermissionsView();
+            view.Save();
+        });
+        //Asignación del evento de click del botón
+        $('#btnClean').click(function () {
+            var view = new PermissionsView();
+            view.Clean();
+        });
+
+    };
+
+    this.Clean = function () {
+
+        this.DestroyTable();
+        this.LoadTableEmpty();
+        permissionValue = [];
+    };
+
+    this.DestroyTable = function () {
+        var table = $('#tblPermission').DataTable();
+        table.clear().draw();
+        $('#username').text('No user selected yet.');
+    };
+
+    this.Save = function () {
+        var newPermissions = [];
+
+        $('#tblPermission tbody tr').each(function () {
+            var row = $(this);
+            var permissionId = row.find('td:eq(0)').text();
+            var isChecked = row.find('input[type="checkbox"]').prop('checked');
+            newPermissions.push({
+                'permissionId': parseInt(permissionId),
+                'isChecked': isChecked
+            });
+        });
+
+        if (typeof permissionValue !== 'undefined' && typeof permissionValue[0].isChecked !== 'undefined') {
+            for (var i = 0; i < permissionValue.length; i++) {
+                var isMatch = true;
+                for (var j = 0; j < newPermissions.length; j++) {
+                    if (typeof newPermissions[j] !== 'undefined' && typeof newPermissions[j].isChecked !== 'undefined' && newPermissions[j].permissionId === permissionValue[i].permissionId) {
+                        if (newPermissions[j].isChecked !== permissionValue[i].isChecked) {
+                            if (newPermissions[j].isChecked) {
+                                this.Create(permissionValue[i].permissionId );
+                            } else {
+                                this.Delete(permissionValue[i].permissionId);
+                            }
+                        }
+                        isMatch = false;
+                        break;
+                    }
+                }
+
+                if (isMatch) {
+                    alert("El registro con ID " + permissionValue[i].permissionId + " no ha cambiado su propiedad isChecked");
+                }
+            }
+        } else {
+            alert("El objeto permissionValue no está definido correctamente.");
+        }
+
+        var view = new PermissionsView();
+        view.Clean();
+    };
+
+    this.Create = function (id) {
+        //Inicialización del DTO de permission
+
+        var managepermission = {};
+        managepermission.id = 0;
+        managepermission.user_id = user_id;
+        managepermission.permission_id = parseInt(id);
+
+        // Validar si el usuario ya tiene asignado el permiso
+        if (permissionValue[parseInt(id) - 1]) {
+            console.log('El usuario ya tiene asignado el permiso.');
+            return;
+        }
+
+        // Asignar el valor de id a permissionId
+        var permissionId = id;
+
+        // Llamado al API
+        var ctrlActions = new ControlActions();
+        var serviceCreate = 'ManagePermission/createPermission';
+
+        ctrlActions.PostToAPIv1(serviceCreate, managepermission, function () {
+            //alert('Permiso creado con éxito');
+        });
+    };
+
+
+    this.Delete = function (id) {
+        var managepermission = {};
+        managepermission.id = 0;
+        managepermission.user_id = user_id;
+        managepermission.permission_id = parseInt(id);
+
+        // Llamado al API
+        var ctrlActions = new ControlActions();
+        var serviceDelete = 'ManagePermission/DeletePermission';
+
+        ctrlActions.DeleteToAPI(serviceDelete, managepermission, function () {
+            //alert('Permiso eliminado con éxito');
+        });
     };
 
     this.LoadTable = function () {
@@ -116,6 +228,9 @@ function PermissionsView() {
                 for (var i = 0; i < rows.length; i++) {
                     checkPermission(rows[i].id);
                 }
+
+                // Invertir el orden del vector permissionValue
+                permissionValue.reverse();
             }
         });
     };
@@ -139,19 +254,34 @@ function PermissionsView() {
             // llamado a la API para iniciar sesión
             var ctrlActions = new ControlActions();
             var serviceCreate = "ManagePermission/checkPermission";
-            ctrlActions.PostToAPIv1(serviceCreate, checkpermission, function (data) {  
+            ctrlActions.PostToAPIv1(serviceCreate, checkpermission, function (data) {
                 if (data) {
                     $('#permission-' + permission_id).attr('checked', true);
+                    permissionValue.push({
+                        'permissionId': permission_id,
+                        'isChecked': true
+                    }); // Agregar valor a permissionValue
                 }
                 else {
                     $('#permission-' + permission_id).attr('checked', false);
+                    permissionValue.push({
+                        'permissionId': permission_id,
+                        'isChecked': false
+                    }); // Agregar valor a permissionValue
                 }
+                permissionValue.reverse();
+
             });
 
         }
     };
 
     this.LoadTableEmpty = function () {
+        // Destruir la tabla existente si ya ha sido inicializada
+        if ($.fn.DataTable.isDataTable('#tblPermission')) {
+            $('#tblPermission').DataTable().destroy();
+        }
+
         var arrayColumnsData = [];
         arrayColumnsData[0] = { 'data': 'id' };
         arrayColumnsData[1] = { 'data': 'name' };
@@ -173,8 +303,14 @@ function PermissionsView() {
 //se ejecuta siempre al finalizar la carga de la vista.
 $(document).ready(function () {
     var view = new PermissionsView();
-    view.LoadTableEmpty();
+    view.InitView();
+});
 
+//Instanciamiento inicial de la clase
+//se ejecuta siempre al finalizar la carga de la vista.
+$(document).ready(function () {
+    var view = new PermissionsView();
+    view.LoadTableEmpty();
 
     // Agregar una función para verificar si la tabla ya se cargó
     setInterval(function () {

@@ -5,25 +5,19 @@ namespace EasyListCORE
 {
     public class ManagePermissionManager
     {
-        //public void Create(Permission permission)
-        //{
-        //    var crudPermission = new PermissionCrudFactory();
+        public void Create(ManagePermission managepermission)
+        {
+            var crudManagePermission = new ManagePermissionCrudFactory();
 
-        //    crudPermission.Create(permission);
-        //}
+            crudManagePermission.Create(managepermission);
+        }
 
-        //public void Delete(Permission permission)
-        //{
-        //    var crudPermission = new PermissionCrudFactory();
-        //    var existPermission = crudPermission.RetrieveById<Permission>(permission.Id);
+        public void Delete(ManagePermission managepermission)
+        {
+            var crudManagePermission = new ManagePermissionCrudFactory();
 
-        //    if (existPermission == null)
-        //    {
-        //        throw new Exception("The permission does not exist!");
-        //    }
-
-        //    crudPermission.Delete(permission);
-        //}
+            crudManagePermission.Delete(managepermission);
+        }
 
         public ManagePermission Check(ManagePermission managepermission)
         {
