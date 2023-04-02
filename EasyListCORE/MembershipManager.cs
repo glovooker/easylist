@@ -8,12 +8,6 @@ namespace EasyListCORE
         public void Create(Membership membership)
         {
             var crudMembership = new MembershipCrudFactory();
-            var existMembership = crudMembership.RetrieveById<Membership>(membership.Id);
-
-            if (existMembership != null)
-            {
-                throw new Exception("Membership already exists!");
-            }
             crudMembership.Create(membership);
         }
 
