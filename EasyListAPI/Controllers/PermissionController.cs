@@ -11,7 +11,7 @@ namespace EasyListAPI.Controllers
     {
         [HttpPost]
         [Route("createPermission")]
-        public async Task<IActionResult> CreateUser(Permission permission)
+        public async Task<IActionResult> CreatePermission(Permission permission)
         {
             try
             {
