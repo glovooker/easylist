@@ -15,7 +15,6 @@
         public float budget { get; set; }
         public string QRcode { get; set; }
         public bool automatic { get; set; }
-
         public int analistId { get; set; }
         public int? offerId { get; set; }
 

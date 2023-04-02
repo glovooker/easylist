@@ -43,13 +43,73 @@
         tender.budget = $("#txtBudget").val();
         tender.QRcode = "";
         tender.automatic = Boolean(parseInt($("#drpAutomatic").val()));
-        
+
+        var isValid = true;
+
+        if (tender.title === '') {
+            $("#error-messageTitle").html("Title is required");
+            $("#error-messageTitle").show();
+            isValid = false;
+        } else {
+            $("#error-messageTitle").hide();
+        }
+
+        if (!tender.automatic) {
+            $("#error-messageAutomatic").html("Automatic is required");
+            $("#error-messageAutomatic").show();
+            isValid = false;
+        } else {
+            $("#error-messageAutomatic").hide();
+        }
+
+        if (tender.description === '') {
+            $("#error-messageDescription").html("Description is required");
+            $("#error-messageDescription").show();
+            isValid = false;
+        } else {
+            $("#error-messageDescription").hide();
+        }
+
+        if (tender.maxDeliverDate === '') {
+            $("#error-messageMaxDeliverDate").html("MaxDeliverDate is required");
+            $("#error-messageMaxDeliverDate").show();
+            isValid = false;
+        } else {
+            $("#error-messageMaxDeliverDate").hide();
+        }
+
+        if (tender.maxOfferDate === '') {
+            $("#error-messageMaxOfferDate").html("MaxOfferDate is required");
+            $("#error-messageMaxOfferDate").show();
+            isValid = false;
+        } else {
+            $("#error-messageMaxOfferDate").hide();
+        }
+
+        if (tender.budget === '') {
+            $("#error-messageBudget").html("Budget is required");
+            $("#error-messageBudget").show();
+            isValid = false;
+        } else {
+            $("#error-messageBudget").hide();
+        }
+
+        if (!tender.tenderStatus) {
+            $("#error-messageStatus").html("Status is required");
+            $("#error-messageStatus").show();
+            isValid = false;
+        } else {
+            $("#error-messageStatus").hide();
+        }
+
+        if (!isValid) {
+            return;
+        }
+
         var ctrlActions = new ControlActions();
         var serviceCreate = this.ApiService + "/createTender";
 
         ctrlActions.PostToAPI(serviceCreate, tender, function () {
-
-            alert("Tender create!!!");
 
             var view = new TenderView();
 
@@ -72,14 +132,11 @@
         tender.budget = $("#txtBudget").val();
         tender.QRcode = "";
         tender.automatic = Boolean(parseInt($("#drpAutomatic").val()));
-        console.log(tender);
 
         var ctrlActions = new ControlActions();
         var serviceUpdate = this.ApiService + "/updateTender";
 
         ctrlActions.PutToAPI(serviceUpdate, tender, function () {
-
-            alert("Tender update!!!");
 
             var view = new TenderView();
 
@@ -107,8 +164,6 @@
         var serviceDelete = this.ApiService + "/deleteTender";
 
         ctrlActions.DeleteToAPI(serviceDelete, tender, function () {
-
-            alert("Tender delete!!!");
 
             var view = new TenderView();
 
@@ -191,6 +246,20 @@
         $("#txtMaxDeliverDate").val("");
         $("#txtBudget").val("");
         $("#drpAutomatic").val("");
+    };
+
+    var inputBudget = document.getElementById("txtBudget");
+
+    inputBudget.onkeypress = function (event) {
+        var key = event.which || event.keyCode;
+        var budgetValue = inputBudget.value;
+
+        if (key >= 48 && key <= 57) {
+            return true;
+        } else {
+            event.preventDefault();
+            return false;
+        }
     };
 
 }
