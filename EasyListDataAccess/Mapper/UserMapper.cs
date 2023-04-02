@@ -129,6 +129,30 @@ namespace EasyListDataAccess.Mapper
             return sqlOperation;
         }
 
+        public SqlOperation GetDeletePasswordsStatement(BaseEntity entity)
+        {
+            var sqlOperation = new SqlOperation();
+
+            var user = (User)entity;
+
+            sqlOperation.ProcedureName = "DEL_ALL_USUARIO_CONTRASENIA_PR";
+            sqlOperation.AddIntParam("P_ID_USUARIO", user.Id);
+
+            return sqlOperation;
+        }
+
+        public SqlOperation GetDeletePermissionsStatement(BaseEntity entity)
+        {
+            var sqlOperation = new SqlOperation();
+
+            var user = (User)entity;
+
+            sqlOperation.ProcedureName = "DEL_ALL_USUARIO_PERMISO_PR";
+            sqlOperation.AddIntParam("P_ID_USUARIO", user.Id);
+
+            return sqlOperation;
+        }
+
         public SqlOperation GetDeleteStatement(BaseEntity entity)
         {
             var sqlOperation = new SqlOperation();

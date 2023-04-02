@@ -84,6 +84,13 @@ namespace EasyListDataAccess.CRUD
         public override void Delete(BaseEntity dto)
         {
             var user = (User)dto;
+
+            var sqlPassword = _mapper.GetDeletePasswordsStatement(user);
+            dao.ExecuteProcedure(sqlPassword);
+
+            var sqlPermission = _mapper.GetDeletePermissionsStatement(user);
+            dao.ExecuteProcedure(sqlPermission);
+
             var sqlUser = _mapper.GetDeleteStatement(user);
             dao.ExecuteProcedure(sqlUser);
         }

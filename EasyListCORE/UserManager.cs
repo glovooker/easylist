@@ -70,6 +70,32 @@ namespace EasyListCORE
             crudUser.Delete(user);
         }
 
+        public void Register(User user)
+        {
+            var crudUser = new UserCrudFactory();
+            var crudPassword = new PasswordCrudFactory();
+            var existUser = crudUser.RetrieveById<User>(user.Id);
+
+            if (existUser != null)
+            {
+                throw new Exception("User already registered!");
+            }
+
+            crudUser.Create(user);
+
+            var currentUser = crudUser.RetrieveByEmail<User>(user.email);
+            currentUser.password = user.password;
+
+            var password = new Password();
+            password.Id = currentUser.Id;
+            password.password = currentUser.password;
+            password.idUser = currentUser.Id;
+            password.isActive = true;
+            password.creationDate = currentUser.registrationDate;
+
+            crudPassword.Create(password);
+        }
+
         public User Login(string email, string password)
         {
             var crudUser = new UserCrudFactory();
