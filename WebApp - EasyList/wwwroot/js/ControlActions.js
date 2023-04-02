@@ -91,10 +91,10 @@
       data,
       function (response) {
         var ctrlActions = new ControlActions();
-        ctrlActions.ShowMessage('I', response.Message);
+        ctrlActions.ShowMessage('I', response?.Message??"");
 
-        if (callBackFunction) {
-          callBackFunction(response.Data);
+          if (callBackFunction) {
+              callBackFunction(response?.Data ?? response);
         }
       }
     ).fail(function (response) {

@@ -2,9 +2,9 @@
 
 var id_permission;
 
-//Definición de la clase PermissionsView
-function PermissionsView() {
-  this.ViewName = 'PermissionsView';
+//Definición de la clase ManagePermissions
+function ManagePermissions() {
+  this.ViewName = 'ManagePermissions';
     this.ApiService = 'Permission';
 
   this.InitView = function () {
@@ -12,25 +12,25 @@ function PermissionsView() {
 
     //Asignación del evento de click del botón
     $('#btnCreate').click(function () {
-      var view = new PermissionsView();
+      var view = new ManagePermissions();
       view.Create();
     });
 
     //Asignación del evento de click del botón
     $('#btnUpdate').click(function () {
-      var view = new PermissionsView();
+      var view = new ManagePermissions();
       view.Update();
     });
 
     //Asignación del evento de click del botón
     $('#btnNew').click(function () {
-      var view = new PermissionsView();
+      var view = new ManagePermissions();
       view.New();
     });
 
     //Asignación del evento de click del botón
     $('#btnDelete').click(function () {
-      var view = new PermissionsView();
+      var view = new ManagePermissions();
       view.Delete();
     });
 
@@ -44,15 +44,16 @@ function PermissionsView() {
     permission.id = 0;
     permission.name = $('#txtName').val();
     permission.description = $('#txtDescription').val();
+    permission.usertype = parseInt($('#selecType').val());
 
       // Llamado al API
-      var view = new PermissionsView();
+      var view = new ManagePermissions();
       var ctrlActions = new ControlActions();
       var serviceCreate = view.ApiService + '/createPermission';
 
         ctrlActions.PostToAPIv1(serviceCreate, permission, function () {
         alert('Permiso creado con éxito');
-        var view = new PermissionsView();
+        var view = new ManagePermissions();
 
         view.ReloadTable();
         view.CleanForm();
@@ -64,15 +65,17 @@ function PermissionsView() {
     permission.id = id_permission;
     permission.name = $('#txtName').val();
     permission.description = $('#txtDescription').val();
+    permission.usertype = parseInt($('#selecType').val());
+
  
       // Llamado al API
-      var view = new PermissionsView();
+      var view = new ManagePermissions();
       var ctrlActions = new ControlActions();
       var serviceCreate = view.ApiService + '/updatePermission';
 
       ctrlActions.PutToAPI(serviceCreate, permission, function () {
         alert('Permiso actualizado con éxito');
-        var view = new PermissionsView();
+        var view = new ManagePermissions();
 
         view.ReloadTable();
         view.CleanForm();
@@ -91,7 +94,7 @@ function PermissionsView() {
 
     ctrlActions.DeleteToAPI(serviceDelete, permission, function () {
       alert('Permiso eliminado con éxito');
-      var view = new PermissionsView();
+      var view = new ManagePermissions();
 
       view.ReloadTable();
       view.CleanForm();
@@ -109,6 +112,7 @@ function PermissionsView() {
     arrayColumnsData[0] = { 'data': 'id' };
     arrayColumnsData[1] = { 'data': 'name' };
     arrayColumnsData[2] = { 'data': 'description' };
+    arrayColumnsData[3] = { 'data': 'usertype' };
 
     $('#tblPermission').dataTable({
       'ajax': {
@@ -127,6 +131,7 @@ function PermissionsView() {
 
       $('#txtName').val(data.name);
       $('#txtDescription').val(data.description);
+      $('#selecType').val(data.usertype.toString());
 
       $('#btnCreate').prop('disabled', true);
       $('#btnDelete').prop('disabled', false);
@@ -149,12 +154,13 @@ function PermissionsView() {
   this.CleanForm = function () {
     $('#txtName').val('');
     $('#txtDescription').val('');
+    $('#selecType').val('');
   };
 }
 
 //Instanciamiento inicial de la clase
 //se ejecuta siempre al finalizar la carga de la vista.
 $(document).ready(function () {
-  var view = new PermissionsView();
+  var view = new ManagePermissions();
   view.InitView();
 });

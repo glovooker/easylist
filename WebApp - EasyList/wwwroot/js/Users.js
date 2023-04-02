@@ -1,8 +1,8 @@
 ﻿//Controla el comportamiento de la página/vista de Users.cshtml
 
-//Definición de la clase PermissionsView
-function PermissionsView() {
-  this.ViewName = 'PermissionsView';
+//Definición de la clase ManagePermissions
+function ManagePermissions() {
+  this.ViewName = 'ManagePermissions';
   this.ApiService = 'User';
 
   this.InitView = function () {
@@ -10,25 +10,25 @@ function PermissionsView() {
 
     //Asignación del evento de click del botón
     $('#btnCreate').click(function () {
-      var view = new PermissionsView();
+      var view = new ManagePermissions();
       view.Create();
     });
 
     //Asignación del evento de click del botón
     $('#btnUpdate').click(function () {
-      var view = new PermissionsView();
+      var view = new ManagePermissions();
       view.Update();
     });
 
     //Asignación del evento de click del botón
     $('#btnNew').click(function () {
-      var view = new PermissionsView();
+      var view = new ManagePermissions();
       view.New();
     });
 
     //Asignación del evento de click del botón
     $('#btnDelete').click(function () {
-      var view = new PermissionsView();
+      var view = new ManagePermissions();
       view.Delete();
     });
 
@@ -51,7 +51,7 @@ function PermissionsView() {
 
     // Call CaptureImageURL with a callback function
     CaptureImageURL('userPic', function (imageUrl) {
-      var view = new PermissionsView();
+      var view = new ManagePermissions();
       if (imageUrl === undefined) {
         imageUrl = document.getElementById('imgUser').src;
       }
@@ -62,7 +62,7 @@ function PermissionsView() {
 
       ctrlActions.PostToAPIv1(serviceCreate, user, function () {
         alert('Usuario creado con éxito');
-        var view = new PermissionsView();
+        var view = new ManagePermissions();
 
         view.ReloadTable();
         view.CleanForm();
@@ -84,7 +84,7 @@ function PermissionsView() {
 
     // Call CaptureImageURL with a callback function
     CaptureImageURL('userPic', function (imageUrl) {
-      var view = new PermissionsView();
+      var view = new ManagePermissions();
       if (imageUrl === undefined) {
         imageUrl = document.getElementById('imgUser').src;
       }
@@ -95,7 +95,7 @@ function PermissionsView() {
 
       ctrlActions.PutToAPI(serviceCreate, user, function () {
         alert('Usuario actualizado con éxito');
-        var view = new PermissionsView();
+        var view = new ManagePermissions();
 
         view.ReloadTable();
         view.CleanForm();
@@ -121,7 +121,7 @@ function PermissionsView() {
 
     ctrlActions.DeleteToAPI(serviceDelete, user, function () {
       alert('Usuario eliminado con éxito');
-      var view = new PermissionsView();
+      var view = new ManagePermissions();
 
       view.ReloadTable();
       view.CleanForm();
@@ -216,6 +216,6 @@ function PermissionsView() {
 //Instanciamiento inicial de la clase
 //se ejecuta siempre al finalizar la carga de la vista.
 $(document).ready(function () {
-  var view = new PermissionsView();
+  var view = new ManagePermissions();
   view.InitView();
 });
