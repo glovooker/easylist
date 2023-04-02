@@ -15,12 +15,18 @@ namespace EasyListDataAccess.CRUD
 
         public override void Create(BaseEntity dto)
         {
-            throw new NotImplementedException();
+            var managepermission = (ManagePermission)dto;
+            var sqlOperation = _mapper.GetCreateStatement(managepermission);
+            dao.ExecuteProcedure(sqlOperation);
         }
 
         public override void Delete(BaseEntity dto)
         {
-            throw new NotImplementedException();
+            var permissionToDelete = (ManagePermission)dto;
+
+            var sqlPermission = _mapper.GetDeleteStatement(permissionToDelete);
+
+            dao.ExecuteProcedure(sqlPermission);
         }
 
         public override List<T> RetrieveAll<T>()

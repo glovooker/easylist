@@ -49,6 +49,18 @@ namespace EasyListDataAccess.Mapper
 
         #region "SQL_Statements"
 
+        public SqlOperation GetCreateStatement(BaseEntity entity)
+        {
+            var sqlOperation = new SqlOperation();
+
+            var managepermission = (ManagePermission)entity;
+
+            sqlOperation.ProcedureName = "CRE_USUARIO_PERMISO_PR";
+            sqlOperation.AddIntParam("P_ID_USUARIO", managepermission.user_id);
+            sqlOperation.AddIntParam("P_ID_PERMISO", managepermission.permission_id);
+
+            return sqlOperation;
+        }
 
         public SqlOperation GetRetrieveByEmailStatement(string email)
         {
@@ -72,9 +84,17 @@ namespace EasyListDataAccess.Mapper
             throw new NotImplementedException();
         }
 
-        public SqlOperation GetCreateStatement(BaseEntity entity)
+        public SqlOperation GetDeleteStatement(BaseEntity entity)
         {
-            throw new NotImplementedException();
+            var sqlOperation = new SqlOperation();
+
+            var managepermission = (ManagePermission)entity;
+
+            sqlOperation.ProcedureName = "DEL_USUARIO_PERMISO_PR";
+            sqlOperation.AddIntParam("P_ID_USUARIO", managepermission.user_id);
+            sqlOperation.AddIntParam("P_ID_PERMISO", managepermission.permission_id);
+
+            return sqlOperation;
         }
 
         public SqlOperation GetRetrieveByIdStatement(int id)
@@ -88,11 +108,6 @@ namespace EasyListDataAccess.Mapper
         }
 
         public SqlOperation GetUpdateStatement(BaseEntity entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public SqlOperation GetDeleteStatement(BaseEntity entity)
         {
             throw new NotImplementedException();
         }
