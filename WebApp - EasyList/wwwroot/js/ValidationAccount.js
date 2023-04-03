@@ -33,15 +33,27 @@
         }
     }
     this.ValidaOTP = function () {
-        // Cambia el contenido del <p>
-        if ($("#country-code").val() != "" && $("#phone-number").val() != "") {
-           // document.getElementById('pValidaOTP').innerText = 'Digita el código que recibiste por SMS o correo electrónico.';
+        countryCode = $("#country-code").val().trim()
+        phoneNumber = $("#phone-number").val().trim()
+
+        if (countryCode === '') {
+            $("#error-messageCountryCode").html("El codigo de país es obligatorio");
+            $("#error-messageCountryCode").show();
+        } else {
+            $("#error-messageCountryCode").hide();
+        }
+        if (phoneNumber === '') {
+            $("#error-messageNumber").html("El numero es obligatorio");
+            $("#error-messageNumber").show();
+        } else {
+            $("#error-messageNumber").hide();
+        }
+        if (countryCode !== '' && phoneNumber !== '') {
+            $("#error-messageCountryCode").hide();
+            $("#error-messageNumber").hide();
+
             $("#divNumeroVerificacion").hide();
             $("#divCodigoOTP").show();
-            
-        }
-        else {
-            console.log("No se ha ingresado el número de teléfono");
         }
     }
 }
