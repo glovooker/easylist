@@ -2,9 +2,6 @@
 {
     public class Tender : BaseEntity
     {
-
-        public Tender() { }
-
         public enum TenderStatus { OPEN, CLOSED, ONGOING, FINISHED, TERMINATED }
 
         public string title { get; set; }

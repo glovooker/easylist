@@ -103,5 +103,37 @@ namespace EasyListAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPost]
+        [Route("registerUser")]
+        public async Task<IActionResult> RegisterUser(User user)
+        {
+            try
+            {
+                var um = new UserManager();
+                um.Register(user);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("loginUser")]
+        public async Task<IActionResult> LoginUser(string email, string password)
+        {
+            try
+            {
+                var um = new UserManager();
+                var user = um.Login(email, password);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
