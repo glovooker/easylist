@@ -1,6 +1,6 @@
 ﻿function TenderView() {
 
-    this.ViewTender = "TenderView";
+    this.ViewTenders = "TenderView";
     this.ApiService = "Tender";
 
     this.InitView = function () {
@@ -93,14 +93,14 @@
         var ctrlActions = new ControlActions();
         var serviceCreate = this.ApiService + "/createTender";
 
-        ctrlActions.PostToAPI(serviceCreate, tender, function () {
+        ctrlActions.PostToAPIv1(serviceCreate, tender, function () {
 
             var view = new TenderView();
 
             view.ReloadTable();
             view.CleanForm();
 
-            toastr.success('¡Action implemented!', 'Creation of successful tender')
+            toastr.success('Tender created', 'Success!')
 
         });
 
@@ -175,7 +175,7 @@
             view.ReloadTable();
             view.CleanForm();
 
-            toastr.success('¡Action implemented!', 'Update of successful tender')
+            toastr.success('Tender updated', 'Success!')
 
         });
 
@@ -250,7 +250,7 @@
             view.ReloadTable();
             view.CleanForm();
 
-            toastr.success('¡Action implemented!', 'Delete of successful tender')
+            toastr.success('Tender deleted', 'Success!')
 
         });
 
