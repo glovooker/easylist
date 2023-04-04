@@ -9,6 +9,9 @@
             var view = new RegisterView();
             view.Register();
         });
+        $("#btnBack").click(function () {
+            window.location.href = "/";
+        })
     };
 
     this.Register = function () {
