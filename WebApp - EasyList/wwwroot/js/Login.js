@@ -9,7 +9,7 @@
             view.Login();
         });
 
-        $("#btnRegresar").click(function () {
+        $("#btnBack").click(function () {
             window.location.href = "/";
         })
 
