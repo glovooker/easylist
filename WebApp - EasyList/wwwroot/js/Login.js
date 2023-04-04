@@ -44,7 +44,6 @@
             };
 
             ctrlActions.GetToApi(url, function (result) {
-                console.log(result.status);
                 if (result.status === 400) {
                     toastr.error('Error', 'Incorrect email or password');
                 } else {
