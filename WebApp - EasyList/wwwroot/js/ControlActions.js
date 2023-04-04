@@ -139,10 +139,15 @@
         var jqxhr = $.get(this.GetUrlApiService(service), function (response) {
             console.log("Response " + response);
             if (callBackFunction) {
-                callBackFunction(response.Data);
+                callBackFunction({ status: jqxhr.status, response: response });
             }
-
-        });
+        })
+            .fail(function (response) {
+                console.log("Error " + response.status + ": " + response.statusText);
+                if (callBackFunction) {
+                    callBackFunction({ status: response.status, response: null });
+                }
+            });
     }
 }
 
@@ -192,16 +197,15 @@ $.delete = function (url, data, callback) {
 }
 $.get = function (url, data, callback) {
     if ($.isFunction(data)) {
-        type = type || callback,
-            callback = data,
-            data = {}
+        callback = data;
+        data = {};
     }
     return $.ajax({
         url: url,
         type: 'GET',
         success: callback,
-        data: JSON.stringify(data),
+        data: data,
         contentType: 'application/json'
     });
-}
+};
 
