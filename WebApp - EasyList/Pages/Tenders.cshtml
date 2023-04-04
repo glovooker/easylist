@@ -1,26 +1,27 @@
 ﻿@page
 @model WebApp___EasyList.Pages.TenderModel
 @{
+    ViewData["Title"] = "Tenders";
 }
-<script src="~/js/Tender.js"></script>
+<script src="~/js/tenders.js"></script>
 <br />
-<h1>Tender</h1>
+<h1>Tenders</h1>
 <br />
-    <div class="row">
-        <table id="tblTender" class="display" style="width:100%">
-            <thead>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Status</th>
-            <th>MaxOfferDate</th>
-            <th>MaxDeliverDate</th>
-            <th>Budget</th>
-            <th>Automatic</th>
-            </thead>
-        </table>
-        <br />
-    </div>
+<div class="row">
+    <table id="tblTender" class="display" style="width:100%">
+        <thead>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th>MaxOfferDate</th>
+        <th>MaxDeliverDate</th>
+        <th>Budget</th>
+        <th>Automatic</th>
+        </thead>
+    </table>
+    <br />
+</div>
 <div class="row d-flex justify-content-center bg-light" style="border-radius: 10px">
     <div class="col-lg-11">
         <div class="bs-component">
