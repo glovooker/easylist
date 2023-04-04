@@ -323,11 +323,11 @@
         $('#txtID').val("");
         $("#txtTitle").val("");
         $("#txtDescription").val("");
-        $("#drpStatus").val("--Select--");
+        $("#drpStatus").val("0");
         $("#txtMaxOfferDate").val("");
         $("#txtMaxDeliverDate").val("");
         $("#txtBudget").val("");
-        $("#drpAutomatic").val("--Select--");
+        $("#drpAutomatic").val("0");
     };
 
     var inputBudget = document.getElementById("txtBudget");
