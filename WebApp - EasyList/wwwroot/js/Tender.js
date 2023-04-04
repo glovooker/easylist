@@ -54,12 +54,79 @@
             $("#error-messageTitle").hide();
         }
 
-        if (!tender.automatic) {
-            $("#error-messageAutomatic").html("Automatic is required");
-            $("#error-messageAutomatic").show();
+        if (tender.description === '') {
+            $("#error-messageDescription").html("Description is required");
+            $("#error-messageDescription").show();
             isValid = false;
         } else {
-            $("#error-messageAutomatic").hide();
+            $("#error-messageDescription").hide();
+        }
+
+        if (tender.maxDeliverDate === '') {
+            $("#error-messageMaxDeliverDate").html("MaxDeliverDate is required");
+            $("#error-messageMaxDeliverDate").show();
+            isValid = false;
+        } else {
+            $("#error-messageMaxDeliverDate").hide();
+        }
+
+        if (tender.maxOfferDate === '') {
+            $("#error-messageMaxOfferDate").html("MaxOfferDate is required");
+            $("#error-messageMaxOfferDate").show();
+            isValid = false;
+        } else {
+            $("#error-messageMaxOfferDate").hide();
+        }
+
+        if (tender.budget === '') {
+            $("#error-messageBudget").html("Budget is required");
+            $("#error-messageBudget").show();
+            isValid = false;
+        } else {
+            $("#error-messageBudget").hide();
+        }
+
+        if (!isValid) {
+            return;
+        }
+
+        var ctrlActions = new ControlActions();
+        var serviceCreate = this.ApiService + "/createTender";
+
+        ctrlActions.PostToAPI(serviceCreate, tender, function () {
+
+            var view = new TenderView();
+
+            view.ReloadTable();
+            view.CleanForm();
+
+            toastr.success('¡Action implemented!', 'Creation of successful tender')
+
+        });
+
+    };
+
+    this.Update = function () {
+
+        var tender = {};
+        tender.id = parseInt($('#txtID').val()) || 0;
+        tender.title = $("#txtTitle").val();
+        tender.description = $("#txtDescription").val();
+        tender.tenderStatus = parseInt($("#drpStatus").val());
+        tender.maxOfferDate = $("#txtMaxOfferDate").val();
+        tender.maxDeliverDate = $("#txtMaxDeliverDate").val();
+        tender.budget = $("#txtBudget").val();
+        tender.QRcode = "";
+        tender.automatic = Boolean(parseInt($("#drpAutomatic").val()));
+
+        var isValid = true;
+
+        if (tender.title === '') {
+            $("#error-messageTitle").html("Title is required");
+            $("#error-messageTitle").show();
+            isValid = false;
+        } else {
+            $("#error-messageTitle").hide();
         }
 
         if (tender.description === '') {
@@ -94,44 +161,9 @@
             $("#error-messageBudget").hide();
         }
 
-        if (!tender.tenderStatus) {
-            $("#error-messageStatus").html("Status is required");
-            $("#error-messageStatus").show();
-            isValid = false;
-        } else {
-            $("#error-messageStatus").hide();
-        }
-
         if (!isValid) {
             return;
         }
-
-        var ctrlActions = new ControlActions();
-        var serviceCreate = this.ApiService + "/createTender";
-
-        ctrlActions.PostToAPI(serviceCreate, tender, function () {
-
-            var view = new TenderView();
-
-            view.ReloadTable();
-            view.CleanForm();
-
-        });
-
-    };
-
-    this.Update = function () {
-
-        var tender = {};
-        tender.id = parseInt($('#txtID').val()) || 0;
-        tender.title = $("#txtTitle").val();
-        tender.description = $("#txtDescription").val();
-        tender.tenderStatus = parseInt($("#drpStatus").val());
-        tender.maxOfferDate = $("#txtMaxOfferDate").val();
-        tender.maxDeliverDate = $("#txtMaxDeliverDate").val();
-        tender.budget = $("#txtBudget").val();
-        tender.QRcode = "";
-        tender.automatic = Boolean(parseInt($("#drpAutomatic").val()));
 
         var ctrlActions = new ControlActions();
         var serviceUpdate = this.ApiService + "/updateTender";
@@ -142,6 +174,8 @@
 
             view.ReloadTable();
             view.CleanForm();
+
+            toastr.success('¡Action implemented!', 'Update of successful tender')
 
         });
 
@@ -160,6 +194,52 @@
         tender.QRcode = "";
         tender.automatic = Boolean(parseInt($("#drpAutomatic").val()));
 
+        var isValid = true;
+
+        if (tender.title === '') {
+            $("#error-messageTitle").html("Title is required");
+            $("#error-messageTitle").show();
+            isValid = false;
+        } else {
+            $("#error-messageTitle").hide();
+        }
+
+        if (tender.description === '') {
+            $("#error-messageDescription").html("Description is required");
+            $("#error-messageDescription").show();
+            isValid = false;
+        } else {
+            $("#error-messageDescription").hide();
+        }
+
+        if (tender.maxDeliverDate === '') {
+            $("#error-messageMaxDeliverDate").html("MaxDeliverDate is required");
+            $("#error-messageMaxDeliverDate").show();
+            isValid = false;
+        } else {
+            $("#error-messageMaxDeliverDate").hide();
+        }
+
+        if (tender.maxOfferDate === '') {
+            $("#error-messageMaxOfferDate").html("MaxOfferDate is required");
+            $("#error-messageMaxOfferDate").show();
+            isValid = false;
+        } else {
+            $("#error-messageMaxOfferDate").hide();
+        }
+
+        if (tender.budget === '') {
+            $("#error-messageBudget").html("Budget is required");
+            $("#error-messageBudget").show();
+            isValid = false;
+        } else {
+            $("#error-messageBudget").hide();
+        }
+
+        if (!isValid) {
+            return;
+        }
+
         var ctrlActions = new ControlActions();
         var serviceDelete = this.ApiService + "/deleteTender";
 
@@ -169,6 +249,8 @@
 
             view.ReloadTable();
             view.CleanForm();
+
+            toastr.success('¡Action implemented!', 'Delete of successful tender')
 
         });
 
@@ -241,11 +323,11 @@
         $('#txtID').val("");
         $("#txtTitle").val("");
         $("#txtDescription").val("");
-        $("#drpStatus").val("");
+        $("#drpStatus").val("--Select--");
         $("#txtMaxOfferDate").val("");
         $("#txtMaxDeliverDate").val("");
         $("#txtBudget").val("");
-        $("#drpAutomatic").val("");
+        $("#drpAutomatic").val("--Select--");
     };
 
     var inputBudget = document.getElementById("txtBudget");
