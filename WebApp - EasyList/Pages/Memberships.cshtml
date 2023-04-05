@@ -1,10 +1,11 @@
 ﻿@page
 @model WebApp___EasyList.Pages.MembershipModel
 @{
+    ViewData["Title"] = "Memberships";
 }
 <script src="~/js/memberships.js"></script>
 <div class="bs-docs-section d-flex flex-column">
-    <br/>
+    <br />
     <legend style="color:#642D3D">Memberships</legend>
     <di class="row">
         <table id="tblMemberships" class="display" style="width:100%">
@@ -18,7 +19,7 @@
                 </tr>
             </thead>
         </table>
-        <br/>
+        <br />
     </di>
     <div class="row d-flex justify-content-center p-4 m-4 shadow border" style="border-radius:2.5rem; background-color:#e4e4e4">
         <div class="col-lg-10">
@@ -40,7 +41,6 @@
                         <div class="w-50 m-2 form-group">
                             <label for="drpType" class="form-label mt-1">Membership type</label>
                             <select class="form-select" id="drpType">
-                                <option value="">-- Select a type --</option>
                                 <option value=0>Monthly</option>
                                 <option value=1>Annual</option>
                             </select>
@@ -59,7 +59,7 @@
                             <small id="emailHelp" class="form-text text-muted">Please insert only costs in colones(₡).</small>
                             <div id="error-messageCost" style="display: none; color: red; font-size:0.7rem"></div>
                         </div>
-                    </div>                   
+                    </div>
                 </form>
                 <br />
                 <div class="d-flex flex-row justify-content-around">

@@ -25,7 +25,7 @@
         });
 
         this.LoadTable();
-    }; 
+    };
 
     this.Create = function () {
 
@@ -34,14 +34,14 @@
         membership.description = $('#txtDescription').val();
         membership.membershipType = parseInt($('#drpType').val());
         membership.cost = parseFloat($('#txtCost').val());
-        if (membership.name === '' || membership.description === '' ||(membership.membershipType!=='0' && membership.membershipType!=='1') || isNaN(membership.cost) || membership.cost <= 0 || membership.cost.toString().toLowerCase().includes("e")) {
+        if (membership.name === '' || membership.description === '' || (membership.membershipType !== 0 && membership.membershipType !== 1) || isNaN(membership.cost) || membership.cost <= 0 || membership.cost.toString().toLowerCase().includes("e")) {
             if (membership.name === '') {
                 $("#error-messageName").html("Name is required");
                 $("#error-messageName").show();
             } else {
                 $("#error-messageName").hide();
             }
-            if (membership.membershipType !== '0' && membership.membershipType !== '1') {
+            if (membership.membershipType !== 0 || membership.membershipType !== 1) {
                 $("#error-messageType").html("Invalid type selected");
                 $("#error-messageType").show();
             } else {
@@ -65,7 +65,7 @@
             var serviceCreate = view.ApiService + '/createMembership';
 
             ctrlActions.PostToAPIv1(serviceCreate, membership, function () {
-                toastr.success('¡Success!', 'Membership created successfully')
+                toastr.success('Success!', 'Membership created successfully')
                 var view = new MembershipsView();
 
                 view.ReloadTable();
@@ -83,14 +83,14 @@
         membership.description = $('#txtDescription').val();
         membership.membershipType = parseInt($('#drpType').val());
         membership.cost = parseFloat($('#txtCost').val());
-        if (membership.name === '' || membership.description === '' || (membership.membershipType !== '0' && membership.membershipType !== '1') || isNaN(membership.cost) || membership.cost <= 0 || membership.cost.toString().toLowerCase().includes("e")) {
+        if (membership.name === '' || membership.description === '' || (membership.membershipType !== 0 && membership.membershipType !== 1) || isNaN(membership.cost) || membership.cost <= 0 || membership.cost.toString().toLowerCase().includes("e")) {
             if (membership.name === '') {
                 $("#error-messageName").html("Name is required");
                 $("#error-messageName").show();
             } else {
                 $("#error-messageName").hide();
             }
-            if (membership.membershipType !== '0' && membership.membershipType !== '1') {
+            if (membership.membershipType !== 0 && membership.membershipType !== 1) {
                 $("#error-messageType").html("Invalid type selected");
                 $("#error-messageType").show();
             } else {
@@ -114,7 +114,7 @@
             var serviceUpdate = view.ApiService + '/updateMembership';
 
             ctrlActions.PutToAPI(serviceUpdate, membership, function () {
-                toastr.success('¡Success!', 'Membership updated successfully')
+                toastr.success('Success!', 'Membership updated successfully')
 
                 var view = new MembershipsView();
 
@@ -164,7 +164,7 @@
             var serviceDelete = view.ApiService + '/deleteMembership';
 
             ctrlActions.DeleteToAPI(serviceDelete, membership, function () {
-                toastr.success('¡Success!', 'Membership deleted successfully')
+                toastr.success('Success!', 'Membership deleted successfully')
 
                 var view = new MembershipsView();
 
@@ -212,7 +212,7 @@
             $('#btnDelete').prop('disabled', false);
             $('#btnUpdate').prop('disabled', false);
         });
-          
+
     }
 
     this.ReloadTable = () => {
