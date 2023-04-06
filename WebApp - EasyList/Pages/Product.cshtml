@@ -1,0 +1,29 @@
+﻿@page
+@model WebApp___EasyList.Pages.ProductModel
+@{
+}
+<script src="~/js/product.js"></script>
+<div class="row">
+    <div class="col-md-12">
+        <h1>Product</h1>
+        <button type="button" id="btn-create" class="btn btn-info float-end mb-3">Agregar Producto</button>
+    </div>
+    <table id="tblProducts" class="table" style="width:100%">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Product Name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+        <tr class="odd">
+            <td>
+                <input type="text" id="txtName" class="form-control border-0" placeholder="New product"/>
+            </td>
+             <td>
+                <button type="button" id="btn-cancel" class="btn btn-warning align-items-center">Cancel</button>
+            </td>
+         </tr>
+    </table>
+</div>
