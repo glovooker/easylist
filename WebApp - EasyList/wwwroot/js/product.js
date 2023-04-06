@@ -23,6 +23,8 @@
     }
 
     this.Cancel = function () {
+        $('#error-productCreate').hide();
+
         $('#txtName').val('');
     }
 
@@ -31,7 +33,8 @@
         product.id = 0;
         product.name = $('#txtName').val().trim();
 
-        if (product.name != ""){ 
+        if (product.name !== "") {
+            $('#error-productCreate').hide();
             var ctrlActions = new ControlActions();
             var serviceCreate = self.ApiService + '/createProduct';
 
@@ -39,6 +42,13 @@
                 $('#tblProducts').DataTable().ajax.reload();
                 $('#txtName').val('');
             });
+        }
+        else {
+            $('#error-productCreate').html("No product was entered");
+            $('#error-productCreate').show();
+            setTimeout(function () {
+                $('#error-productCreate').hide();
+            }, 10000);
         }
     }
 
