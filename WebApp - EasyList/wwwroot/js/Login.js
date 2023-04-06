@@ -1,6 +1,6 @@
 ﻿function LoginView() {
     this.ViewName = "LoginView";
-    this.ApiService = "";
+    this.ApiService = "User";
 
     this.InitView = function () {
 
@@ -21,20 +21,38 @@
 
         if (email === '' || password === '') {
             if (email === '') {
-                $("#error-messageEmail").html("El correo electrónico es obligatorio");
+                $("#error-messageEmail").html("Email is required");
                 $("#error-messageEmail").show();
             } else {
                 $("#error-messageEmail").hide();
             }
             if (password === '') {
-                $("#error-messagePass").html("La contraseña es obligatoria");
+                $("#error-messagePass").html("Password is required");
                 $("#error-messagePass").show();
             } else {
                 $("#error-messagePass").hide();
             }
         } else {
             //Realizar la logica para enviar los datos al Backend
-            toastr.success('¡Bienvenido!', 'Inicio de sesión exitoso')
+            var view = new LoginView();
+            var ctrlActions = new ControlActions();
+            var serviceLogin = view.ApiService + '/loginUser';
+            var url = `${serviceLogin}?email=${email}&password=${password}`;
+            toastr.options = {
+                "positionClass": "toast-top-center",
+                "showDuration": "100"
+            };
+
+            ctrlActions.GetToApi(url, function (result) {
+                if (result.status === 400) {
+                    toastr.error('Error', 'Incorrect email or password');
+                } else {
+                    localStorage.setItem('user', email);
+                    toastr.success('¡Welcome!', 'Login successful');
+                    window.location.href = "/";
+                }
+            });
+            
 
         }
 
