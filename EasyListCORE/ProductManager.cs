@@ -11,11 +11,6 @@ namespace EasyListCORE
 
             var existProduct = crudProduct.RetrieveById<Product>(product.Id);
 
-            if (existProduct != null)
-            {
-                throw new Exception("The product already exist!");
-            }
-
             crudProduct.Create(product);
 
         }
