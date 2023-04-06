@@ -9,8 +9,6 @@ namespace EasyListCORE
         {
             var crudProduct = new ProductCrudFactory();
 
-            var existProduct = crudProduct.RetrieveById<Product>(product.Id);
-
             crudProduct.Create(product);
 
         }
