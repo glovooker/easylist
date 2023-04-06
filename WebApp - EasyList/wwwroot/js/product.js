@@ -29,16 +29,17 @@
     this.Create = function () {
         var product = {};
         product.id = 0;
-        product.name = $('#txtName').val();
+        product.name = $('#txtName').val().trim();
 
-        var ctrlActions = new ControlActions();
-        var serviceCreate = self.ApiService + '/createProduct';
+        if (product.name != ""){ 
+            var ctrlActions = new ControlActions();
+            var serviceCreate = self.ApiService + '/createProduct';
 
-        ctrlActions.PostToAPIv1(serviceCreate, product, function () {
-            $('#tblProducts').DataTable().ajax.reload();
-            $('#txtName').val('');
-        });
-
+            ctrlActions.PostToAPIv1(serviceCreate, product, function () {
+                $('#tblProducts').DataTable().ajax.reload();
+                $('#txtName').val('');
+            });
+        }
     }
 
 
