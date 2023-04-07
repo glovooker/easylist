@@ -12,7 +12,8 @@ namespace EasyListDataAccess.Mapper
             {
                 Id = (int)row["ID_PERMISO"],
                 name = (string)row["NOMBREPERMISO"],
-                description = (string)row["DESCRIPCIONPERMISO"],              
+                description = (string)row["DESCRIPCIONPERMISO"],   
+                usertype = (int)row["TIPOUSUARIO"],
             };
 
             return permission;
@@ -68,6 +69,7 @@ namespace EasyListDataAccess.Mapper
             sqlOperation.ProcedureName = "CRE_PERMISO_PR";
             sqlOperation.AddVarcharParam("P_NOMBREPERMISO", permission.name);
             sqlOperation.AddVarcharParam("P_DESCRIPCIONPERMISO", permission.description);
+            sqlOperation.AddIntParam("P_TIPOUSUARIO", permission.usertype);
 
             return sqlOperation;
         }
@@ -101,6 +103,7 @@ namespace EasyListDataAccess.Mapper
             sqlOperation.AddIntParam("P_ID_PERMISO", permission.Id);
             sqlOperation.AddVarcharParam("P_NOMBREPERMISO", permission.name);
             sqlOperation.AddVarcharParam("P_DESCRIPCIONPERMISO", permission.description);
+            sqlOperation.AddIntParam("P_TIPOUSUARIO", permission.usertype);
 
             return sqlOperation;
         }
@@ -120,6 +123,17 @@ namespace EasyListDataAccess.Mapper
         public SqlOperation GetRetrieveByEmailStatement(string email)
         {
             throw new NotImplementedException();
+        }
+
+        public SqlOperation GetRetrieveByIds(int user, int permission)
+        {
+            var sqlOperation = new SqlOperation();
+
+            sqlOperation.ProcedureName = "CHECK_RELACION_PERMISO_USUARIO";
+            sqlOperation.AddIntParam("P_ID_PERMISO", user);
+            sqlOperation.AddIntParam("P_ID_USUARIO", permission);
+
+            return sqlOperation;
         }
 
         #endregion

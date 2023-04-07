@@ -1,4 +1,5 @@
-﻿using DTOs;
+﻿using System.Security;
+using DTOs;
 using EasyListDataAccess.DAOs;
 using EasyListDataAccess.Mapper;
 
@@ -16,14 +17,19 @@ namespace EasyListDataAccess.CRUD
         public override void Create(BaseEntity dto)
         {
             var permission = (Permission)dto;
-            var sqlOperation = _mapper.GetCreateStatement(permission);
-            dao.ExecuteProcedure(sqlOperation);
+            var sqlPermission = _mapper.GetCreateStatement(permission);
+            dao.ExecuteProcedure(sqlPermission);
+        }
+
+        public override T RetrieveByEmail<T>(string email)
+        {
+            throw new NotImplementedException();
         }
 
         public override T RetrieveById<T>(int id)
         {
-            var sqlOperationToRetrieve = _mapper.GetRetrieveByIdStatement(id);
-            var results = dao.ExecuteQueryProcedure(sqlOperationToRetrieve);
+            var sqlPermission = _mapper.GetRetrieveByIdStatement(id);
+            var results = dao.ExecuteQueryProcedure(sqlPermission);
 
             var dic = new Dictionary<string, object>();
 
@@ -39,46 +45,35 @@ namespace EasyListDataAccess.CRUD
 
         public override List<T> RetrieveAll<T>()
         {
-            var lstOperations = new List<T>();
-
+            var lstPermissions = new List<T>();
             var sqlPermission = _mapper.GetRetrieveAllStatement();
-
             var lstResults = dao.ExecuteQueryProcedure(sqlPermission);
 
             if (lstResults.Count > 0)
             {
-                var objsUsers = _mapper.BuildObjects(lstResults);
+                var objsPermissions = _mapper.BuildObjects(lstResults);
 
-                foreach (var op in objsUsers)
+                foreach (var op in objsPermissions)
                 {
-                    lstOperations.Add((T)Convert.ChangeType(op, typeof(T)));
+                    lstPermissions.Add((T)Convert.ChangeType(op, typeof(T)));
                 }
             }
 
-            return lstOperations;
+            return lstPermissions;
         }
 
         public override void Update(BaseEntity dto)
         {
-            var permissionToUpdate = (Permission)dto;
-
-            var sqlPermission = _mapper.GetUpdateStatement(permissionToUpdate);
-
+            var permission = (Permission)dto;
+            var sqlPermission = _mapper.GetUpdateStatement(permission);
             dao.ExecuteProcedure(sqlPermission);
         }
 
         public override void Delete(BaseEntity dto)
         {
-            var permissionToDelete = (Permission)dto;
-
-            var sqlPermission = _mapper.GetDeleteStatement(permissionToDelete);
-
+            var permission = (Permission)dto;
+            var sqlPermission = _mapper.GetDeleteStatement(permission);
             dao.ExecuteProcedure(sqlPermission);
-        }
-
-        public override T RetrieveByEmail<T>(string email)
-        {
-            throw new NotImplementedException();
         }
     }
 }

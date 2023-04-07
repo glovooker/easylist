@@ -1,8 +1,12 @@
 ﻿<!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>@ViewData["Title"] - EasyList</title>
     <link href="~/lib/bootstrap/dist/css/bootstrap-flatly.css" rel="stylesheet" />
     <link href="~/css/datatables.css" rel="stylesheet" />
@@ -10,10 +14,12 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/controlactions.js"></script>
+    <script src="~/js/ControlActions.js"></script>
     <script src="~/js/datatables.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
 </head>
+
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
@@ -23,19 +29,24 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                <div class="collapse navbar-collapse" id="navbarColor01">
+                    <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Login">Login</a>
+                            <a class="nav-link active" asp-area="" asp-page="/Index">
+                                Home
+                                <span class="visually-hidden">(current)</span>
+                            </a>
                         </li>
                     </ul>
+                    <div class="d-flex">
+                        <a class="btn btn-primary" asp-area="" asp-page="/Register">Sign Up</a>
+                        <a class="btn" asp-area="" asp-page="/Login">Sign In</a>
+                    </div>
                 </div>
             </div>
         </nav>
     </header>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -49,5 +60,6 @@
     </footer>
 
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>
