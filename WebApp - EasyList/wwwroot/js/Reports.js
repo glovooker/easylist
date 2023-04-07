@@ -59,31 +59,38 @@ function ManagePermissions() {
             $('#tblPermission').DataTable().destroy();
         }
 
-        var arrayColumnsData = [];
-        arrayColumnsData[0] = { 'data': 'id' };
-        arrayColumnsData[1] = { 'data': 'name' };
-        arrayColumnsData[2] = { 'data': 'firstLastName' };
-        arrayColumnsData[3] = { 'data': 'secondLastName' };
-        arrayColumnsData[4] = { 'data': 'email' };
-        arrayColumnsData[5] = { 'data': 'phone' };
-        arrayColumnsData[6] = { 'data': 'registrationDate' };
-        arrayColumnsData[7] = { 'data': 'userStatus' };
-        arrayColumnsData[0] = {
-            'data': null,
-        };
+        var arrayColumnsData = [
+            { 'data': 'id' },
+            { 'data': 'name' },
+            { 'data': 'firstLastName' },
+            { 'data': 'secondLastName' },
+            { 'data': 'email' },
+            { 'data': 'phone' },
+            { 'data': 'registrationDate' },
+            { 'data': 'userStatus' }
+        ];
 
         $('#tblPermission').dataTable({
             'columns': arrayColumnsData,
-            'deferRender': true
+            'deferRender': true,
+            'data': [] // cargar la tabla con un arreglo vacío
         });
 
         this.tableLoaded = true; // actualizar la bandera
     };
 
     this.Clean = function () {
+        // Limpiar los inputs endDate y startDate
+        $('#endDate').val('');
+        $('#startDate').val('');
+
+        // Destruir la tabla existente si ya ha sido inicializada
         this.DestroyTable();
+
+        // Cargar la tabla sin contenido
         this.LoadTableEmpty();
     };
+
 
     this.DestroyTable = function () {
         var table = $('#tblPermission').DataTable();
@@ -91,10 +98,12 @@ function ManagePermissions() {
     };
 
     this.Search = function () {
-        var startDate = new Date($('#startDate').val()).toISOString().slice(0, -5);
-        var endDate = new Date($('#endDate').val()).toISOString().slice(0, -5);
+        var startDate = $('#startDate').val();
+        var endDate = $('#endDate').val();
 
         if (startDate && endDate) {
+            startDate = new Date(startDate).toISOString().slice(0, -5);
+            endDate = new Date(endDate).toISOString().slice(0, -5);
             this.DestroyTable();
             this.LoadTable(startDate, endDate);
 
@@ -187,30 +196,38 @@ function TenderView() {
             $('#tblTender').DataTable().destroy();
         }
 
-        var arrayColumnsData = [];
-        arrayColumnsData[0] = { 'data': 'id' };
-        arrayColumnsData[1] = { 'data': 'title' };
-        arrayColumnsData[2] = { 'data': 'description' };
-        arrayColumnsData[3] = { 'data': 'tenderStatus' };
-        arrayColumnsData[4] = { 'data': 'maxOfferDate' };
-        arrayColumnsData[5] = { 'data': 'maxDeliverDate' };
-        arrayColumnsData[6] = { 'data': 'budget' };
-        arrayColumnsData[7] = { 'data': 'automatic' };
-        arrayColumnsData[0] = {
-            'data': null,
-        };
+        var arrayColumnsData = [
+            { 'data': 'id' },
+            { 'data': 'title' },
+            { 'data': 'description' },
+            { 'data': 'tenderStatus' },
+            { 'data': 'maxOfferDate' },
+            { 'data': 'maxDeliverDate' },
+            { 'data': 'budget' },
+            { 'data': 'automatic' },
+        ];
 
         $('#tblTender').dataTable({
             'columns': arrayColumnsData,
-            'deferRender': true
+            'deferRender': true,
+            'data': [] // cargar la tabla con un arreglo vacío
         });
 
         this.tableLoaded = true; // actualizar la bandera
     };
+
     this.Clean = function () {
+        // Limpiar los inputs endDate y startDate
+        $('#endDate').val('');
+        $('#startDate').val('');
+
+        // Destruir la tabla existente si ya ha sido inicializada
         this.DestroyTable();
+
+        // Cargar la tabla sin contenido
         this.LoadTableEmpty();
     };
+
 
     this.DestroyTable = function () {
         var table = $('#tblTender').DataTable();
@@ -218,16 +235,18 @@ function TenderView() {
     };
 
     this.Search = function () {
-        var startDate = new Date($('#startDate').val()).toISOString().slice(0, -5);
-        var endDate = new Date($('#endDate').val()).toISOString().slice(0, -5);
+        var startDate = $('#startDate').val();
+        var endDate = $('#endDate').val();
 
         if (startDate && endDate) {
+            startDate = new Date(startDate).toISOString().slice(0, -5);
+            endDate = new Date(endDate).toISOString().slice(0, -5);
             this.DestroyTable();
             this.LoadTable(startDate, endDate);
 
-            toastr.success('Query Successful!', 'Showing data related to the date range.');
+            
         } else {
-            toastr.error('Error!', 'The date filters cannot be null.');
+            
         }
     };
 
