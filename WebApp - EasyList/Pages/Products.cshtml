@@ -1,11 +1,12 @@
 ﻿@page
-@model WebApp___EasyList.Pages.ProductModel
+@model WebApp___EasyList.Pages.ProductsModel
 @{
+    ViewData["Title"] = "Products";
 }
-<script src="~/js/product.js"></script>
+<script src="~/js/products.js"></script>
 <div class="row">
     <div class="col-md-12">
-        <h1>Product</h1>
+        <h1>Products</h1>
         <button type="button" id="btn-create" class="btn btn-info float-end mb-3">Add Product</button>
     </div>
     <table id="tblProducts" class="table" style="width:100%">
@@ -19,12 +20,12 @@
         <tbody></tbody>
         <tr class="odd">
             <td>
-                <input type="text" id="txtName" class="form-control border-0" placeholder="New product"/>
+                <input type="text" id="txtName" class="form-control border-0" placeholder="New product" />
                 <div id="error-productCreate" style="display:none;color:red;font-size:0.7rem"></div>
             </td>
-             <td>
+            <td>
                 <button type="button" id="btn-cancel" class="btn btn-warning align-items-center">Cancel</button>
             </td>
-         </tr>
+        </tr>
     </table>
 </div>

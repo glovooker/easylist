@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace WebApp___EasyList.Pages
 {
-    public class ProductModel : PageModel
+    public class ProductsModel : PageModel
     {
         public void OnGet()
         {
