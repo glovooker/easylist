@@ -165,6 +165,17 @@ namespace EasyListDataAccess.Mapper
             return sqlOperation;
         }
 
+        public SqlOperation GetRetrieveByDateStatement(string startDate, string endDate)
+        {
+            var sqlOperation = new SqlOperation();
+
+            sqlOperation.ProcedureName = "RET_USUARIOS_POR_FECHAS_PR";
+            sqlOperation.AddVarcharParam("StartDate", startDate);
+            sqlOperation.AddVarcharParam("EndDate", endDate);
+
+            return sqlOperation;
+        }
+
         #endregion
     }
 }

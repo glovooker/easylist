@@ -116,5 +116,11 @@ namespace EasyListCORE
 
             return existUser;
         }
+
+        public List<User> RetrieveByDate(string startDate, string endDate)
+        {
+            var crudUser = new UserCrudFactory();
+            return crudUser.RetrieveByDate<User>(startDate, endDate);
+        }
     }
 }

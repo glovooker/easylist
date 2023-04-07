@@ -101,5 +101,21 @@ namespace EasyListAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet]
+        [Route("getTendersByDate")]
+        public async Task<IActionResult> RetrieveTendersByDate(string startDate, string endDate)
+        {
+            try
+            {
+                var um = new TenderManager();
+                var tenders = um.RetrieveByDate(startDate, endDate);
+                return Ok(tenders);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
