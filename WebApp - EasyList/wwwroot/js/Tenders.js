@@ -27,6 +27,11 @@
             view.New();
         });
 
+        $("#btnAddProdctTender").click(function () {
+            var view = new TenderView();
+            view.CreateProductTender();
+        });
+
         this.LoadTable();
 
     };
@@ -373,6 +378,33 @@
             return false;
         }
     };
+
+    this.CreateProductTender = function () {
+
+        var producttender = {};
+
+        /*TENDER_ID*/
+
+        producttender.price = $("#txtPrice").val();
+        producttender.quantity = $("#txtQuantity").val();
+        producttender.product_id = $("#drpProduct").val();
+
+        console.log(JSON.stringify(producttender));
+
+    }
+
+    fetch('https://localhost:7103/api/Product/getAllProducts')
+        .then(response => response.json())
+        .then(products => {
+            const select = document.getElementById('drpProduct');
+            products.forEach(product => {
+                const option = document.createElement('option');
+                option.value = product.id;
+                option.text = product.name;
+                select.appendChild(option);
+            });
+        })
+        .catch(error => console.error(error));
 
 }
 
