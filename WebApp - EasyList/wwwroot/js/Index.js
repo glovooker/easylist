@@ -4,6 +4,7 @@
 
     this.InitView = function () {
         document.getElementById("section-banner").removeAttribute("hidden");
+
         var ctrlActions = new ControlActions();
 
         var urlService = ctrlActions.GetUrlApiService(
@@ -34,7 +35,7 @@
                         <p class="card-text m-0">Deliver at ${tender.deliverLocation}</p>
                         <p class="card-text m-0">Deadline: ${formatDate(tender.maxDeliverDate)}</p>
                     </div>
-                    <a href="/Login" class="btn btn-primary">Sign in to Offer</a>
+                    ${ localStorage.getItem('userId') ? `<a href="#" class="btn btn-primary">View</a>` : `<a href="/Login" class="btn btn-primary">Sign in to Offer</a>` }
                 </div>
                 <div class="position-absolute" style="top: 10px; right: 10px;">
                     <span class="badge badge-pill bg-primary p-2">$${tender.budget}</span>
@@ -57,6 +58,7 @@
         container.innerHTML = cardsHtml;
     }
 }
+
 $(document).ready(function () {
     var view = new IndexView();
     view.InitView();
