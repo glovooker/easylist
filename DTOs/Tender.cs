@@ -16,7 +16,7 @@
         public int? offerId { get; set; }
         public string deliverLocation { get; set; }
 
-        //public List<ProductTender> Products { get; set; } 
+        public List<ProductTender> ProductTenders { get; set; }
 
 
     }

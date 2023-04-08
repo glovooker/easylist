@@ -11,7 +11,6 @@ namespace EasyListCORE
         {
             var crudTender = new TenderCrudFactory();
             var crudProductTender = new ProductTenderCrudFactory();
-
             var existTender = crudTender.RetrieveById<Tender>(tender.Id);
 
             if (existTender != null)
@@ -19,14 +18,24 @@ namespace EasyListCORE
                 throw new Exception("Tender already exists!");
             }
 
-            crudTender.Create(tender); 
+            crudTender.Create(tender);
 
-            //foreach (var productTender in tender.Products)
-            //{
-            //    productTender.tender_id = tender.Id; 
-            //    crudProductTender.Create(productTender); 
-            //}
+            var generatedId = crudTender.RetrieveAll<Tender>().Last().Id;
 
+            tender.Id = generatedId;
+
+            var currentTender = crudTender.RetrieveById<Tender>(tender.Id);
+
+            if (currentTender == null)
+            {
+                throw new Exception("Tender not found.");
+            }
+
+            foreach (var productTender in tender.ProductTenders)
+            {
+                productTender.tender_id = currentTender.Id;
+                crudProductTender.Create(productTender);
+            }
         }
 
         public void Update(Tender tender)
