@@ -21,11 +21,11 @@ namespace EasyListCORE
 
             crudTender.Create(tender); 
 
-            foreach (var productTender in tender.Products)
-            {
-                productTender.tender_id = tender.Id; 
-                crudProductTender.Create(productTender); 
-            }
+            //foreach (var productTender in tender.Products)
+            //{
+            //    productTender.tender_id = tender.Id; 
+            //    crudProductTender.Create(productTender); 
+            //}
 
         }
 
