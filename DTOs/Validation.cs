@@ -9,12 +9,13 @@ namespace DTOs
     public class Validation : BaseEntity
     {
         public enum ValidationType { EMAIL, PHONE, BOTH}
-        public int userId { get; set; }
+        public enum ValidationStatus { PENDING, VALIDATED, EXPIRED, INVALID}
+        public string userId { get; set; }
         public ValidationType validationType { get; set; }
+        public ValidationStatus validationStatus { get; set; }
         public string validationCode { get; set; }
         public DateTime validationDateCreation { get; set; }
         public DateTime validationDateExpired { get; set; }
         public int validationCount { get; set; }
-
     }
 }

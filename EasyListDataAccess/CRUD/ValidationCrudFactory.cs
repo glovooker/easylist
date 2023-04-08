@@ -1,4 +1,5 @@
 ﻿using DTOs;
+using EasyListDataAccess.DAOs;
 using EasyListDataAccess.Mapper;
 using System;
 using System.Collections.Generic;
@@ -13,16 +14,18 @@ namespace EasyListDataAccess.CRUD
 
         private ValidationMapper _mapper;
 
+        public ValidationCrudFactory() : base()
+        {
+            _mapper = new ValidationMapper();
+            dao = SqlDao.GetInstance();
+        }
+
 
         public override void Create(BaseEntity dto)
         {
             var validation = (Validation)dto;
-
-            var sqlOperationToCreate = _mapper.GetCreateStatement(validation);
-
-            dao.ExecuteProcedure(sqlOperationToCreate);
-
-        
+            var sqlValidation = _mapper.GetCreateStatement(validation);
+            dao.ExecuteProcedure(sqlValidation);
         }
 
         public override void Delete(BaseEntity dto)
@@ -42,12 +45,31 @@ namespace EasyListDataAccess.CRUD
 
         public override T RetrieveById<T>(int id)
         {
-            throw new NotImplementedException();
+            var sqlValidation = _mapper.GetRetrieveByIdStatement(id);
+            var results = dao.ExecuteQueryProcedure(sqlValidation);
+
+            var dic = new Dictionary<string, object>();
+
+            if (results.Count > 0)
+            {
+                dic = results[0];
+                var obj = _mapper.BuildObject(dic);
+                return (T)Convert.ChangeType(obj, typeof(T));
+            }
+
+            return default(T);
         }
 
         public override void Update(BaseEntity dto)
         {
             throw new NotImplementedException();
+        }
+        public void UpdatePhoneUser(BaseEntity dto)
+        {
+            var user = (User)dto;
+            var sqlUser = _mapper.GetUpdatePhoneUserStatement(user);
+            dao.ExecuteProcedure(sqlUser);
+           
         }
     }
 }

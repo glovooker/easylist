@@ -27,7 +27,8 @@
         user.registrationDate = new Date().toISOString();
         user.userStatus = 0;
         user.userPicture = '';
-        // Llamado al API
+
+        //Llamado al API
         var view = new RegisterView();
         var ctrlActions = new ControlActions();
         var serviceCreate = view.ApiService + '/registerUser';
@@ -35,8 +36,10 @@
         ctrlActions.PostToAPIv1(serviceCreate, user, function () {
             alert('Usuario registrado con éxito');
             var view = new LoginView();
-
             view.InitView();
+            localStorage.setItem('userEmail', userEmail);
+            window.location.href = "/ValidationAccount";  
+
         });
     };
 }

@@ -47,7 +47,7 @@
                 if (result.status === 400) {
                     toastr.error('Error', 'Incorrect email or password');
                 } else {
-                    localStorage.setItem('user', email);
+                    localStorage.setItem('userEmail', email);
                     toastr.success('¡Welcome!', 'Login successful');
                     window.location.href = "/";
                 }

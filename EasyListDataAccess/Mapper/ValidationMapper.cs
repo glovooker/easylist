@@ -14,13 +14,14 @@ namespace EasyListDataAccess.Mapper
         {
             var validation = new Validation
             {
-                Id = (int)row["id"],
-                userId = (int)row["user_id"],
-                validationType = (Validation.ValidationType)row["validation_type"],
-                validationCode = (string)row["validation_code"],
-                validationDateCreation = (DateTime)row["validation_date_creation"],
-                validationDateExpired = (DateTime)row["validation_date_expired"],
-                validationCount = (int)row["validation_count"]
+                Id = (int)row["ID_VALIDACION"],
+                userId = (string)row["ID_USUARIO"],
+                validationType = (Validation.ValidationType)Enum.Parse(typeof(Validation.ValidationType), (string)row["TIPOVALIDACION"]),
+                validationStatus = (Validation.ValidationStatus)Enum.Parse(typeof(Validation.ValidationStatus), (string)row["ESTADOVALIDACION"]),
+                validationCode = (string)row["CODIGOVALIDACION"],
+                validationDateCreation = (DateTime)row["FECHACREACION"],
+                validationDateExpired = (DateTime)row["FECHAVENCIMIENTO"],
+                validationCount = (int)row["INTENTOS"]
 
             };
 
@@ -49,17 +50,15 @@ namespace EasyListDataAccess.Mapper
 
             sqlOperation.ProcedureName = "CRE_VALIDATION_PR";
 
-            sqlOperation.AddIntParam("USER_ID", validation.userId);
-            sqlOperation.AddIntParam("VALIDATION_TYPE", (int)validation.validationType);
-            sqlOperation.AddVarcharParam("VALIDATION_CODE", validation.validationCode);
-            sqlOperation.AddDateTimeParam("VALIDATION_DATE_CREATION", validation.validationDateCreation);
-            sqlOperation.AddDateTimeParam("VALIDATION_DATE_EXPIRED", validation.validationDateExpired);
-            sqlOperation.AddIntParam("VALIDATION_COUNT", validation.validationCount);
+            sqlOperation.AddVarcharParam("P_USER_ID", validation.userId);
+            sqlOperation.AddVarcharParam("P_VALIDATION_TYPE", validation.validationType.ToString());
+            sqlOperation.AddVarcharParam("P_VALIDATION_STATUS",validation.validationStatus.ToString());
+            sqlOperation.AddVarcharParam("P_VALIDATION_CODE", validation.validationCode);
+            sqlOperation.AddDateTimeParam("P_VALIDATION_DATE_CREATION", validation.validationDateCreation);
+            sqlOperation.AddDateTimeParam("P_VALIDATION_DATE_EXPIRED", validation.validationDateExpired);
+            sqlOperation.AddIntParam("P_VALIDATION_COUNT", validation.validationCount);
 
             return sqlOperation;
-
-
-
         }
 
         public SqlOperation GetDeleteStatement(BaseEntity entity)
@@ -79,12 +78,31 @@ namespace EasyListDataAccess.Mapper
 
         public SqlOperation GetRetrieveByIdStatement(int id)
         {
-            throw new NotImplementedException();
+            var sqlOperation = new SqlOperation();
+
+            sqlOperation.ProcedureName = "RET_VALIDATION_BY_ID_PR";
+
+            sqlOperation.AddIntParam("P_ID_VALIDATION", id);
+
+            return sqlOperation;
         }
 
         public SqlOperation GetUpdateStatement(BaseEntity entity)
         {
             throw new NotImplementedException();
         }
+        public SqlOperation GetUpdatePhoneUserStatement(BaseEntity entity)
+        {
+            var sqlOperation = new SqlOperation();
+            var user = (User)entity;
+
+            sqlOperation.ProcedureName = "UPD_PHONE_USER_PR";
+
+            sqlOperation.AddVarcharParam("P_ID_USER", user.Id.ToString());
+            sqlOperation.AddVarcharParam("P_PHONE", user.phone);
+
+            return sqlOperation;
+        }
+        
     }
 }
