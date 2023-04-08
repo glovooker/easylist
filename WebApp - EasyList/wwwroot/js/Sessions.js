@@ -47,6 +47,8 @@
 function logout() {
     // Remove userId from local storage and reload the page
     localStorage.removeItem('userId');
+    localStorage.removeItem('email');
+    localStorage.removeItem('password');
     window.location.reload();
 }
 
