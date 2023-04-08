@@ -9,17 +9,23 @@ namespace EasyListCORE
 
         public void Create(Tender tender)
         {
-
             var crudTender = new TenderCrudFactory();
+            var crudProductTender = new ProductTenderCrudFactory();
 
             var existTender = crudTender.RetrieveById<Tender>(tender.Id);
 
-            if (existTender != null )
+            if (existTender != null)
             {
                 throw new Exception("Tender already exists!");
             }
 
-            crudTender.Create(tender);
+            crudTender.Create(tender); 
+
+            foreach (var productTender in tender.Products)
+            {
+                productTender.tender_id = tender.Id; 
+                crudProductTender.Create(productTender); 
+            }
 
         }
 

@@ -14,6 +14,8 @@
         public bool automatic { get; set; }
         public int analistId { get; set; }
         public int? offerId { get; set; }
+        public List<ProductTender> Products { get; set; } 
+
 
     }
 

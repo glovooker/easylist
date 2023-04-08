@@ -31,8 +31,8 @@ namespace EasyListDataAccess.Mapper
 
             foreach (var row in lstRows)
             {
-                var newUser = BuildObject(row);
-                lstResult.Add(newUser);
+                var newTender = BuildObject(row);
+                lstResult.Add(newTender);
             }
 
             return lstResult;
