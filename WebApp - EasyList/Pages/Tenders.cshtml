@@ -18,7 +18,6 @@
 
   <header class="container">
     <h2 class="display-1">Tenders</h2>
-    <hr>
   </header>
 
   <br/>
@@ -33,6 +32,7 @@
           <th>MaxDeliverDate</th>
           <th>Budget</th>
           <th>Automatic</th>
+          <th>DeliverLocation</th>
           </thead>
       </table>
       <br/>
@@ -52,7 +52,7 @@
                         </div>
                         <h5 style="padding-top: 20px;">Productos</h5>
                         <div class="d-flex align-items-center" style="width: 100%; padding-top:10px;">
-                            <input type="text" class="form-control mx-2" id="txtNewProduct" placeholder="New product" style="width: 180px;">
+                            <input type="text" class="form-control mx-2" id="txtNewProduct" placeholder="New product" style="width: 200px;">
                             <input type="number" class="form-control mx-2" id="txtQuantity" placeholder="Quantity">
                             <input type="number" class="form-control mx-2" id="txtPrice" placeholder="Price">
                             <button type="button" class="btn btn-outline-primary mx-2" style="width:100%">Add</button>
@@ -72,8 +72,14 @@
 
                     <div class="m-2 form-group pt-3" style="width: 90%">
                         <label for="txtDescription" class="form-label">Description</label>
-                        <textarea type="text" class="form-control" id="txtDescription" placeholder="Enter your description"></textarea>
+                        <input type="text" class="form-control" id="txtDescription" placeholder="Enter your description">
                         <div id="error-messageDescription" style="display: none; color: red; font-size:0.7rem"></div>
+                    </div>
+
+                    <div class="m-2 form-group pt-3" style="width: 90%">
+                        <label for="txtDeliverLocation" class="form-label">Deliver Location</label>
+                        <textarea type="text" class="form-control" id="txtDeliverLocation" placeholder="Enter your deliver location"></textarea>
+                        <div id="error-messageDeliverLocation" style="display: none; color: red; font-size:0.7rem"></div>
                     </div>
 
                     <div class="m-2 form-group" style="width: 90%">
@@ -104,6 +110,7 @@
                             <option value=4>Terminated</option>
                         </select>
                     </div>
+
                 </div>
             </div>
 
@@ -125,5 +132,5 @@
             </fieldset>
         </form>
     </section>
-    </body>
+  </body>
 </html>
