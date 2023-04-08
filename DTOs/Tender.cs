@@ -14,6 +14,7 @@
         public bool automatic { get; set; }
         public int analistId { get; set; }
         public int? offerId { get; set; }
+        public string deliverLocation { get; set; }
 
     }
 
