@@ -69,11 +69,19 @@ namespace EasyListCORE
         public Tender RetrieveById(int id)
         {
             var crudTender = new TenderCrudFactory();
+            var crudProductTender = new ProductTenderCrudFactory();
             var existLicitacion = crudTender.RetrieveById<Tender>(id);
 
             if (existLicitacion == null )
             {
                 throw new Exception("Tender does not exist!");
+            }
+
+            var tenderProducts = crudProductTender.RetrieveByTenderId<ProductTender>(id);
+
+            if (tenderProducts != null)
+            {
+                existLicitacion.ProductTenders = tenderProducts;
             }
 
             return existLicitacion;
@@ -83,7 +91,13 @@ namespace EasyListCORE
         public List<Tender> RetrieveAll()
         {
             var crudTender = new TenderCrudFactory();
-            return crudTender.RetrieveAll<Tender>();
+            var crudProductTender = new ProductTenderCrudFactory();
+            var tenderList = crudTender.RetrieveAll<Tender>();
+            foreach ( var tender in tenderList )
+            {
+                tender.ProductTenders = crudProductTender.RetrieveByTenderId<ProductTender>(tender.Id);
+            }
+            return tenderList;
         }
 
     }

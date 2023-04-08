@@ -38,6 +38,12 @@ namespace EasyListCORE
             return crudProducTender.RetrieveAll<ProductTender>();
         }
 
+        public List<ProductTender> RetrieveByTenderId(int id)
+        {
+            var productTenderFactory = new ProductTenderCrudFactory();
+            return productTenderFactory.RetrieveByTenderId<ProductTender>(id);
+        }
+
     }
 
 }

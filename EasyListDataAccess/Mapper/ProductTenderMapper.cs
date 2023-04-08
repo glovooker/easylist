@@ -107,14 +107,19 @@ namespace EasyListDataAccess.Mapper
             return sqlOperation;
         }
 
+        public SqlOperation GetRetrieveByIdStatement(int id)
+        {
+            var sqlOperation = new SqlOperation { ProcedureName = "RET_PRODUCTO_LICITACION_BY_ID_PR" };
+
+            sqlOperation.AddIntParam("P_ID_LICITACION", id);
+
+            return sqlOperation;
+        }
+
         public SqlOperation GetRetrieveByEmailStatement(string email)
         {
             throw new NotImplementedException();
         }
 
-        public SqlOperation GetRetrieveByIdStatement(int id)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

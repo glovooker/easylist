@@ -20,7 +20,7 @@ namespace EasyListDataAccess.Mapper
                 QRcode = (string)row["CODIGOQR"],
                 automatic = (bool)row["AUTOMATICA"],
                 analistId = (int)row["ID_ANALISTA"],
-                offerId = row["ID_OFERTA"] == DBNull.Value ? 0 : (int)row["ID_OFERTA"],
+                offerId = row["ID_OFERTA"] == DBNull.Value ? 0 : (int)row["IDOFERTA"],
                 deliverLocation = (string)row["LUGARENTREGA"]
             };
             return tender;
@@ -143,6 +143,7 @@ namespace EasyListDataAccess.Mapper
         {
             throw new NotImplementedException();
         }
+
     }
 
 }

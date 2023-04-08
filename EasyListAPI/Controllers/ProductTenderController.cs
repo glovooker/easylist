@@ -76,5 +76,22 @@ namespace EasyListAPI.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("retrieveProductTenders")]
+        public async Task<IActionResult> RetrieveProducTenders(int id)
+        {
+            try
+            {
+
+                var ptm = new ProductTenderManager();
+                var producttender = ptm.RetrieveByTenderId(id);
+                return Ok(producttender);
+
+            }catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }

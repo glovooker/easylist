@@ -15,7 +15,7 @@ namespace EasyListDataAccess.CRUD
 
         public override void Create(BaseEntity dto)
         {
-            var producttender = (ProductTender) dto;
+            var producttender = (ProductTender)dto;
             var sqlOperation = _mapper.GetCreateStatement(producttender);
             dao.ExecuteProcedure(sqlOperation);
         }
@@ -58,9 +58,30 @@ namespace EasyListDataAccess.CRUD
             throw new NotImplementedException();
         }
 
+        public List<ProductTender> RetrieveByTenderId<ProductTender>(int id)
+        {
+
+            var lstProducTender = new List<ProductTender>();
+            var sqlProductTender = _mapper.GetRetrieveByIdStatement(id);
+            var lstResults = dao.ExecuteQueryProcedure(sqlProductTender);
+
+            if (lstResults.Count > 0)
+            {
+                var objsProductTender = _mapper.BuildObjects(lstResults);
+
+                foreach (var op in objsProductTender)
+                {
+                    lstProducTender.Add((ProductTender)Convert.ChangeType(op, typeof(ProductTender)));
+                }
+            }
+
+            return lstProducTender;
+        }
+
         public override T RetrieveById<T>(int id)
         {
             throw new NotImplementedException();
         }
+
     }
 }
