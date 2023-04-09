@@ -20,7 +20,7 @@ namespace EasyListDataAccess.Mapper
                 QRcode = (string)row["CODIGOQR"],
                 automatic = (bool)row["AUTOMATICA"],
                 analistId = (int)row["ID_ANALISTA"],
-                offerId = row["ID_OFERTA"] == DBNull.Value ? 0 : (int)row["ID_OFERTA"],
+                offerId = row["ID_OFERTA"] == DBNull.Value ? 0 : (int)row["IDOFERTA"],
                 deliverLocation = (string)row["LUGARENTREGA"]
             };
             return tender;
@@ -32,8 +32,8 @@ namespace EasyListDataAccess.Mapper
 
             foreach (var row in lstRows)
             {
-                var newUser = BuildObject(row);
-                lstResult.Add(newUser);
+                var newTender = BuildObject(row);
+                lstResult.Add(newTender);
             }
 
             return lstResult;
@@ -107,7 +107,6 @@ namespace EasyListDataAccess.Mapper
             sqlOperation.AddIntParam("P_ID_ANALISTA", tender.analistId);
             sqlOperation.AddIntParam("P_ID_OFERTA", tender.offerId);
             sqlOperation.AddVarcharParam("P_LUGARENTREGA", tender.deliverLocation);
-
 
             return sqlOperation;
         }

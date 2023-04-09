@@ -1,4 +1,6 @@
-﻿function TenderView() {
+﻿var productsTender = [];
+
+function TenderView() {
 
     this.ViewTenders = "TenderView";
     this.ApiService = "Tender";
@@ -29,6 +31,7 @@
 
         this.LoadTable();
 
+        loadProductSelect();
     };
 
     this.Create = function () {
@@ -44,6 +47,8 @@
         tender.QRcode = "";
         tender.automatic = Boolean(parseInt($("#drpAutomatic").val()));
         tender.deliverLocation = $("#txtDeliverLocation").val();
+        tender.productTenders = productsTender;
+        console.log(tender);
 
         var isValid = true;
 
@@ -128,6 +133,8 @@
         tender.QRcode = "";
         tender.automatic = Boolean(parseInt($("#drpAutomatic").val()));
         tender.deliverLocation = $("#txtDeliverLocation").val();
+        tender.productTenders = productsTender;
+        console.log(tender);
 
         var isValid = true;
 
@@ -314,6 +321,8 @@
 
             var data = $('#tblTender').DataTable().row(tr).data();
 
+            productsTender = data.productTenders;
+
             var maxOfferDate = new Date(data.maxOfferDate);
             var maxDeliverDate = new Date(data.maxDeliverDate);
             var dateOffer = maxOfferDate.toISOString().substring(0, 10);
@@ -328,6 +337,8 @@
             $('#txtBudget').val(data.budget);
             $('#drpAutomatic').val(Number(data.automatic));
             $('#txtDeliverLocation').val(data.deliverLocation);
+
+            loadProducts(productsTender);
 
             $('#btnCreate').prop('disabled', true);
             $('#btnDelete').prop('disabled', false);
@@ -358,6 +369,7 @@
         $("#txtBudget").val("");
         $("#drpAutomatic").val("0");
         $("#txtDeliverLocation").val("");
+        $("#productsContainer").empty();
     };
 
     var inputBudget = document.getElementById("txtBudget");
@@ -374,7 +386,98 @@
         }
     };
 
+
 }
+
+loadProductSelect = () => {
+    fetch('https://localhost:7103/api/Product/getAllProducts')
+        .then(response => response.json())
+        .then(products => {
+            const select = document.getElementById('drpProduct');
+            products.forEach(product => {
+                    const option = document.createElement('option');
+                    option.value = product.id;
+                    option.text = product.name;
+                    select.appendChild(option);
+            });
+        })
+        .catch(error => console.error(error));
+}
+
+createProductTender = function () {
+
+    var productTender = {};
+
+    productTender.id = $("#drpProduct").val();
+    productTender.tender_id = $("#txtID").val();
+    productTender.name = $("#drpProduct option:selected").text();
+    productTender.price = $("#txtPrice").val();
+    productTender.quantity = $("#txtQuantity").val();
+    productTender.product_id = $("#drpProduct").val();
+
+    productsTender.push(productTender);
+    loadProducts(productsTender);
+
+    $('#drpProduct option:selected').hide()
+    $('#drpProduct').val('');
+    $('#txtQuantity').val('');
+    $('#txtPrice').val('');
+}
+
+deleteProductTender = function (id) {
+    // Find the index of the product with the matching id
+    var index = productsTender.findIndex(function (product) {
+        return product.id == id;
+    });
+
+    if (index !== -1) {
+        // Remove the product from the array
+        var deletedProduct = productsTender.splice(index, 1)[0];
+
+        // Update the display and select element
+        loadProducts(productsTender);
+
+        // Show the option in the select element
+        $('#drpProduct option[value="' + deletedProduct.product_id + '"]').show();
+    }
+    $('#drpProduct').val('');
+    $('#txtQuantity').val('');
+    $('#txtPrice').val('');
+
+}
+
+
+loadProducts = function (products) {
+    $("#productsContainer").empty();
+
+    products.forEach(function (productTender) {
+        // Fetch the product name from a URL
+        fetch('https://localhost:7103/api/Product/getProductById?id=' + productTender.product_id)
+            .then(response => response.json())
+            .then(product => {
+                productTender.name = product.name;
+
+                // Create the product card with the updated name
+                var productCard = $(`
+                    <div class='card w-100 mt-2' id="product${productTender.id}">
+                        <div class='card-body d-flex flex-row justify-content-around align-items-center'>
+                            <h5 class='card-title m-0'>${productTender.name}</h5>
+                            <div class='d-flex flex-row justify-content-around align-items-center w-50'>
+                                <p class='card-text m-0'>${productTender.quantity} items</p>
+                                <p class='card-text m-0'>$${productTender.price}</p>
+                            </div>
+                            <button type="button" class="btn btn-primary w-25 delete-btn" onclick="deleteProductTender(${productTender.id})" style="width:100%"><i class="bi bi-trash-fill text-white"></i></button>
+                        </div>
+                    </div>
+                `);
+
+                $("#productsContainer").append(productCard);
+            })
+            .catch(error => console.error(error));
+    });
+}
+
+
 
 $(document).ready(function () {
     var view = new TenderView();
