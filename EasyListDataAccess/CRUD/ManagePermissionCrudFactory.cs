@@ -39,9 +39,22 @@ namespace EasyListDataAccess.CRUD
             throw new NotImplementedException();
         }
 
-        public override T RetrieveById<T>(int id)
+        public List<ManagePermission> RetrieveByUserId<ManagePermission>(int id)
         {
-            throw new NotImplementedException();
+            var lstManagePermissions = new List<ManagePermission>();
+            var sqlManagePermission = _mapper.GetRetrieveByIdStatement(id);
+            var lstResults = dao.ExecuteQueryProcedure(sqlManagePermission);
+
+            if (lstResults.Count > 0)
+            {
+                var objsManagePermissions = _mapper.BuildObjects(lstResults);
+
+                foreach (var op in objsManagePermissions)
+                {
+                    lstManagePermissions.Add((ManagePermission)Convert.ChangeType(op, typeof(ManagePermission)));
+                }
+            }
+            return lstManagePermissions;
         }
 
         public override void Update(BaseEntity dto)
@@ -60,10 +73,15 @@ namespace EasyListDataAccess.CRUD
             {
                 dic = results[0];
                 var obj = _mapper.BuildObject(dic);
-                return (T)Convert.ChangeType(obj, typeof(T));             
+                return (T)Convert.ChangeType(obj, typeof(T));
             }
 
             return default(T);
+        }
+
+        public override T RetrieveById<T>(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

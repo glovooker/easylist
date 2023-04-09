@@ -4,6 +4,7 @@
 
     this.InitView = function () {
         document.getElementById("section-banner").removeAttribute("hidden");
+
         var ctrlActions = new ControlActions();
 
         var urlService = ctrlActions.GetUrlApiService(
@@ -17,12 +18,14 @@
 
     function formatDate(isoDate) {
         const date = new Date(isoDate);
-        const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = date.getDate();
+        const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        const month = monthNames[date.getMonth()];
         const year = date.getFullYear();
 
-        return `${day}/${month}/${year}`;
+        return `${month} ${day}, ${year}`;
     }
+
 
     function createCard(tender) {
         return `
@@ -31,10 +34,10 @@
                 <div class="card-body text-start">
                     <h4 class="card-title mb-4">${tender.title}</h4>
                     <div class="mx-4 mb-4">
-                        <p class="card-text m-0">Deliver at ${tender.deliverLocation}</p>
-                        <p class="card-text m-0">Deadline: ${formatDate(tender.maxDeliverDate)}</p>
+                        <p class="card-text m-0 small">Deliver at <strong>${tender.deliverLocation}</strong></p>
+                        <p class="card-text m-0 small">before <strong>${formatDate(tender.maxDeliverDate)}</strong></p>
                     </div>
-                    <a href="/Login" class="btn btn-primary">Sign in to Offer</a>
+                    ${ localStorage.getItem('userId') ? `<a href="#" class="btn btn-primary">View</a>` : `<a href="/Login" class="btn btn-primary">Sign in to Offer</a>` }
                 </div>
                 <div class="position-absolute" style="top: 10px; right: 10px;">
                     <span class="badge badge-pill bg-primary p-2">$${tender.budget}</span>
@@ -57,6 +60,7 @@
         container.innerHTML = cardsHtml;
     }
 }
+
 $(document).ready(function () {
     var view = new IndexView();
     view.InitView();
