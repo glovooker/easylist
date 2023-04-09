@@ -54,5 +54,29 @@ namespace EasyListCORE
                 to: new Twilio.Types.PhoneNumber($"+50687733016")
             );
         }
+
+        private static string _sendGridApiKey = "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";
+        private static EmailAddress _from = new EmailAddress("lmongec@ucenfotec.ac.cr", "EasyList");
+
+        public async void NotifyByEmail(string message, string contact)
+        {
+            var client = new SendGridClient(_sendGridApiKey);
+            var from = _from;
+            var subject = "EasyList Notification";
+            var to = new EmailAddress(contact, "EasyList User");
+            var plainTextContent = message;
+            var htmlContent = message;
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+
+            try
+            {
+                var response = await client.SendEmailAsync(msg);
+                Console.WriteLine("Correo electrónico enviado exitosamente a {0}", contact);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al enviar el correo electrónico: {0}", ex.Message);
+            }
+        }
     }
 }
