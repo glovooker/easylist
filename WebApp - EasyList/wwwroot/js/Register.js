@@ -25,18 +25,21 @@
         user.password = $('#txtPassword').val();
         user.phone = '';
         user.registrationDate = new Date().toISOString();
-        user.userStatus = 0;
+        user.userStatus = 4;
         user.userPicture = '';
-        // Llamado al API
+
+        //Llamado al API
         var view = new RegisterView();
         var ctrlActions = new ControlActions();
         var serviceCreate = view.ApiService + '/registerUser';
 
         ctrlActions.PostToAPIv1(serviceCreate, user, function () {
             alert('Usuario registrado con éxito');
-            var view = new LoginView();
-
+            var view = new RegisterView();
             view.InitView();
+            localStorage.setItem('userEmail', user.email);
+            window.location.href = "/ValidationAccount";  
+
         });
     };
 }

@@ -13,6 +13,14 @@
             window.location.href = "/";
         })
 
+        // Check for stored credentials on page load
+        var storedEmail = localStorage.getItem('email');
+        var storedPassword = localStorage.getItem('password');
+        if (storedEmail && storedPassword) {
+            $("#txtEmail").val(storedEmail);
+            $("#txtPassword").val(storedPassword);
+            this.Login();
+        }
     }
 
     this.Login = function () {
@@ -33,7 +41,7 @@
                 $("#error-messagePass").hide();
             }
         } else {
-            //Realizar la logica para enviar los datos al Backend
+
             var view = new LoginView();
             var ctrlActions = new ControlActions();
             var serviceLogin = view.ApiService + '/loginUser';
@@ -44,32 +52,24 @@
             };
 
             ctrlActions.GetToApi(url, function (result) {
+
                 if (result.status === 400) {
                     toastr.error('Error', 'Incorrect email or password');
                 } else {
-<<<<<<< Updated upstream
-                    localStorage.setItem('user', email);
-                    toastr.success('¡Welcome!', 'Login successful');
-=======
+
                     localStorage.setItem('userId', result.response.id);
                     localStorage.setItem('userEmail', email);
                     localStorage.setItem('email', email);
                     localStorage.setItem('password', password);
                     toastr.success('Welcome!', 'Login successful');
->>>>>>> Stashed changes
                     window.location.href = "/";
+                    
                 }
-<<<<<<< Updated upstream
             });
-            
-
-=======
-            });  
->>>>>>> Stashed changes
         }
-
     }
 }
+
 $(document).ready(function () {
     var view = new LoginView();
     view.InitView();

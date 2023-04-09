@@ -19,6 +19,12 @@ namespace EasyListCORE
             crudManagePermission.Delete(managepermission);
         }
 
+        public List<ManagePermission> RetrieveByUserId(int id)
+        {
+            var crudManagePermission = new ManagePermissionCrudFactory();
+            return crudManagePermission.RetrieveByUserId<ManagePermission>(id);
+        }
+
         public ManagePermission Check(ManagePermission managepermission)
         {
             var crudManagePermission = new ManagePermissionCrudFactory();
