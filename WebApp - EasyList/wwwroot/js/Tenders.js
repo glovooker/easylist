@@ -43,6 +43,7 @@
         tender.budget = $("#txtBudget").val();
         tender.QRcode = "";
         tender.automatic = Boolean(parseInt($("#drpAutomatic").val()));
+        tender.deliverLocation = $("#txtDeliverLocation").val();
 
         var isValid = true;
 
@@ -60,6 +61,14 @@
             isValid = false;
         } else {
             $("#error-messageDescription").hide();
+        }
+
+        if (tender.deliverLocation === '') {
+            $("#error-messageDeliverLocation").html("Deliver Location is required");
+            $("#error-messageDeliverLocation").show();
+            isValid = false;
+        } else {
+            $("#error-messageDeliverLocation").hide();
         }
 
         if (tender.maxDeliverDate === '') {
@@ -118,6 +127,7 @@
         tender.budget = $("#txtBudget").val();
         tender.QRcode = "";
         tender.automatic = Boolean(parseInt($("#drpAutomatic").val()));
+        tender.deliverLocation = $("#txtDeliverLocation").val();
 
         var isValid = true;
 
@@ -135,6 +145,14 @@
             isValid = false;
         } else {
             $("#error-messageDescription").hide();
+        }
+
+        if (tender.deliverLocation === '') {
+            $("#error-messageDeliverLocation").html("Deliver Location is required");
+            $("#error-messageDeliverLocation").show();
+            isValid = false;
+        } else {
+            $("#error-messageDeliverLocation").hide();
         }
 
         if (tender.maxDeliverDate === '') {
@@ -193,6 +211,7 @@
         tender.budget = $("#txtBudget").val();
         tender.QRcode = "";
         tender.automatic = Boolean(parseInt($("#drpAutomatic").val()));
+        tender.deliverLocation = $("#txtDeliverLocation").val();
 
         var isValid = true;
 
@@ -210,6 +229,14 @@
             isValid = false;
         } else {
             $("#error-messageDescription").hide();
+        }
+
+        if (tender.deliverLocation === '') {
+            $("#error-messageDeliverLocation").html("Deliver Location is required");
+            $("#error-messageDeliverLocation").show();
+            isValid = false;
+        } else {
+            $("#error-messageDeliverLocation").hide();
         }
 
         if (tender.maxDeliverDate === '') {
@@ -272,6 +299,7 @@
         arrayColumnsData[5] = { 'data': 'maxDeliverDate' };
         arrayColumnsData[6] = { 'data': 'budget' };
         arrayColumnsData[7] = { 'data': 'automatic' };
+        arrayColumnsData[8] = { 'data': 'deliverLocation' };
 
         $('#tblTender').dataTable({
             'ajax': {
@@ -299,6 +327,7 @@
             $('#txtMaxDeliverDate').val(dateDeliver);
             $('#txtBudget').val(data.budget);
             $('#drpAutomatic').val(Number(data.automatic));
+            $('#txtDeliverLocation').val(data.deliverLocation);
 
             $('#btnCreate').prop('disabled', true);
             $('#btnDelete').prop('disabled', false);
@@ -328,6 +357,7 @@
         $("#txtMaxDeliverDate").val("");
         $("#txtBudget").val("");
         $("#drpAutomatic").val("0");
+        $("#txtDeliverLocation").val("");
     };
 
     var inputBudget = document.getElementById("txtBudget");

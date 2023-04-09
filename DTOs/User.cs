@@ -2,7 +2,7 @@
 {
     public class User : BaseEntity
     {
-        public enum UserStatus {ACTIVE, SUSPENDED, BANNED, DELETED, INACTIVE }
+        public enum UserStatus { ACTIVE, SUSPENDED, BANNED, DELETED, INACTIVE }
 
         public string name { get; set; }
         public string firstLastName { get; set; }

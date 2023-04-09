@@ -13,6 +13,14 @@
             window.location.href = "/";
         })
 
+        // Check for stored credentials on page load
+        var storedEmail = localStorage.getItem('email');
+        var storedPassword = localStorage.getItem('password');
+        if (storedEmail && storedPassword) {
+            $("#txtEmail").val(storedEmail);
+            $("#txtPassword").val(storedPassword);
+            this.Login();
+        }
     }
 
     this.Login = function () {
@@ -33,7 +41,7 @@
                 $("#error-messagePass").hide();
             }
         } else {
-            //Realizar la logica para enviar los datos al Backend
+
             var view = new LoginView();
             var ctrlActions = new ControlActions();
             var serviceLogin = view.ApiService + '/loginUser';
@@ -44,20 +52,27 @@
             };
 
             ctrlActions.GetToApi(url, function (result) {
+
                 if (result.status === 400) {
                     toastr.error('Error', 'Incorrect email or password');
                 } else {
+                    localStorage.setItem('userId', result.response.id);
                     localStorage.setItem('userEmail', email);
-                    toastr.success('¡Welcome!', 'Login successful');
+                    toastr.success('Welcome!', 'Login successful');
                     window.location.href = "/";
+                    
                 }
             });
-            
 
+            // Store user credentials in local storage
+            localStorage.setItem('email', email);
+            localStorage.setItem('password', password);
+
+            toastr.success('Welcome!', 'Login successful')
         }
-
     }
 }
+
 $(document).ready(function () {
     var view = new LoginView();
     view.InitView();

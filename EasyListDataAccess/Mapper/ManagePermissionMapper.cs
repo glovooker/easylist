@@ -1,8 +1,5 @@
 ﻿using DTOs;
 using EasyListDataAccess.DAOs;
-using System.Data.SqlClient;
-using System.Data;
-using System.Security;
 
 namespace EasyListDataAccess.Mapper
 {
@@ -13,7 +10,7 @@ namespace EasyListDataAccess.Mapper
             var managepermission = new ManagePermission()
             {
                 user_id = (int)row["ID_USUARIO"],
-                permission_id = (int)row["ID_PERMISO"], 
+                permission_id = (int)row["ID_PERMISO"],
             };
 
             return managepermission;
@@ -81,7 +78,15 @@ namespace EasyListDataAccess.Mapper
 
         public List<BaseEntity> BuildObjects(List<Dictionary<string, object>> lstRows)
         {
-            throw new NotImplementedException();
+            var lstResult = new List<BaseEntity>();
+
+            foreach (var row in lstRows)
+            {
+                var newUser = BuildObject(row);
+                lstResult.Add(newUser);
+            }
+
+            return lstResult;
         }
 
         public SqlOperation GetDeleteStatement(BaseEntity entity)
@@ -99,7 +104,11 @@ namespace EasyListDataAccess.Mapper
 
         public SqlOperation GetRetrieveByIdStatement(int id)
         {
-            throw new NotImplementedException();
+            var SqlOperation = new SqlOperation { ProcedureName = "RET_ALL_USUARIO_PERMISO_BY_ID_PR" };
+
+            SqlOperation.AddIntParam("P_ID_USUARIO", id);
+
+            return SqlOperation;
         }
 
         public SqlOperation GetRetrieveAllStatement()

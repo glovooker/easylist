@@ -20,7 +20,8 @@ namespace EasyListDataAccess.Mapper
                 QRcode = (string)row["CODIGOQR"],
                 automatic = (bool)row["AUTOMATICA"],
                 analistId = (int)row["ID_ANALISTA"],
-                offerId = row["ID_OFERTA"] == DBNull.Value ? 0 : (int)row["ID_OFERTA"]
+                offerId = row["ID_OFERTA"] == DBNull.Value ? 0 : (int)row["ID_OFERTA"],
+                deliverLocation = (string)row["LUGARENTREGA"]
             };
             return tender;
         }
@@ -82,6 +83,7 @@ namespace EasyListDataAccess.Mapper
             sqlOperation.AddBoolParam("P_AUTOMATICA", tender.automatic);
             sqlOperation.AddIntParam("P_ID_ANALISTA", tender.analistId);
             sqlOperation.AddIntParam("P_ID_OFERTA", tender.offerId);
+            sqlOperation.AddVarcharParam("P_LUGARENTREGA", tender.deliverLocation);
 
             return sqlOperation;
         }
@@ -104,6 +106,7 @@ namespace EasyListDataAccess.Mapper
             sqlOperation.AddBoolParam("P_AUTOMATICA", tender.automatic);
             sqlOperation.AddIntParam("P_ID_ANALISTA", tender.analistId);
             sqlOperation.AddIntParam("P_ID_OFERTA", tender.offerId);
+            sqlOperation.AddVarcharParam("P_LUGARENTREGA", tender.deliverLocation);
 
 
             return sqlOperation;
@@ -139,6 +142,17 @@ namespace EasyListDataAccess.Mapper
         public SqlOperation GetRetrieveByEmailStatement(string email)
         {
             throw new NotImplementedException();
+        }
+
+        public SqlOperation GetRetrieveByDateStatement(string startDate, string endDate)
+        {
+            var sqlOperation = new SqlOperation();
+
+            sqlOperation.ProcedureName = "RET_LICITACIONES_POR_FECHAS_PR";
+            sqlOperation.AddVarcharParam("StartDate", startDate);
+            sqlOperation.AddVarcharParam("EndDate", endDate);
+
+            return sqlOperation;
         }
     }
 
