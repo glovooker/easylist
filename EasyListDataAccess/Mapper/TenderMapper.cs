@@ -108,7 +108,6 @@ namespace EasyListDataAccess.Mapper
             sqlOperation.AddIntParam("P_ID_OFERTA", tender.offerId);
             sqlOperation.AddVarcharParam("P_LUGARENTREGA", tender.deliverLocation);
 
-
             return sqlOperation;
         }
 
