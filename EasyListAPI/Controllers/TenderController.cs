@@ -1,4 +1,8 @@
-﻿namespace EasyListAPI.Controllers
+﻿using DTOs;
+using EasyListCORE;
+using Microsoft.AspNetCore.Mvc;
+
+namespace EasyListAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

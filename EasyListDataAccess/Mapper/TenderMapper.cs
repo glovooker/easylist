@@ -1,4 +1,7 @@
-﻿namespace EasyListDataAccess.Mapper
+﻿using DTOs;
+using EasyListDataAccess.DAOs;
+
+namespace EasyListDataAccess.Mapper
 {
     public class TenderMapper : ISqlStatements, IObjectMapper
     {
