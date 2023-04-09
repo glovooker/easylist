@@ -1,6 +1,7 @@
 ﻿using DTOs;
 using EasyListCORE;
 using Microsoft.AspNetCore.Mvc;
+using static DTOs.Validation;
 
 namespace EasyListAPI.Controllers
 {
@@ -40,6 +41,23 @@ namespace EasyListAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet]
+        [Route("getValidationByUserId&Status")]
+        public async Task<IActionResult> RetrieveValidationByUserIdAndStatus(string userId)
+        {
+            try
+            {
+                var vm = new ValidationManager();
+                var validate = vm.RetrieveByUserIdAndStatus(userId);
+                return Ok(validate);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
 
         [HttpPut]
         [Route("updateValidation")]

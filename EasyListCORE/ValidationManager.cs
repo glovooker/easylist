@@ -24,21 +24,27 @@ namespace EasyListCORE
                 throw new Exception("User does not exist!");
             }
 
+            var pendingValidations = crudValidation.RetrievePendingValidationsByUserId(user.Id);
+            if (pendingValidations.Count > 0)
+            {
+                // Ya existe una validación pendiente, no se hace nada
+                throw new Exception("Cannot create a validation if the code already exists.");
+            }
             var random = new Random();
-            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            var result = new string(Enumerable.Repeat(chars, 6).Select(s => s[random.Next(s.Length)]).ToArray());
-            validation.userId = user.Id.ToString();
-            validation.validationCode = result;
-            validation.validationDateCreation = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Local);
-            validation.validationDateExpired = DateTime.SpecifyKind(DateTime.Now.AddMinutes(30), DateTimeKind.Local);
-            validation.validationStatus = 0;
-            validation.validationCount = 1;
+                var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                var result = new string(Enumerable.Repeat(chars, 6).Select(s => s[random.Next(s.Length)]).ToArray());
+                validation.userId = user.Id.ToString();
+                validation.validationCode = result;
+                validation.validationDateCreation = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Local);
+                validation.validationDateExpired = DateTime.SpecifyKind(DateTime.Now.AddMinutes(30), DateTimeKind.Local);
+                validation.validationStatus = 0;
+                validation.validationCount = 1;
 
+                var nm = new NotificationManager();
+                nm.NotifyAccountValidation(validation);
 
-            var nm = new NotificationManager();
-            nm.NotifyAccountValidation(validation);
-
-            crudValidation.Create(validation);
+                crudValidation.Create(validation);
+            
         }
         public void Update(Validation validation)
         {
@@ -79,6 +85,7 @@ namespace EasyListCORE
         }
 
 
+
         public Validation RetrieveById(int id)
         {
             var crudValidation = new ValidationCrudFactory();
@@ -91,6 +98,34 @@ namespace EasyListCORE
 
             return existValidation;
         }
+
+        public List<Validation> RetrieveByUserIdAndStatus(string userId)
+        {
+            var crudValidation = new ValidationCrudFactory();
+            var crudUser = new UserCrudFactory();
+
+            var existUser = crudUser.RetrieveByEmail<User>(userId);
+            if (existUser == null)
+            {
+                throw new Exception("User does not exist!");
+            }
+            var idUser = existUser.Id;
+            var existValidation = crudValidation.RetrieveByUserId<Validation>(idUser);
+
+            if (existValidation == null)
+            {
+                throw new Exception("Validation does not exist!");
+            }
+
+            if (existValidation.userId != idUser.ToString())
+            {
+                throw new Exception("Validation does not belong to user!");
+            }
+
+            var pendingValidations = crudValidation.RetrievePendingValidationsByUserId(int.Parse(existValidation.userId));
+            return pendingValidations;
+        }
+
 
     }
 }

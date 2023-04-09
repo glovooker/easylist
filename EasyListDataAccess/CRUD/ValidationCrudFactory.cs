@@ -59,10 +59,43 @@ namespace EasyListDataAccess.CRUD
 
             return default(T);
         }
+        public T RetrieveByUserId<T>(int idUser)
+        {
+            var sqlValidation = _mapper.GetRetrieveByUserIdStatement(idUser);
+            var results = dao.ExecuteQueryProcedure(sqlValidation);
+
+            var dic = new Dictionary<string, object>();
+
+            if (results.Count > 0)
+            {
+                dic = results[0];
+                var obj = _mapper.BuildObject(dic);
+                return (T)Convert.ChangeType(obj, typeof(T));
+            }
+
+            return default(T);
+        }
+        public List<Validation> RetrievePendingValidationsByUserId(int userId)
+        {
+            var sql = _mapper.GetRetrieveByUserIdStatement(userId);
+            var results = dao.ExecuteQueryProcedure(sql);
+            var validations = new List<Validation>();
+            foreach (var result in results)
+            {
+                var validation = (Validation)_mapper.BuildObject(result);
+                if (validation.validationStatus == 0) // validación pendiente
+                {
+                    validations.Add(validation);
+                }
+            }
+            return validations.Cast<Validation>().ToList();
+        }
 
         public override void Update(BaseEntity dto)
         {
-            throw new NotImplementedException();
+            var validation = (Validation)dto;
+            var sqlValidation = _mapper.GetUpdateStatement(validation);
+            dao.ExecuteProcedure(sqlValidation);
         }
         public void UpdatePhoneUser(BaseEntity dto)
         {

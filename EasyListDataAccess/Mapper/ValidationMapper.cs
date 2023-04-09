@@ -15,7 +15,7 @@ namespace EasyListDataAccess.Mapper
             var validation = new Validation
             {
                 Id = (int)row["ID_VALIDACION"],
-                userId = (string)row["ID_USUARIO"],
+                userId = row["ID_USUARIO"].ToString(),
                 validationType = (Validation.ValidationType)Enum.Parse(typeof(Validation.ValidationType), (string)row["TIPOVALIDACION"]),
                 validationStatus = (Validation.ValidationStatus)Enum.Parse(typeof(Validation.ValidationStatus), (string)row["ESTADOVALIDACION"]),
                 validationCode = (string)row["CODIGOVALIDACION"],
@@ -87,9 +87,32 @@ namespace EasyListDataAccess.Mapper
             return sqlOperation;
         }
 
+        public SqlOperation GetRetrieveByUserIdStatement(int idUser)
+        {
+            var sqlOperation = new SqlOperation();
+
+            sqlOperation.ProcedureName = "RET_VALIDATION_BY_USER_ID_PR";
+
+            sqlOperation.AddIntParam("P_ID_USER", idUser);
+
+            return sqlOperation;
+        }
+
+
+        
+
         public SqlOperation GetUpdateStatement(BaseEntity entity)
         {
-            throw new NotImplementedException();
+            var sqlOperation = new SqlOperation();
+            var validation = (Validation)entity;
+
+            sqlOperation.ProcedureName = "UPD_VALIDATION_PR";   
+
+            sqlOperation.AddIntParam("P_ID_VALIDATION", validation.Id);
+            sqlOperation.AddVarcharParam("P_VALIDATION_STATUS", validation.validationStatus.ToString());
+            sqlOperation.AddIntParam("P_VALIDATION_COUNT", validation.validationCount);
+
+            return sqlOperation;
         }
         public SqlOperation GetUpdatePhoneUserStatement(BaseEntity entity)
         {
@@ -103,6 +126,18 @@ namespace EasyListDataAccess.Mapper
 
             return sqlOperation;
         }
-        
+        public SqlOperation RetrieveValidationByUserIdAndStatus(BaseEntity entity)
+        {
+            var sqlOperation = new SqlOperation();
+            var validation = (Validation)entity;
+                
+            sqlOperation.ProcedureName = "RET_VALIDATION_BY_USER_ID_AND_STATUS_PR";
+
+            return sqlOperation;
+        }
+
+
+
+
     }
 }

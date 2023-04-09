@@ -8,28 +8,74 @@
     this.InitView = function () {
         console.log("Validation Account init");
 
-        $("#divCodigoOTP").hide();
-        $("#divVerificacionTerminada").hide();
+        //$("#divCodeOTP").hide();
+        //$("#divVerificationCompleted").hide();
 
         //Asignacion del evento de clic
-        $("#btnValidaOTP").click(function () {
+        $("#btnValidateOTP").click(function () {
             var view = new ValidationAccountView();
             view.ValidaOTP();
         });
         //Asignacion del evento de clic
-        $("#btnValidaCuenta").click(function () {
+        $("#btnValidateAccount").click(function () {
             var view = new ValidationAccountView();
             view.ValidaCuenta();
         });
     }
     this.ValidaCuenta = function () {
-        if ($("#OTP-code").val() != "") {
-            $("#divCodigoOTP").hide();
-            $("#divVerificacionTerminada").show();
+        var codigoIngresado = $("#OTP-code").val().trim();
+        if (codigoIngresado !== "") {
+
+            var ctrlActions = new ControlActions();
+            var service = self.ApiService + "/getValidationByUserId&Status";
+            var url = service + "?userId=" + localStorage.getItem('userEmail');
+            ctrlActions.GetToApi(url, function (result) {
+                var validation = result.response[0];
+                if (validation.validationCode === codigoIngresado) {
+                    $("#error-OTPCode").hide();
+                    var serviceUpdate = self.ApiService + "/updateValidation";
+                    validation.validationStatus = 1;
+                    ctrlActions.PutToAPI(serviceUpdate, validation, function () {
+                        var serviceGetUserByEmail = "User/getUserByEmail";
+                        var url = serviceGetUserByEmail + "?email=" + localStorage.getItem('userEmail');
+                        ctrlActions.GetToApi(url, function (result) {
+                            var user = result.response;
+                            user.userStatus = 0;
+                            user.password = '';
+                            var serviceUpdateUser = "User/updateUser";
+                            ctrlActions.PutToAPI(serviceUpdateUser, user, function () {
+                                toastr.success('Your account has been verified', 'Verification Successful');
+                                $("#divCodeOTP").hide();
+                                $("#divVerificationCompleted").show();
+
+                            });
+                        });
+                    });
+                }
+                else {
+                    var serviceUpdate = self.ApiService + "/updateValidation";
+                    var count=validation.validationCount;
+                    if (count < 3) {
+                        validation.validationCount += 1;
+                        ctrlActions.PutToAPI(serviceUpdate, validation, function () {
+                            $("#error-OTPCode").html("The OTP code is incorrect. You have made " + validation.validationCount + " attempts out of 3.");
+                            $("#error-OTPCode").show();
+                        })
+                    }
+                    else {
+                        validation.validationStatus = 2
+                        ctrlActions.PutToAPI(serviceUpdate, validation, function () {
+                            $("#error-OTPCode").html("You must request the code again."); 
+                            $("#error-OTPCode").show();
+                        })
+                    }
+                }
+            });
 
         }
         else {
-            console.log("No se ha ingresado el número de teléfono");
+            $("#error-messageOTP").html("You must request the code again.");
+            $("#error-messageOTP").show();
         }
     }
     this.ValidaOTP = function () {
@@ -38,13 +84,13 @@
         checkBoxEmail = $("#email-validation-checkbox");
 
         if (countryCode === '') {
-            $("#error-messageCountryCode").html("El codigo de país es obligatorio");
+            $("#error-messageCountryCode").html("The country code is required.");
             $("#error-messageCountryCode").show();
         } else {
             $("#error-messageCountryCode").hide();
         }
         if (phoneNumber === '') {
-            $("#error-messageNumber").html("El numero es obligatorio");
+            $("#error-messageNumber").html("The phone number is required.");
             $("#error-messageNumber").show();
         } else {
             $("#error-messageNumber").hide();
@@ -52,7 +98,12 @@
         if ((countryCode !== '' && phoneNumber !== '') || checkBoxEmail.is(":checked")) {
             $("#error-messageCountryCode").hide();
             $("#error-messageNumber").hide();
-            $("#divNumeroVerificacion").hide();
+            $("#divNumberVerification").hide();
+
+            toastr.options = {
+                "positionClass": "toast-top-center",
+                "showDuration": "100"
+            };
 
             var ctrlActions = new ControlActions();
             var serviceUpdate = this.ApiService + "/updatePhoneUser";
@@ -67,37 +118,40 @@
             user.registrationDate = new Date()
             user.userStatus = 0;
             user.userPicture = '';
-            ctrlActions.PutToAPI(serviceUpdate, user, function () {
+            if (user.phone != '') {
+                ctrlActions.PutToAPI(serviceUpdate, user, function () {
 
-                var ctrlActions = new ControlActions();
-                var service = self.ApiService + "/createValidation";
+                    var service = self.ApiService + "/createValidation";
 
-                var validation ={};
+                    var validation = {};
 
-                validation.id = 0;
-                validation.userId = localStorage.getItem('userEmail');
+                    validation.id = 0;
+                    validation.userId = localStorage.getItem('userEmail');
 
-                if ((countryCode !== '' && phoneNumber !== '') && !checkBoxEmail.is(":checked")){
-                    validation.validationType = 1;
-                }
-                else if (checkBoxEmail.is(":checked") && (countryCode === '' && phoneNumber === '')) {
-                    validation.validationType = 0;
-                }
-                else if ((countryCode !== '' && phoneNumber !== '') && checkBoxEmail.is(":checked")) {
-                    validation.validationType = 2;
-                }
-                validation.validationStatus = 0;
-                validation.validationCode = "";
-                validation.validationDateCreation = new Date();
-                validation.validationDateExpired = new Date();
-                validation.validationCount = 0;
+                    if ((countryCode !== '' && phoneNumber !== '') && !checkBoxEmail.is(":checked")) {
+                        validation.validationType = 1;
+                        var mensaje = "It was sent to your phone number.";
+                    }
+                    else if (checkBoxEmail.is(":checked") && (countryCode === '' && phoneNumber === '')) {
+                        validation.validationType = 0;
+                        var mensaje = "It was sent to your email.";
+                    }
+                    else if ((countryCode !== '' && phoneNumber !== '') && checkBoxEmail.is(":checked")) {
+                        validation.validationType = 2;
+                        var mensaje = "It was sent to your phone number and your email.";
+                    }
+                    validation.validationStatus = 0;
+                    validation.validationCode = "";
+                    validation.validationDateCreation = new Date();
+                    validation.validationDateExpired = new Date();
+                    validation.validationCount = 0;
 
-                ctrlActions.PostToAPIv1(service, validation, function () {
-                    console.log("Se ha creado el registro de validación");
-
+                    ctrlActions.PostToAPIv1(service, validation, function () {
+                        toastr.success(mensaje, 'The OTP code.');
+                        $("#divCodeOTP").show();
+                    });
                 });
-            });
-            $("#divCodigoOTP").show();
+            }
         }
     }
     
