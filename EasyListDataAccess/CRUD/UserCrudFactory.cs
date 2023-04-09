@@ -94,5 +94,24 @@ namespace EasyListDataAccess.CRUD
             var sqlUser = _mapper.GetDeleteStatement(user);
             dao.ExecuteProcedure(sqlUser);
         }
+
+        public List<T> RetrieveByDate<T>(string startDate, string endDate)
+        {
+            var lstUsers = new List<T>();
+            var sqlUser = _mapper.GetRetrieveByDateStatement(startDate, endDate);
+            var lstResults = dao.ExecuteQueryProcedure(sqlUser);
+
+            if (lstResults.Count > 0)
+            {
+                var objsUsers = _mapper.BuildObjects(lstResults);
+
+                foreach (var op in objsUsers)
+                {
+                    lstUsers.Add((T)Convert.ChangeType(op, typeof(T)));
+                }
+            }
+
+            return lstUsers;
+        }
     }
 }

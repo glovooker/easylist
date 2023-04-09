@@ -8,15 +8,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>@ViewData["Title"] - EasyList</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+  
     <link href="~/lib/bootstrap/dist/css/bootstrap-flatly.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css">
     <link href="~/css/datatables.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+    <link href="~/css/site.css" rel="stylesheet" />
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/ControlActions.js"></script>
     <script src="~/js/datatables.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="~/js/sessions.js"></script>
 
 </head>
 
@@ -24,7 +32,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">EasyList</a>
+                <a class="navbar-brand w-auto" asp-area="" asp-page="/Index"><img src="~/img/Logotype-H.svg" width="200px" class="logotype" alt="banner"></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -39,13 +47,24 @@
                         </li>
                     </ul>
                     <div class="d-flex">
-                        <a class="btn btn-primary" asp-area="" asp-page="/Register">Sign Up</a>
-                        <a class="btn" asp-area="" asp-page="/Login">Sign In</a>
+                        <div id="userDropdownContainer"></div>
+                        <a class="btn btn-primary" asp-area="" asp-page="/Register" id="registerBtn" style="display:none;">Sign Up</a>
+                        <a class="btn" asp-area="" asp-page="/Login" id="loginBtn" style="display:none;">Sign In</a>
                     </div>
                 </div>
             </div>
         </nav>
     </header>
+
+    <section hidden id="section-banner" class="banner">
+        <div class="banner_image">
+            <img src="~/img/Banner_Desktop.svg" alt="banner">
+            <div class="banner_text text-start font-family">
+                <h1 class="fw-bold">Sell more easily to <strong style="color: #3E314B">schools</strong></h1>
+                <p><strong style="color: #3E314B">EasyList</strong> simplifies the sales process to school or institutions while it helps you increase your profitability.</p>
+            </div>
+        </div>
+    </section>
 
     <div class="container">
         <main role="main" class="pb-3">
@@ -53,9 +72,9 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted fixed-bottom bg-white">
         <div class="container">
-            &copy; 2023 - BugBusters - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            &copy; 2023 - BugBusters
         </div>
     </footer>
 

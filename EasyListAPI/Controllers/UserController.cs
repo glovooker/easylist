@@ -135,5 +135,38 @@ namespace EasyListAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet]
+        [Route("getUsersByDate")]
+        public async Task<IActionResult> RetrieveUsersByDate(string startDate, string endDate)
+        {
+            try
+            {
+                var um = new UserManager();
+                var users = um.RetrieveByDate(startDate, endDate);
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("recoverUser")]
+        public async Task<IActionResult> RecoverUser(string email)
+        {
+            try
+            {
+                var um = new UserManager();
+                var newPassword = um.RecoverUser(email);
+                return Ok(newPassword);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }

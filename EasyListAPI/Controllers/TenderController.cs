@@ -1,8 +1,4 @@
-﻿using DTOs;
-using EasyListCORE;
-using Microsoft.AspNetCore.Mvc;
-
-namespace EasyListAPI.Controllers
+﻿namespace EasyListAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -22,7 +18,8 @@ namespace EasyListAPI.Controllers
 
                 return Ok();
 
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -34,7 +31,7 @@ namespace EasyListAPI.Controllers
         public async Task<IActionResult> UpdateTender(Tender tender)
         {
             try
-            { 
+            {
 
                 var tm = new TenderManager();
 
@@ -42,7 +39,8 @@ namespace EasyListAPI.Controllers
 
                 return Ok();
 
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -61,7 +59,8 @@ namespace EasyListAPI.Controllers
 
                 return Ok();
 
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -80,7 +79,8 @@ namespace EasyListAPI.Controllers
 
                 return Ok(tender);
 
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -96,11 +96,27 @@ namespace EasyListAPI.Controllers
                 var tm = new TenderManager();
 
                 return Ok(tm.RetrieveAll());
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
 
+        [HttpGet]
+        [Route("getTendersByDate")]
+        public async Task<IActionResult> RetrieveTendersByDate(string startDate, string endDate)
+        {
+            try
+            {
+                var um = new TenderManager();
+                var tenders = um.RetrieveByDate(startDate, endDate);
+                return Ok(tenders);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

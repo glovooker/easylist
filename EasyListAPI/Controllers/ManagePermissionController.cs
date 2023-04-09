@@ -1,7 +1,6 @@
 ﻿using DTOs;
 using EasyListCORE;
 using Microsoft.AspNetCore.Mvc;
-using System.Security;
 
 namespace EasyListAPI.Controllers
 {
@@ -40,6 +39,23 @@ namespace EasyListAPI.Controllers
             }
 
             return Ok(retrievedPermission);
+        }
+
+        [HttpGet]
+        [Route("getPermissionsById")]
+        public async Task<IActionResult> RetrieveByUserId(int id)
+        {
+
+            var um = new ManagePermissionManager();
+
+            var retrievedPermissions = um.RetrieveByUserId(id);
+
+            if (retrievedPermissions == null)
+            {
+                return NoContent();
+            }
+
+            return Ok(retrievedPermissions);
         }
 
         [HttpDelete]

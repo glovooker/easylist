@@ -1,0 +1,60 @@
+﻿@page
+@model WebApp___EasyList.Pages.ReportsModel
+@{
+    ViewData["Title"] = "Reports";
+}
+<script src="~/js/Reports.js"></script>
+<div class="bs-docs-section d-flex flex-column">
+    <h1>Reports</h1>
+    <br />
+    <div class="row">
+        <div class="col-sm-6 form-group">
+            <label for="startDate">Start Date:</label>
+            <input type="date" class="form-control" id="startDate" name="startDate">
+        </div>
+        <div class="col-sm-6 form-group">
+            <label for="endDate">End Date:</label>
+            <input type="date" class="form-control" id="endDate" name="endDate">
+        </div>
+    </div>
+    <br />
+    <legend>Users</legend>
+    <div class="row">
+        <table id="tblPermission" class="display" style="width:100%">
+            <thead>
+            <th>ID</th>
+            <th>Name</th>
+            <th>First Lastname</th>
+            <th>Second Lastname</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Registration Date</th>
+            </thead>
+        </table>
+        <br />
+    </div>
+    <br />
+    <br />
+    <legend>Tenders</legend>
+    <div class="row">
+        <table id="tblTender" class="display" style="width:100%">
+            <thead>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>MaxOfferDate</th>
+            <th>MaxDeliverDate</th>
+            <th>Budget</th>
+            <th>Automatic</th>
+            </thead>
+        </table>
+        <br />
+    </div>
+
+    <div class="d-flex flex-row justify-content-around">
+        <button id="btnClean" class="source-button btn btn-info w-25 mx-4" type="button" tabindex="0"><i class="bi bi-code">Clean</i></button>
+        <button id="btnSearch" class="source-button btn btn-primary w-25 mx-4" type="button" tabindex="0"><i class="bi bi-code">Search</i></button>
+    </div>
+
+</div>

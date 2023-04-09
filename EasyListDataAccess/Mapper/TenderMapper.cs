@@ -1,7 +1,4 @@
-﻿using DTOs;
-using EasyListDataAccess.DAOs;
-
-namespace EasyListDataAccess.Mapper
+﻿namespace EasyListDataAccess.Mapper
 {
     public class TenderMapper : ISqlStatements, IObjectMapper
     {
@@ -144,6 +141,16 @@ namespace EasyListDataAccess.Mapper
             throw new NotImplementedException();
         }
 
+        public SqlOperation GetRetrieveByDateStatement(string startDate, string endDate)
+        {
+            var sqlOperation = new SqlOperation();
+
+            sqlOperation.ProcedureName = "RET_LICITACIONES_POR_FECHAS_PR";
+            sqlOperation.AddVarcharParam("StartDate", startDate);
+            sqlOperation.AddVarcharParam("EndDate", endDate);
+
+            return sqlOperation;
+        }
     }
 
 }
