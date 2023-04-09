@@ -38,14 +38,26 @@ function ManagePermissions() {
         arrayColumnsData[4] = { 'data': 'email' };
         arrayColumnsData[5] = { 'data': 'phone' };
         arrayColumnsData[6] = { 'data': 'registrationDate' };
-        arrayColumnsData[7] = { 'data': 'userStatus' };
 
         $('#tblPermission').dataTable({
             'ajax': {
                 'url': urlService,
-                'dataSrc': '',
+                'dataSrc': function (data) {
+                    var filteredData = data.filter(function (row) {
+                        return row.userStatus === 0;
+                    });
+
+                    var transformedData = filteredData.map(function (row) {
+                        if (row.userStatus !== 0) {
+                            delete row.userStatus;
+                        }
+                        return row;
+                    });
+
+                    return transformedData;
+                }
             },
-            'columns': arrayColumnsData,
+            'columns': arrayColumnsData
         });
     };
 
@@ -66,8 +78,7 @@ function ManagePermissions() {
             { 'data': 'secondLastName' },
             { 'data': 'email' },
             { 'data': 'phone' },
-            { 'data': 'registrationDate' },
-            { 'data': 'userStatus' }
+            { 'data': 'registrationDate' }
         ];
 
         $('#tblPermission').dataTable({
