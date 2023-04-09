@@ -151,5 +151,22 @@ namespace EasyListAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPost]
+        [Route("recoverUser")]
+        public async Task<IActionResult> RecoverUser(string email)
+        {
+            try
+            {
+                var um = new UserManager();
+                var newPassword = um.RecoverUser(email);
+                return Ok(newPassword);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }
