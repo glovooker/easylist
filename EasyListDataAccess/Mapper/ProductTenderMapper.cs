@@ -100,6 +100,16 @@ namespace EasyListDataAccess.Mapper
             return sqlOperation;
         }
 
+        public SqlOperation GetDeleteAllStatement(int tender_id)
+        {
+            var sqlOperation = new SqlOperation();
+
+            sqlOperation.ProcedureName = "DEL_ALL_PRODUCTO_LICITACION_PR";
+            sqlOperation.AddIntParam("P_ID_LICITACION", tender_id);
+
+            return sqlOperation;
+        }
+
         public SqlOperation GetRetrieveAllStatement()
         {
             var sqlOperation = new SqlOperation { ProcedureName = "RET_ALL_PRODUCTO_LICITACION_PR" };

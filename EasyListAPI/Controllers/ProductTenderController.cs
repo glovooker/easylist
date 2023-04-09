@@ -20,7 +20,8 @@ namespace EasyListAPI.Controllers
                 ptm.Create(producttender);
                 return Ok("The tender product has been successfully added.");
 
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -37,7 +38,8 @@ namespace EasyListAPI.Controllers
                 ptm.Update(producttender);
                 return Ok("The tender product has been successfully update.");
 
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -54,7 +56,26 @@ namespace EasyListAPI.Controllers
                 ptm.Delete(producttender);
                 return Ok(producttender);
 
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete]
+        [Route("deleteAllProductTender")]
+        public async Task<IActionResult> DeleteAllProductTender(int tender_id)
+        {
+            try
+            {
+
+                var ptm = new ProductTenderManager();
+                ptm.DeleteAll(tender_id);
+                return Ok(tender_id);
+
+            }
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -70,7 +91,8 @@ namespace EasyListAPI.Controllers
                 var ptm = new ProductTenderManager();
                 return Ok(ptm.RetrieveAll());
 
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -87,7 +109,8 @@ namespace EasyListAPI.Controllers
                 var producttender = ptm.RetrieveByTenderId(id);
                 return Ok(producttender);
 
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }

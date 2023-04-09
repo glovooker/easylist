@@ -22,13 +22,22 @@ namespace EasyListCORE
             crudProductTender.Update(producttender);
 
         }
-        
+
         public void Delete(ProductTender producttender)
         {
 
             var crudProductTender = new ProductTenderCrudFactory();
 
             crudProductTender.Delete(producttender);
+
+        }
+
+        public void DeleteAll(int tender_id)
+        {
+
+            var crudProductTender = new ProductTenderCrudFactory();
+
+            crudProductTender.DeleteAll(tender_id);
 
         }
 

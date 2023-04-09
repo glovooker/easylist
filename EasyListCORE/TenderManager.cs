@@ -47,11 +47,13 @@ namespace EasyListCORE
                 throw new Exception("Tender does not exist!");
             }
 
+            var crudProductTender = new ProductTenderCrudFactory();
+            crudProductTender.DeleteAll(existTender.Id);
+
             foreach (var productTender in tender.ProductTenders)
             {
-                var crudProductTender = new ProductTenderCrudFactory();
                 productTender.tender_id = existTender.Id;
-                crudProductTender.Update(productTender);
+                crudProductTender.Create(productTender);
             }
 
             crudTender.Update(tender);

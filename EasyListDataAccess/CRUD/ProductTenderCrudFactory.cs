@@ -34,6 +34,12 @@ namespace EasyListDataAccess.CRUD
             dao.ExecuteProcedure(sqlOperation);
         }
 
+        public void DeleteAll(int tender_id)
+        {
+            var sqlOperation = _mapper.GetDeleteAllStatement(tender_id);
+            dao.ExecuteProcedure(sqlOperation);
+        }
+
         public override List<ProductTender> RetrieveAll<ProductTender>()
         {
             var lstProducTender = new List<ProductTender>();

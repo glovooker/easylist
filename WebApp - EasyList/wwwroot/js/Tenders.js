@@ -48,6 +48,7 @@ function TenderView() {
         tender.automatic = Boolean(parseInt($("#drpAutomatic").val()));
         tender.deliverLocation = $("#txtDeliverLocation").val();
         tender.productTenders = productsTender;
+        console.log(tender);
 
         var isValid = true;
 
@@ -133,6 +134,7 @@ function TenderView() {
         tender.automatic = Boolean(parseInt($("#drpAutomatic").val()));
         tender.deliverLocation = $("#txtDeliverLocation").val();
         tender.productTenders = productsTender;
+        console.log(tender);
 
         var isValid = true;
 
@@ -367,6 +369,7 @@ function TenderView() {
         $("#txtBudget").val("");
         $("#drpAutomatic").val("0");
         $("#txtDeliverLocation").val("");
+        $("#productsContainer").empty();
     };
 
     var inputBudget = document.getElementById("txtBudget");
