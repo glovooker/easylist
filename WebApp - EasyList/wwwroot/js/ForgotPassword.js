@@ -38,7 +38,7 @@
 
             // Agregar tiempo de espera antes de redireccionar
             setTimeout(function () {
-                window.location.href = "/Login";
+                window.location.href = "/ExLogin";
             }, 5000);
         });
     }

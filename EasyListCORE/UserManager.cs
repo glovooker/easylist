@@ -183,5 +183,35 @@ namespace EasyListCORE
             return newPassword;
 
         }
+
+        public string AvailableUser(string email, string newpassword)
+        {
+            var crudUser = new UserCrudFactory();
+            var crudPassword = new PasswordCrudFactory();
+
+            var currentUser = crudUser.RetrieveByEmail<User>(email);
+
+            if (currentUser == null)
+            {
+                throw new Exception("User does not exist!");
+            }
+
+            var id = currentUser.Id;
+
+            crudPassword.DisPassword(id);
+
+            var password = new Password();
+            password.Id = currentUser.Id;
+            password.password = newpassword;
+            password.idUser = currentUser.Id;
+            password.isActive = true;
+            password.isTemporal = false;
+            password.creationDate = currentUser.registrationDate;
+
+            crudPassword.Create(password);
+
+            return password.ToString();
+
+        }
     }
 }
