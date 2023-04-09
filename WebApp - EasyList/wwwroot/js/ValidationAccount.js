@@ -8,8 +8,8 @@
     this.InitView = function () {
         console.log("Validation Account init");
 
-        //$("#divCodeOTP").hide();
-        //$("#divVerificationCompleted").hide();
+        $("#divCodeOTP").hide();
+        $("#divVerificationCompleted").hide();
 
         //Asignacion del evento de clic
         $("#btnValidateOTP").click(function () {
@@ -21,7 +21,16 @@
             var view = new ValidationAccountView();
             view.ValidaCuenta();
         });
+        $("#btnGoSignIn").click(function () {
+            var view = new ValidationAccountView();
+            view.GoSingIn();
+        });
     }
+    this.GoSingIn = function () {
+        window.location.href = "/Login";
+        }
+
+
     this.ValidaCuenta = function () {
         var codigoIngresado = $("#OTP-code").val().trim();
         if (codigoIngresado !== "") {
