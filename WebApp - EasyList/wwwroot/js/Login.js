@@ -47,13 +47,25 @@
                 if (result.status === 400) {
                     toastr.error('Error', 'Incorrect email or password');
                 } else {
+<<<<<<< Updated upstream
                     localStorage.setItem('user', email);
                     toastr.success('¡Welcome!', 'Login successful');
+=======
+                    localStorage.setItem('userId', result.response.id);
+                    localStorage.setItem('userEmail', email);
+                    localStorage.setItem('email', email);
+                    localStorage.setItem('password', password);
+                    toastr.success('Welcome!', 'Login successful');
+>>>>>>> Stashed changes
                     window.location.href = "/";
                 }
+<<<<<<< Updated upstream
             });
             
 
+=======
+            });  
+>>>>>>> Stashed changes
         }
 
     }
