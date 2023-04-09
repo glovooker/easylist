@@ -1,0 +1,144 @@
+﻿@page
+@model WebApp___EasyList.Pages.TenderModel
+@{
+    ViewData["Title"] = "Tenders";
+}
+<script src="~/js/Tenders.js"></script>
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Universidad Cenfotec</title>
+  </head>
+  
+  <body>
+
+
+  <header class="container">
+    <h2 class="display-1">Tenders</h2>
+  </header>
+
+  <br/>
+  <div class="text-center container">
+      <table id="tblTender" style="width:100%">
+          <thead>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Status</th>
+          <th>MaxOfferDate</th>
+          <th>MaxDeliverDate</th>
+          <th>Budget</th>
+          <th>Automatic</th>
+          <th>DeliverLocation</th>
+          </thead>
+      </table>
+      <br/>
+  </div>
+
+    <section class="container">
+        <form style="background-color: #ECF0F1; border-radius: 10px;">
+            <fieldset>
+            <br />
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6" style="padding-left:50px;">
+                    <legend style="padding-left: 5px;">Tender registration form</legend>
+                    <div class="m-2 form-group" style="width: 95%">
+                        <label for="txtTitle" class="form-label pt-0;">Title</label>
+                        <input type="text" class="form-control" id="txtTitle" placeholder="Enter title">
+                        <div id="error-messageTitle" style="display: none; color: red; font-size:0.7rem">
+                        </div>
+                        <h5 style="padding-top: 20px;">Productos</h5>
+
+                        <div class="d-flex flex-column justify-content-around align-items-center" id="productsContainer"></div>
+
+                        <div class="d-flex align-items-center" style="width: 100%; padding-top:10px;">
+                            <select class="form-select mx-2" id="drpProduct">
+                            </select>
+                            <input type="number" class="form-control mx-2" id="txtQuantity" placeholder="Quantity">
+                            <input type="number" class="form-control mx-2" id="txtPrice" placeholder="Price">
+                                <button type="button" class="btn btn-outline-primary mx-2" onclick="createProductTender()" style="width:100%">Add</button>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-md-6 col-lg-6" style="padding-left:20px;">
+
+                    <div class="m-2 form-group " style="width: 90%; ">
+                            <label for="txtID" class="form-label mt-1">ID</label>
+                            <input disabled type="number" class="form-control" id="txtID" aria-describedby="emailHelp" placeholder="Tender ID" style="margin: 0 auto;" />
+                    </div>
+
+                    <div class="m-2 form-group " style="width: 90%; ">
+                        <label for="drpAutomatic" class="form-label">Automatic</label>
+                        <select class="form-select" id="drpAutomatic">
+                            <option value=0>No</option>
+                            <option value=1>Yes</option>
+                        </select>
+                    </div>
+
+                    <div class="m-2 form-group pt-3" style="width: 90%">
+                        <label for="txtDescription" class="form-label">Description</label>
+                        <input type="text" class="form-control" id="txtDescription" placeholder="Enter your description">
+                        <div id="error-messageDescription" style="display: none; color: red; font-size:0.7rem"></div>
+                    </div>
+
+                    <div class="m-2 form-group pt-3" style="width: 90%">
+                        <label for="txtDeliverLocation" class="form-label">Deliver Location</label>
+                        <textarea type="text" class="form-control" id="txtDeliverLocation" placeholder="Enter your deliver location"></textarea>
+                        <div id="error-messageDeliverLocation" style="display: none; color: red; font-size:0.7rem"></div>
+                    </div>
+
+                    <div class="m-2 form-group" style="width: 90%">
+                        <label for="txtMaxDeliverDate" class="form-label pt-3">Delivery Date</label>
+                        <input type="date" class="form-control" id="txtMaxDeliverDate" placeholder="Enter the maximum date for delivery">
+                        <div id="error-messageMaxDeliverDate" style="display: none; color: red; font-size:0.7rem"></div>
+                    </div>
+
+                    <div class="m-2 form-group " style="width: 90%">
+                        <label for="txtMaxOfferDate" class="form-label pt-3">Offer Date</label>
+                        <input type="date" class="form-control" id="txtMaxOfferDate" placeholder="Enter the maximum date for offers">
+                        <div id="error-messageMaxOfferDate" style="display: none; color: red; font-size:0.7rem"></div>
+                    </div>
+
+                    <div class="m-2 form-group" style="width: 90%">
+                        <label for="txtBudget" class="form-label pt-3">Budget</label>
+                        <input type="number" class="form-control" id="txtBudget" placeholder="Enter your budget">
+                        <div id="error-messageBudget" style="display: none; color: red; font-size:0.7rem"></div>
+                    </div>
+
+                    <div class="m-2 form-group" style="width: 90%">
+                        <label for="drpStatus" class="form-label pt-3">Status</label>
+                        <select class="form-select" id="drpStatus">
+                            <option value=0>Open</option>
+                            <option value=1>Closed</option>
+                            <option value=2>Ongoing</option>
+                            <option value=3>Finished</option>
+                            <option value=4>Terminated</option>
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="m-2 form-group container pt-2">
+                <div class="d-flex justify-content-center pt-2">
+                    <div class="form-group" style="width: 50%;">
+                        <div class="d-flex justify-content-center pt-3">
+                            <button id="btnCreate" class="source-button btn btn-dark btn-xs mx-2" type="button" tabindex="0"><i class="bi bi-code">Publish Tender</i></button>
+                            <button id="btnUpdate" class="source-button btn btn-dark btn-xs mx-2" type="button" tabindex="0"><i class="bi bi-code">Update Tender</i></button>
+                            <button id="btnDelete" class="source-button btn btn-dark btn-xs mx-2" type="button" tabindex="0"><i class="bi bi-code">Delete Tender</i></button>
+                            <button id="btnNew" class="source-button btn btn-dark btn-xs mx-2" type="button" tabindex="0"><i class="bi bi-code">New Tender</i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            </fieldset>
+        </form>
+    </section>
+  </body>
+</html>

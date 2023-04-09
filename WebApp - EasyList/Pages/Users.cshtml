@@ -1,0 +1,88 @@
+﻿@page
+@model WebApp___EasyList.Pages.UsersModel
+@{
+    ViewData["Title"] = "Users";
+}
+<script src="~/js/users.js"></script>
+<div class="bs-docs-section d-flex flex-column">
+    <br />
+    <legend>Users</legend>
+    <div class="row">
+        <table id="tblPermission" class="display" style="width:100%">
+            <thead>
+            <th>ID</th>
+            <th>Name</th>
+            <th>First Lastname</th>
+            <th>Second Lastname</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Registration Date</th>
+            <th>Status</th>
+            </thead>
+        </table>
+        <br />
+    </div>
+    <div class="row d-flex justify-content-center">
+        <div class="col-lg-10">
+            <div class="bs-component">
+                <form>
+                    <fieldset>
+                        <legend>User Form</legend>
+                        <div class="w-100 d-flex flex-row justify-content-between">
+                            <div class="w-50 m-2 form-group">
+                                <label for="txtName" class="form-label mt-1">Name</label>
+                                <input type="text" class="form-control" id="txtName" aria-describedby="emailHelp" placeholder="Enter the name" />
+                            </div>
+                            <div class="w-50 m-2 form-group">
+                                <label for="txtFirstLastname" class="form-label mt-1">First Lastname</label>
+                                <input type="text" class="form-control" id="txtFirstLastname" aria-describedby="emailHelp" placeholder="Enter the first lastname" />
+                            </div>
+                            <div class="w-50 m-2 form-group">
+                                <label for="txtSecondLastname" class="form-label mt-1">Second Lastname</label>
+                                <input type="text" class="form-control" id="txtSecondLastname" aria-describedby="emailHelp" placeholder="Enter the second lastname" />
+                            </div>
+                        </div>
+                        <div class="w-100 d-flex flex-row justify-content-between">
+                            <div class="w-50 m-2 form-group">
+                                <label for="txtID" class="form-label mt-1">ID</label>
+                                <input disabled type="email" class="form-control" id="txtID" aria-describedby="emailHelp" placeholder="User ID" />
+                            </div>
+                            <div class="w-50 m-2 form-group">
+                                <label for="txtEmail" class="form-label mt-1">Email address</label>
+                                <input type="email" class="form-control" id="txtEmail" aria-describedby="emailHelp" placeholder="Enter the email" />
+                            </div>
+                            <div class="w-50 m-2 form-group">
+                                <label for="txtPhone" class="form-label mt-1">Phone number</label>
+                                <input type="email" class="form-control" id="txtPhone" aria-describedby="emailHelp" placeholder="Enter the phone number" />
+                                <small id="emailHelp" class="form-text text-muted">Please insert only CR numbers.</small>
+                            </div>
+                            <div class="w-25 m-2 form-group">
+                                <label for="drpStatus" class="form-label mt-1">User Status</label>
+                                <select class="form-select" id="drpStatus">
+                                    <option value=0>Active</option>
+                                    <option value=1>Suspended</option>
+                                    <option value=2>Banned</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="w-100 d-flex flex-row justify-content-center">
+                            <div class="w-100 m-2 form-group">
+                                <label for="userPic" class="form-label mt-1">Attach the user profile picture.</label>
+                                <div class="d-flex flex-column align-items-center">
+                                    <img id="imgUser" class="img-thumbnail w-25 mb-2" alt="" />
+                                    <input class="form-control" accept="image/png, image/jpeg" type="file" id="userPic" />
+                                </div>
+                            </div>
+                        </div>
+                </form>
+                <br />
+                <div class="d-flex flex-row justify-content-around">
+                    <button id="btnNew" class="source-button btn btn-info w-25 mx-4" type="button" tabindex="0"><i class="bi bi-code">New</i></button>
+                    <button id="btnCreate" class="source-button btn btn-primary w-25 mx-4" type="button" tabindex="0"><i class="bi bi-code">Save</i></button>
+                    <button id="btnUpdate" class="source-button btn btn-warning w-25 mx-4" type="button" tabindex="0"><i class="bi bi-code">Update</i></button>
+                    <button id="btnDelete" class="source-button btn btn-danger w-25 mx-4" type="button" tabindex="0"><i class="bi bi-code">Delete</i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
