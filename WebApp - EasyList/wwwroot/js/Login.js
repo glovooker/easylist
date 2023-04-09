@@ -66,8 +66,6 @@
             // Store user credentials in local storage
             localStorage.setItem('email', email);
             localStorage.setItem('password', password);
-
-            toastr.success('Welcome!', 'Login successful')
         }
     }
 }
