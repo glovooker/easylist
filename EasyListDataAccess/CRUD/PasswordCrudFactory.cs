@@ -96,6 +96,12 @@ namespace EasyListDataAccess.CRUD
             var sqlPassword = _mapper.GetDeleteStatement(password);
             dao.ExecuteProcedure(sqlPassword);
         }
+
+        public void DisPassword(int id)
+        {
+            var sqlPassword = _mapper.GetDisablePasswordStatement(id);
+            dao.ExecuteProcedure(sqlPassword);
+        }
     }
 }
 

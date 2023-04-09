@@ -7,6 +7,7 @@ namespace DTOs
 		public string password { get; set; }
 		public DateTime creationDate { get; set; }
 		public Boolean isActive { get; set; }
+		public Boolean isTemporal { get; set; }
 	}
 }
 

@@ -91,6 +91,7 @@ namespace EasyListCORE
             password.password = currentUser.password;
             password.idUser = currentUser.Id;
             password.isActive = true;
+            password.isTemporal = false;
             password.creationDate = currentUser.registrationDate;
 
             crudPassword.Create(password);
@@ -121,6 +122,53 @@ namespace EasyListCORE
         {
             var crudUser = new UserCrudFactory();
             return crudUser.RetrieveByDate<User>(startDate, endDate);
+        }
+
+        public string RecoverUser(string email)
+        {
+            var crudUser = new UserCrudFactory();
+            var crudPassword = new PasswordCrudFactory();
+
+            var currentUser = crudUser.RetrieveByEmail<User>(email);
+
+            if (currentUser == null)
+            {
+                throw new Exception("User does not exist!");
+            }
+
+            var id = currentUser.Id;
+
+            crudPassword.DisPassword(id);
+
+            // Generar una contraseña aleatoria que cumpla con los requisitos
+            const string chars = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+            var random = new Random();
+
+            string newPassword;
+
+            do
+            {
+                newPassword = new string(
+                    Enumerable.Repeat(chars, 8)
+                    .Select(s => s[random.Next(s.Length)])
+                    .ToArray());
+            }
+            while (!newPassword.Any(char.IsUpper) || !newPassword.Any(char.IsLower) || !newPassword.Any(char.IsDigit) || !newPassword.Any(char.IsSymbol));
+
+            currentUser.password = newPassword;
+
+            var password = new Password();
+            password.Id = currentUser.Id;
+            password.password = newPassword;
+            password.idUser = currentUser.Id;
+            password.isActive = true;
+            password.isTemporal = true;
+            password.creationDate = currentUser.registrationDate;
+
+            crudPassword.Create(password);
+
+            // Devuelve la nueva contraseña generada
+            return newPassword;
         }
     }
 }

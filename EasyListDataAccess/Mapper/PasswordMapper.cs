@@ -15,7 +15,8 @@ namespace EasyListDataAccess.Mapper
                 idUser = (int)row["ID_USUARIO"],
                 password = (string)row["CONTRASENIA"],
                 creationDate = (DateTime)row["FECHACREACION"],
-                isActive = (Boolean)row["ACTIVA"]
+                isActive = (Boolean)row["ACTIVA"],
+                isTemporal = (Boolean)row["TEMPORAL"]
             };
 
             return password;
@@ -80,6 +81,7 @@ namespace EasyListDataAccess.Mapper
             sqlOperation.AddIntParam("P_ID_USUARIO", password.idUser);
             sqlOperation.AddVarcharParam("P_CONTRASENIA", EncryptPassword(password.password));
             sqlOperation.AddBoolParam("P_ACTIVA", password.isActive);
+            sqlOperation.AddBoolParam("P_TEMPORAL", password.isTemporal);
 
             return sqlOperation;
         }
@@ -140,6 +142,16 @@ namespace EasyListDataAccess.Mapper
 
             sqlOperation.ProcedureName = "DEL_CONTRASENIA_PR";
             sqlOperation.AddIntParam("P_ID_CONTRASENIA", password.Id);
+
+            return sqlOperation;
+        }
+
+        public SqlOperation GetDisablePasswordStatement(int id)
+        {
+            var sqlOperation = new SqlOperation();
+
+            sqlOperation.ProcedureName = "DESC_CONTRASENIA_PR";
+            sqlOperation.AddIntParam("P_ID_USUARIO", id);
 
             return sqlOperation;
         }
