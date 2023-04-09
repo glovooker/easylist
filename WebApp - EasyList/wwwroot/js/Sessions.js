@@ -16,7 +16,7 @@
                             Hi, ${user.name}!
                         </button>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                            <a class="dropdown-item" asp-area="" asp-page="/Settings">Settings</a>
+                            <a class="dropdown-item" href="/Settings" asp-area="" asp-page="/Settings">Settings</a>
                             <a class="dropdown-item" href="#" onclick="logout()">Logout</a>
                         </div>
                     </div>

@@ -44,6 +44,12 @@ body {
     width: 100%;
 }
 
+.card-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 @media screen and (min-width: 768px) {
     .banner_image {
         justify-content: center;
