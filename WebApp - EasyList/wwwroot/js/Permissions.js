@@ -52,7 +52,7 @@ function ManagePermissions() {
       var serviceCreate = view.ApiService + '/createPermission';
 
         ctrlActions.PostToAPIv1(serviceCreate, permission, function () {
-        alert('Permiso creado con éxito');
+        toastr.success('Permission created successfully');
         var view = new ManagePermissions();
 
         view.ReloadTable();
@@ -74,7 +74,7 @@ function ManagePermissions() {
       var serviceCreate = view.ApiService + '/updatePermission';
 
       ctrlActions.PutToAPI(serviceCreate, permission, function () {
-        alert('Permiso actualizado con éxito');
+        toastr.success('Permission updated successfully');
         var view = new ManagePermissions();
 
         view.ReloadTable();
@@ -93,7 +93,7 @@ function ManagePermissions() {
     var serviceDelete = this.ApiService + '/deletePermission';
 
     ctrlActions.DeleteToAPI(serviceDelete, permission, function () {
-      alert('Permiso eliminado con éxito');
+      toastr.success('Permission deleted successfully');
       var view = new ManagePermissions();
 
       view.ReloadTable();

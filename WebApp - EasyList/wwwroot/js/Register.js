@@ -33,7 +33,7 @@
         var serviceCreate = view.ApiService + '/registerUser';
 
         ctrlActions.PostToAPIv1(serviceCreate, user, function () {
-            alert('Usuario registrado con éxito');
+            toastr.success('User registered successfully');
             var view = new LoginView();
 
             view.InitView();
