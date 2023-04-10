@@ -22,6 +22,7 @@ namespace EasyListCORE
                 }
             }
 
+
             crudPassword.Create(password);
         }
 
@@ -93,11 +94,16 @@ namespace EasyListCORE
         public bool ValidatePassword(string email, string password)
         {
             var crudPassword = new PasswordCrudFactory();
-            var hashedPassword = crudPassword.RetrieveByEmail<Password>(email).password;
+            var UserPasswordObj = crudPassword.RetrieveByEmail<Password>(email);
+
+            if (UserPasswordObj == null)
+            {
+                return false;
+            }
 
             password = Convert.ToBase64String(MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(password)));
 
-            if (password == hashedPassword)
+            if (password == UserPasswordObj.password)
             {
                 return true;
             }
