@@ -168,5 +168,21 @@ namespace EasyListAPI.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("availableUser")]
+        public async Task<IActionResult> AvailableUser(string email, string newpassword)
+        {
+            try
+            {
+                var um = new UserManager();
+                var newPassword = um.AvailableUser(email, newpassword);
+                return Ok(newPassword);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }

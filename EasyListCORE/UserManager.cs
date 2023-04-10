@@ -141,7 +141,7 @@ namespace EasyListCORE
             crudPassword.DisPassword(id);
 
             // Generar una contraseña aleatoria que cumpla con los requisitos
-            const string chars = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+            const string chars = "!\"#$%'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
             var random = new Random();
 
             string newPassword;
@@ -167,8 +167,51 @@ namespace EasyListCORE
 
             crudPassword.Create(password);
 
+            var nm = new NotificationManager();
+
+            var message = "<html><body><p>Hello " + currentUser.name + " " + currentUser.firstLastName + ",</p>" +
+            "<p>We're sorry that you've had trouble logging in to EasyList.</p>" +
+            "<p>Below you'll find your temporary password to access your account: <b>" + newPassword + "</b>.</p>" +
+            "<p>Please consider changing your password as soon as possible to ensure the security of your account.</p>" +
+            "<p>Thank you for using EasyList.</p>" +
+            "<p>Best regards,</p>" +
+            "<p>The EasyList team</p></body></html>";
+
+            nm.NotifyByEmail(message, email);
+
             // Devuelve la nueva contraseña generada
             return newPassword;
+
+        }
+
+        public string AvailableUser(string email, string newpassword)
+        {
+            var crudUser = new UserCrudFactory();
+            var crudPassword = new PasswordCrudFactory();
+
+            var currentUser = crudUser.RetrieveByEmail<User>(email);
+
+            if (currentUser == null)
+            {
+                throw new Exception("User does not exist!");
+            }
+
+            var id = currentUser.Id;
+
+            crudPassword.DisPassword(id);
+
+            var password = new Password();
+            password.Id = currentUser.Id;
+            password.password = newpassword;
+            password.idUser = currentUser.Id;
+            password.isActive = true;
+            password.isTemporal = false;
+            password.creationDate = currentUser.registrationDate;
+
+            crudPassword.Create(password);
+
+            return password.ToString();
+
         }
     }
 }

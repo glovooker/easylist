@@ -26,6 +26,7 @@
     this.Login = function () {
         var email = $("#txtEmail").val();
         var password = $("#txtPassword").val();
+        var newpassword = $("#txtNewPassword").val();
 
         if (email === '' || password === '') {
             if (email === '') {
@@ -39,6 +40,12 @@
                 $("#error-messagePass").show();
             } else {
                 $("#error-messagePass").hide();
+            }
+            if (password === '') {
+                $("#error-messageNewPass").html("The New Password is required");
+                $("#error-messageNewPass").show();
+            } else {
+                $("#error-messageNewPass").hide();
             }
         } else {
 
@@ -57,16 +64,47 @@
                     toastr.error('Error', 'Incorrect email or password');
                 } else {
 
+                    view.CreNewPassword();
                     localStorage.setItem('userId', result.response.id);
                     localStorage.setItem('userEmail', email);
                     localStorage.setItem('email', email);
                     localStorage.setItem('password', password);
                     toastr.success('Welcome!', 'Login successful');
-                    window.location.href = "/";
+                    toastr.success('Verification successful!', 'Password has been changed successfully');
+
+                    // Agregar tiempo de espera antes de redireccionar
+                    setTimeout(function () {
+                        window.location.href = "/";
+                    }, 5000);
                     
                 }
             });
         }
+    }
+
+    this.CreNewPassword = function () {
+
+        var email = $("#txtEmail").val();
+        var newpassword = $("#txtNewPassword").val();
+
+        //Realizar la logica para enviar los datos al Backend
+        var view = new LoginView();
+        var ctrlActions = new ControlActions();
+        var serviceRecover = view.ApiService + '/availableUser';
+        var url = `${serviceRecover}?email=${email}&newpassword=${newpassword}`;
+        toastr.options = {
+            "positionClass": "toast-top-center",
+            "showDuration": "100"
+        };
+
+        var data = {
+            email: $("#txtEmail").val(),
+            newpassword: $("#txtNewPassword").val()
+        };
+
+        ctrlActions.PostToAPIv1(url, data, function () {
+
+        });
     }
 }
 
