@@ -22,7 +22,8 @@ namespace EasyListAPI.Controllers
 
                 return Ok();
 
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -34,7 +35,7 @@ namespace EasyListAPI.Controllers
         public async Task<IActionResult> UpdateTender(Tender tender)
         {
             try
-            { 
+            {
 
                 var tm = new TenderManager();
 
@@ -42,7 +43,8 @@ namespace EasyListAPI.Controllers
 
                 return Ok();
 
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -61,7 +63,8 @@ namespace EasyListAPI.Controllers
 
                 return Ok();
 
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -80,7 +83,8 @@ namespace EasyListAPI.Controllers
 
                 return Ok(tender);
 
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -96,7 +100,8 @@ namespace EasyListAPI.Controllers
                 var tm = new TenderManager();
 
                 return Ok(tm.RetrieveAll());
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }

@@ -57,7 +57,8 @@
                     toastr.error('Error', 'Incorrect email or password');
                 } else {
                     localStorage.setItem('userId', result.response.id);
-                    toastr.success('¡Welcome!', 'Login successful');
+                    localStorage.setItem('userEmail', email);
+                    toastr.success('Welcome!', 'Login successful');
                     window.location.href = "/";
                     
                 }
