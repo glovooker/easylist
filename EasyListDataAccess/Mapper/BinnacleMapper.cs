@@ -10,13 +10,10 @@ namespace EasyListDataAccess.Mapper
             var binnacle = new Binnacle()
             {
                 Id = (int)row["ID_BITACORA"],
-                user_id = (int)row["ID_USUARIO"],
                 dateHour = (DateTime)row["FECHAHORA"],
                 actionType = (string)row["TIPOACCION"],
                 affectedObject_id = (int)row["IDOBJETOAFECTADO"],
                 tableAffected = (string)row["TABLAAFECTADA"],
-                oldValue = (string)row["VALORANTIGUO"],
-                newValue = (string)row["VALORNUEVO"]
             };
             return binnacle;
         }
@@ -68,13 +65,10 @@ namespace EasyListDataAccess.Mapper
             var sqlOperation = new SqlOperation();
 
             sqlOperation.ProcedureName = "CRE_BITACORA_PR";
-            sqlOperation.AddIntParam("P_ID_USUARIO", binnacle.user_id);
             sqlOperation.AddDateTimeParam("P_FECHAHORA", binnacle.dateHour);
             sqlOperation.AddVarcharParam("P_TIPOACCION", binnacle.actionType);
             sqlOperation.AddIntParam("P_IDOBJETOAFECTADO", binnacle.affectedObject_id);
             sqlOperation.AddVarcharParam("P_TABLAAFECTADA", binnacle.tableAffected);
-            sqlOperation.AddVarcharParam("P_VALORANTIGUO", binnacle.oldValue);
-            sqlOperation.AddVarcharParam("P_VALORNUEVO", binnacle.newValue);
 
             return sqlOperation;
         }
