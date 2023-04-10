@@ -1,13 +1,6 @@
 ﻿using DTOs;
 using SendGrid;
 using SendGrid.Helpers.Mail;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
 
@@ -23,19 +16,19 @@ namespace EasyListCORE
             var validationDateCreation = validation.validationDateCreation;
             if (validationType == "EMAIL")
             {
-                NotifyValidationByEmail(validationCode, validationDateCreation , user.email);
+                NotifyValidationByEmail(validationCode, validationDateCreation, user.email);
             }
             else if (validationType == "PHONE")
             {
-                NotifyValidationByPhone(validationCode, validationDateCreation , user.phone);
+                NotifyValidationByPhone(validationCode, validationDateCreation, user.phone);
             }
             else if (validationType == "BOTH")
             {
-                NotifyValidationByEmail( validationCode, validationDateCreation, user.email);
-                NotifyValidationByPhone( validationCode, validationDateCreation, user.phone);
+                NotifyValidationByEmail(validationCode, validationDateCreation, user.email);
+                NotifyValidationByPhone(validationCode, validationDateCreation, user.phone);
             }
         }
-        private async Task NotifyValidationByEmail(string validationCode, DateTime validationDateCreation,  string email)
+        private async Task NotifyValidationByEmail(string validationCode, DateTime validationDateCreation, string email)
         {
 
             var apiKey = "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";
@@ -60,6 +53,30 @@ namespace EasyListCORE
                 from: new Twilio.Types.PhoneNumber("+17473194370"),
                 to: new Twilio.Types.PhoneNumber($"+50687733016")
             );
+        }
+
+        private static string _sendGridApiKey = "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";
+        private static EmailAddress _from = new EmailAddress("lmongec@ucenfotec.ac.cr", "EasyList");
+
+        public async void NotifyByEmail(string message, string contact)
+        {
+            var client = new SendGridClient(_sendGridApiKey);
+            var from = _from;
+            var subject = "EasyList Notification";
+            var to = new EmailAddress(contact, "EasyList User");
+            var plainTextContent = message;
+            var htmlContent = message;
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+
+            try
+            {
+                var response = await client.SendEmailAsync(msg);
+                Console.WriteLine("Correo electrónico enviado exitosamente a {0}", contact);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al enviar el correo electrónico: {0}", ex.Message);
+            }
         }
     }
 }

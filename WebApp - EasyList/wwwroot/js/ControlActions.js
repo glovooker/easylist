@@ -96,8 +96,12 @@
         ).fail(function (response) {
             var data = response.responseJSON;
             var ctrlActions = new ControlActions();
-            ctrlActions.ShowMessage('E', data.ExceptionMessage);
-            console.log(data);
+            if (data) {
+                ctrlActions.ShowMessage('E', data.ExceptionMessage);
+                console.log(data);
+            } else {
+                ctrlActions.ShowMessage('E', 'An error occurred');
+            }
         });
     };
 

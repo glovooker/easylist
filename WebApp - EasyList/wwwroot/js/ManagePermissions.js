@@ -149,11 +149,11 @@ function PermissionsView() {
                 }
 
                 if (isMatch) {
-                    alert("El registro con ID " + permissionValue[i].permissionId + " no ha cambiado su propiedad isChecked");
+                    toastr.success("The record with ID " + permissionValue[i].permissionId + " has not changed its isChecked property.");
                 }
             }
         } else {
-            alert("El objeto permissionValue no está definido correctamente.");
+            toastr.error("The permissionValue object is not defined correctly.");
         }
 
         var view = new PermissionsView();
@@ -182,7 +182,7 @@ function PermissionsView() {
         var serviceCreate = 'ManagePermission/createPermission';
 
         ctrlActions.PostToAPIv1(serviceCreate, managepermission, function () {
-            //alert('Permiso creado con éxito');
+            //toastr.success('Permission created successfully');
         });
     };
 
@@ -198,7 +198,7 @@ function PermissionsView() {
         var serviceDelete = 'ManagePermission/DeletePermission';
 
         ctrlActions.DeleteToAPI(serviceDelete, managepermission, function () {
-            //alert('Permiso eliminado con éxito');
+            //toastr.success('Permission deleted successfully');
         });
     };
 
