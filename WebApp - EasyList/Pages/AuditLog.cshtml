@@ -1,0 +1,22 @@
+﻿@page
+@model WebApp___EasyList.Pages.AuditLogModel
+@{
+    ViewData["Title"] = "Action Log";
+}
+<script src="~/js/actionlog.js"></script>
+<div class="bs-docs-section d-flex flex-column">
+    <br />
+    <legend>Action Log</legend>
+    <div class="row">
+        <table id="tblLogAction" class="display" style="width:100%">
+            <thead>
+            <th>ID</th>
+            <th>Action DateTime</th>
+            <th>Action Type</th>
+            <th>Affected Object ID</th>
+            <th>Affected Table</th>
+            </thead>
+        </table>
+        <br />
+    </div>
+</div>

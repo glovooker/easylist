@@ -72,15 +72,16 @@
             var ctrlActions = new ControlActions();
             var serviceCreate = view.ApiService + '/registerUser';
 
-        ctrlActions.PostToAPIv1(serviceCreate, user, function () {
-            alert('Usuario registrado con éxito');
-            var view = new RegisterView();
-            view.InitView();
-            localStorage.setItem('userEmail', user.email);
-            window.location.href = "/ValidationAccount";  
+            ctrlActions.PostToAPIv1(serviceCreate, user, function () {
+                alert('Usuario registrado con éxito');
+                var view = new RegisterView();
+                view.InitView();
+                localStorage.setItem('userEmail', user.email);
+                window.location.href = "/ValidationAccount";
 
-        });
-    };
+            });
+        };
+    }
 }
 
 //Instanciamiento inicial de la clase
