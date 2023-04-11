@@ -272,8 +272,6 @@ function ManageUsers() {
     };
 }
 
-//Instanciamiento inicial de la clase
-//se ejecuta siempre al finalizar la carga de la vista.
 $(document).ready(function () {
     var view = new ManageUsers();
     view.InitView();
