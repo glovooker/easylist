@@ -28,7 +28,7 @@
         var password = $("#txtPassword").val();
         var newpassword = $("#txtNewPassword").val();
 
-        if (email === '' || password === '') {
+        if (email === '' || password === '' || newpassword === '') {
             if (email === '') {
                 $("#error-messageEmail").html("Email is required");
                 $("#error-messageEmail").show();
@@ -41,7 +41,7 @@
             } else {
                 $("#error-messagePass").hide();
             }
-            if (password === '') {
+            if (newpassword === '') {
                 $("#error-messageNewPass").html("The New Password is required");
                 $("#error-messageNewPass").show();
             } else {
@@ -63,20 +63,46 @@
                 if (result.status === 400) {
                     toastr.error('Error', 'Incorrect email or password');
                 } else {
+                    if (result.response.userStatus === 0) {
+                        view.CreNewPassword();
+                        localStorage.setItem('userId', result.response.id);
+                        localStorage.setItem('userEmail', email);
+                        localStorage.setItem('email', email);
+                        localStorage.setItem('password', password);
+                        toastr.success('Welcome!', 'Login successful');
+                        toastr.success('Verification successful!', 'Password has been changed successfully');
 
-                    view.CreNewPassword();
-                    localStorage.setItem('userId', result.response.id);
-                    localStorage.setItem('userEmail', email);
-                    localStorage.setItem('email', email);
-                    localStorage.setItem('password', password);
-                    toastr.success('Welcome!', 'Login successful');
-                    toastr.success('Verification successful!', 'Password has been changed successfully');
+                        // Agregar tiempo de espera antes de redireccionar
+                        setTimeout(function () {
+                            window.location.href = "/";
+                        }, 5000);
+                    }
+                    else if (result.response.userStatus === 1) {
+                        toastr.error('Error', 'Your account is suspended');
+                    }
+                    else if (result.response.userStatus === 2) {
+                        toastr.error('Error', 'Your account is banned');
+                    }
+                    else if (result.response.userStatus === 3) {
+                        toastr.error('Error', 'Your account is deleted');
+                    }
+                    else if (result.response.userStatus === 4) {
+                        var creNewPassword = view.CreNewPassword();
+                        if (creNewPassword !== 1) {
+                            $("#error-messageNewPass").hide();
+                            localStorage.setItem('userId', result.response.id);
+                            localStorage.setItem('userEmail', email);
+                            localStorage.setItem('email', email);
+                            localStorage.setItem('password', password);
+                            toastr.success('Welcome!', 'Login successful');
+                            toastr.success('Verification successful!', 'Password has been changed successfully');
 
-                    // Agregar tiempo de espera antes de redireccionar
-                    setTimeout(function () {
-                        window.location.href = "/";
-                    }, 5000);
-                    
+                            toastr.error('Error', 'Your account is inactive');
+                            setTimeout(function () {
+                                window.location.href = "/ValidationAccount";
+                            }, 3000);
+                        }
+                    }           
                 }
             });
         }
@@ -86,6 +112,8 @@
 
         var email = $("#txtEmail").val();
         var newpassword = $("#txtNewPassword").val();
+        var regex = /^(?!.*(\w)\1{4})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=.*+-¿?!¡])(?!.*\s).{8,}$/;
+
 
         //Realizar la logica para enviar los datos al Backend
         var view = new LoginView();
@@ -101,10 +129,16 @@
             email: $("#txtEmail").val(),
             newpassword: $("#txtNewPassword").val()
         };
+        if (!regex.test(newpassword)) {
+            $("#error-messageNewPass").html("Password must have at least 8 characters, including special characters, numbers, uppercase and lowercase letters.");
+            $("#error-messageNewPass").show();
+            return 1;
+        } else {
+            $("#error-messagePass").hide();
+            ctrlActions.PostToAPIv1(url, data, function () {
 
-        ctrlActions.PostToAPIv1(url, data, function () {
-
-        });
+            });
+        }
     }
 }
 

@@ -56,14 +56,30 @@
                 if (result.status === 400) {
                     toastr.error('Error', 'Incorrect email or password');
                 } else {
+                    if (result.response.userStatus === 0) {
+                        localStorage.setItem('userId', result.response.id);
+                        localStorage.setItem('userEmail', email);
+                        localStorage.setItem('email', email);
+                        localStorage.setItem('password', password);
 
-                    localStorage.setItem('userId', result.response.id);
-                    localStorage.setItem('userEmail', email);
-                    localStorage.setItem('email', email);
-                    localStorage.setItem('password', password);
-                    toastr.success('Welcome!', 'Login successful');
-                    window.location.href = "/";
-                    
+                        toastr.success('Welcome!', 'Login successful');
+                        window.location.href = "/";
+                    }
+                    else if (result.response.userStatus === 1) {
+                        toastr.error('Error', 'Your account is suspended');
+                    }
+                    else if (result.response.userStatus === 2) {
+                        toastr.error('Error', 'Your account is banned');
+                    }
+                    else if (result.response.userStatus === 3) {
+                        toastr.error('Error', 'Your account is deleted');
+                    }
+                    else if (result.response.userStatus === 4) {
+                        toastr.error('Error', 'Your account is inactive');
+                        setTimeout(function () {
+                            window.location.href = "/ValidationAccount";
+                            }, 3000);                     
+                    }
                 }
             });
         }
