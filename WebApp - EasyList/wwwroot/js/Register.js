@@ -73,7 +73,7 @@
             var serviceCreate = view.ApiService + '/registerUser';
 
             ctrlActions.PostToAPIv1(serviceCreate, user, function () {
-                alert('Usuario registrado con éxito');
+                toastr.success('Success!', 'User registered successfully')
                 var view = new RegisterView();
                 view.InitView();
                 localStorage.setItem('userEmail', user.email);
