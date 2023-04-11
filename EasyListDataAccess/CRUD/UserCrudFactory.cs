@@ -91,8 +91,12 @@ namespace EasyListDataAccess.CRUD
             var sqlPermission = _mapper.GetDeletePermissionsStatement(user);
             dao.ExecuteProcedure(sqlPermission);
 
+            var sqlValidacion = _mapper.GetDeleteValidationStatement(user);
+            dao.ExecuteProcedure(sqlValidacion);
+
             var sqlUser = _mapper.GetDeleteStatement(user);
             dao.ExecuteProcedure(sqlUser);
+
         }
 
         public List<T> RetrieveByDate<T>(string startDate, string endDate)

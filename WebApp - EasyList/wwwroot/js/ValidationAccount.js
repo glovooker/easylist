@@ -155,9 +155,20 @@
                     validation.validationDateExpired = new Date();
                     validation.validationCount = 0;
 
-                    ctrlActions.PostToAPIv1(service, validation, function () {
-                        toastr.success(mensaje, 'The OTP code.');
-                        $("#divCodeOTP").show();
+                    var serviceGetValidation = self.ApiService + "/getValidationByUserId&Status";
+                    var url = serviceGetValidation + "?userId=" + localStorage.getItem('userEmail');
+                    ctrlActions.GetToApi(url, function (result) {
+                        if (result.response != null) {
+                            // Resto del código
+                            $("#divCodeOTP").show();
+
+                        } else {
+                            // El array está vacío o es nulo
+                            ctrlActions.PostToAPIv1(service, validation, function () {
+                                toastr.success(mensaje, 'The OTP code.');
+                                $("#divCodeOTP").show();
+                            });
+                        }
                     });
                 });
             }
