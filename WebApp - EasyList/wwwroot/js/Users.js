@@ -1,6 +1,4 @@
-﻿//Controla el comportamiento de la página/vista de Users.cshtml
-
-//Definición de la clase ManageUsers
+﻿
 function ManageUsers() {
     this.ViewName = 'UserView';
     this.ApiService = 'User';
@@ -10,42 +8,36 @@ function ManageUsers() {
         $('#formContainer').hide();
         $('#btnBack').hide();
 
-        //Asignación del evento de click del botón
         $('#btnCreate').click(function () {
             var view = new ManageUsers();
             view.Create();
         });
 
-        //Asignación del evento de click del botón
         $('#btnUpdate').click(function () {
             var view = new ManageUsers();
             view.Update();
         });
 
-        //Asignación del evento de click del botón
-        $('#btnNew').click(function () {
-            var view = new ManageUsers();
-            view.New();
-        });
-
-        //Asignación del evento de click del botón
-        $('#btnBack').click(function () {
-            var view = new ManageUsers();
-            view.Back();
-        });
-
-        //Asignación del evento de click del botón
         $('#btnDelete').click(function () {
             var view = new ManageUsers();
             view.Delete();
         });
 
-        //Llamado al evento de cargar la tabla con toda la data de usuarios
+        $('#btnNew').click(function () {
+            var view = new ManageUsers();
+            view.New();
+        });
+
+        $('#btnBack').click(function () {
+            var view = new ManageUsers();
+            view.Back();
+        });
+
         this.LoadTable();
     };
 
     this.Create = function () {
-        //Inicialización del DTO de user
+
         var user = {};
         user.id = parseInt($('#txtID').val()) || 0;
         user.name = $('#txtName').val();
@@ -57,19 +49,19 @@ function ManageUsers() {
         user.registrationDate = new Date().toISOString();
         user.userStatus = parseInt($('#drpStatus').val());
 
-        // Call CaptureImageURL with a callback function
+
         CaptureImageURL('userPic', function (imageUrl) {
             var view = new ManagePermissions();
             if (imageUrl === undefined) {
                 imageUrl = document.getElementById('imgUser').src;
             }
             user.userPicture = imageUrl;
-            // Llamado al API
+
             var ctrlActions = new ControlActions();
             var serviceCreate = view.ApiService + '/createUser';
 
             ctrlActions.PostToAPIv1(serviceCreate, user, function () {
-                toastr.success('User created successfully');
+                toastr.success('User created', 'Success!');
                 var view = new ManageUsers();
 
                 $('#tblContainer').show();
@@ -94,7 +86,6 @@ function ManageUsers() {
         user.registrationDate = new Date().toISOString();
         user.userStatus = parseInt($('#drpStatus').val());
 
-        // Call CaptureImageURL with a callback function
         CaptureImageURL('userPic', function (imageUrl) {
             var view = new ManageUsers();
             if (imageUrl === undefined) {
@@ -106,7 +97,7 @@ function ManageUsers() {
             var serviceCreate = view.ApiService + '/updateUser';
 
             ctrlActions.PutToAPI(serviceCreate, user, function () {
-                toastr.success('User updated successfully');
+                toastr.success('User updated', 'Success!');
                 var view = new ManageUsers();
 
                 $('#tblContainer').show();
@@ -190,7 +181,8 @@ function ManageUsers() {
                     4: 'Inactive',
                 };
                 return statusMap[data] || data;
-            }, };
+            },
+        };
 
         $('#tblUsers').dataTable({
             'ajax': {
@@ -230,12 +222,12 @@ function ManageUsers() {
         if (file) {
             const reader = new FileReader();
             reader.addEventListener('load', (event) => {
-                callback(event.target.result); // call the callback with the image URL
+                callback(event.target.result);
             });
 
             reader.readAsDataURL(file);
         } else {
-            callback(); // call the callback with no image URL
+            callback();
         }
     }
 
@@ -252,7 +244,6 @@ function ManageUsers() {
         $('#btnDelete').prop('disabled', true);
         $('#btnUpdate').prop('disabled', true);
 
-
         this.CleanForm();
     };
 
@@ -264,7 +255,6 @@ function ManageUsers() {
         $('#btnCreate').prop('disabled', true);
         $('#btnDelete').prop('disabled', false);
         $('#btnUpdate').prop('disabled', false);
-
 
         this.CleanForm();
     };
