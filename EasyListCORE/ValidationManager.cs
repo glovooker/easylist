@@ -83,6 +83,22 @@ namespace EasyListCORE
             }
 
         }
+        public void Delete(User user) { 
+            var crudValidation = new UserCrudFactory();
+            var existValidation = crudValidation.RetrieveById<User>(user.Id);
+            if (existValidation != null)
+            {
+                crudValidation.Delete(user);
+            }
+            else
+                {
+                throw new Exception("User does not exist!");
+            }
+            
+
+            
+        
+        }
 
 
 
