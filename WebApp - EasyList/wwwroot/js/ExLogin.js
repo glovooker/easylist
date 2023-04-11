@@ -90,11 +90,6 @@
                         var creNewPassword = view.CreNewPassword();
                         if (creNewPassword !== 1) {
                             $("#error-messageNewPass").hide();
-                            localStorage.setItem('userId', result.response.id);
-                            localStorage.setItem('userEmail', email);
-                            localStorage.setItem('email', email);
-                            localStorage.setItem('password', password);
-                            toastr.success('Welcome!', 'Login successful');
                             toastr.success('Verification successful!', 'Password has been changed successfully');
 
                             toastr.error('Error', 'Your account is inactive');
