@@ -58,7 +58,6 @@
                 } else {
                     if (result.response.userStatus === 0) {
                         localStorage.setItem('userId', result.response.id);
-                        localStorage.setItem('userEmail', email);
                         localStorage.setItem('email', email);
                         localStorage.setItem('password', password);
 
@@ -75,6 +74,7 @@
                         toastr.error('Error', 'Your account is deleted');
                     }
                     else if (result.response.userStatus === 4) {
+                        localStorage.setItem('userEmail', email);
                         toastr.error('Error', 'Your account is inactive');
                         setTimeout(function () {
                             window.location.href = "/ValidationAccount";
