@@ -4,28 +4,33 @@
     ViewData["Title"] = "Products";
 }
 <script src="~/js/products.js"></script>
-<div class="row">
-    <div class="col-md-12">
-        <h1>Products</h1>
-        <button type="button" id="btn-create" class="btn btn-info float-end mb-3">Add Product</button>
+<div class="bs-docs-section d-flex flex-column">
+    <br />
+    <div class="d-flex flex-row justify-content-between">
+        <h3 class="display-7 mb-3">Products</h3>
+        <div>
+            <button type="button" id="btn-create" class="btn btn-info float-end mb-3">Add Product</button>
+        </div>
     </div>
-    <table id="tblProducts" class="table" style="width:100%">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Product Name</th>
-                <th></th>
+    <div class="row">
+        <table id="tblProducts" class="table" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Product Name</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+            <tr class="odd">
+                <td>
+                    <input type="text" id="txtName" class="form-control border-0" placeholder="New product" />
+                    <div id="error-productCreate" style="display:none;color:red;font-size:0.7rem"></div>
+                </td>
+                <td>
+                    <button type="button" id="btn-cancel" class="btn btn-warning align-items-center">Cancel</button>
+                </td>
             </tr>
-        </thead>
-        <tbody></tbody>
-        <tr class="odd">
-            <td>
-                <input type="text" id="txtName" class="form-control border-0" placeholder="New product" />
-                <div id="error-productCreate" style="display:none;color:red;font-size:0.7rem"></div>
-            </td>
-            <td>
-                <button type="button" id="btn-cancel" class="btn btn-warning align-items-center">Cancel</button>
-            </td>
-        </tr>
-    </table>
+        </table>
+    </div>
 </div>
