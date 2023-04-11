@@ -48,7 +48,10 @@ function TenderView() {
         tender.automatic = Boolean(parseInt($("#drpAutomatic").val()));
         tender.deliverLocation = $("#txtDeliverLocation").val();
         tender.productTenders = productsTender;
-        console.log(tender);
+
+        tender.productTenders.forEach(function (productTender) {
+            productTender.tender_id = tender.id;
+        })
 
         var isValid = true;
 
@@ -134,7 +137,6 @@ function TenderView() {
         tender.automatic = Boolean(parseInt($("#drpAutomatic").val()));
         tender.deliverLocation = $("#txtDeliverLocation").val();
         tender.productTenders = productsTender;
-        console.log(tender);
 
         var isValid = true;
 

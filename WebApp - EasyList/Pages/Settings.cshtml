@@ -4,9 +4,22 @@
     ViewData["Title"] = "Your Settings";
 }
 <script src="~/js/settings.js"></script>
-<section class="container-fluid">
+<section class="container-fluid mb-4">
     <h3 class="display-7 mt-4 mb-3">Settings</h3>
     <div class="row flex-wrap justify-content-between">
+        <div class="col-12 mb-3" id="profileModule">
+            <div class="card h-100">
+                <div class="card-body d-flex flex-row justify-content-between align-content-center">
+                    <div>
+                        <h5 class="card-title"><i class="bi bi-person-circle text-primary"></i> Profile</h5>
+                        <p class="card-text">View and manage your profile</p>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <a href="/Profile" class="btn btn-outline-secondary"><i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="col-12 mb-3" id="tendersModule">
             <div class="card h-100">
                 <div class="card-body d-flex flex-row justify-content-between align-content-center">
@@ -15,7 +28,7 @@
                         <p class="card-text">View and manage tenders</p>
                     </div>
                     <div class="d-flex align-items-center">
-                        <a href="/Tenders" class="btn btn-primary"><i class="bi bi-arrow-right"></i></a>
+                        <a href="/Tenders" class="btn btn-outline-secondary"><i class="bi bi-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -28,7 +41,7 @@
                         <p class="card-text">View and manage products</p>
                     </div>
                     <div class="d-flex align-items-center">
-                        <a href="/Products" class="btn btn-primary"><i class="bi bi-arrow-right"></i></a>
+                        <a href="/Products" class="btn btn-outline-secondary"><i class="bi bi-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -37,11 +50,11 @@
             <div class="card h-100">
                 <div class="card-body d-flex flex-row justify-content-between align-content-center">
                     <div>
-                        <h5 class="card-title"><i class="bi bi-person-fill text-primary"></i> Users</h5>
+                        <h5 class="card-title"><i class="bi bi-people-fill text-primary"></i> Users</h5>
                         <p class="card-text">View and manage users</p>
                     </div>
                     <div class="d-flex align-items-center">
-                        <a href="/Users" class="btn btn-primary"><i class="bi bi-arrow-right"></i></a>
+                        <a href="/Users" class="btn btn-outline-secondary"><i class="bi bi-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -54,7 +67,7 @@
                         <p class="card-text">View and manage memberships and plans</p>
                     </div>
                     <div class="d-flex align-items-center">
-                        <a href="/Memberships" class="btn btn-primary"><i class="bi bi-arrow-right"></i></a>
+                        <a href="/Memberships" class="btn btn-outline-secondary"><i class="bi bi-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -67,7 +80,7 @@
                         <p class="card-text">View and manage permissions</p>
                     </div>
                     <div class="d-flex align-items-center">
-                        <a href="/ManagePermissions" class="btn btn-primary"><i class="bi bi-arrow-right"></i></a>
+                        <a href="/ManagePermissions" class="btn btn-outline-secondary"><i class="bi bi-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -80,7 +93,7 @@
                         <p class="card-text">View platform reports</p>
                     </div>
                     <div class="d-flex align-items-center">
-                        <a href="/Reports" class="btn btn-primary"><i class="bi bi-arrow-right"></i></a>
+                        <a href="/Reports" class="btn btn-outline-secondary"><i class="bi bi-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -93,7 +106,7 @@
                         <p class="card-text">View audit logs</p>
                     </div>
                     <div class="d-flex align-items-center">
-                        <a href="/AuditLog" class="btn btn-primary"><i class="bi bi-arrow-right"></i></a>
+                        <a href="/AuditLog" class="btn btn-outline-secondary"><i class="bi bi-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
