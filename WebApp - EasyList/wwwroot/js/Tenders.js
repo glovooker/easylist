@@ -335,7 +335,12 @@ function TenderView() {
                 const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
                 return isoDate.toLocaleDateString('en-GB', options).replace(/\//g, '/');
             }, };
-        arrayColumnsData[5] = { 'data': 'budget' };
+        arrayColumnsData[5] = {
+            'data': 'budget',
+            'render': function (data) {
+                return `$ ${data}`;
+            },
+        };
         arrayColumnsData[6] = {
             'data': 'automatic',
             'render': function (data) {
