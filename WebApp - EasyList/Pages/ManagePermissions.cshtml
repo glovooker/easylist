@@ -1,49 +1,42 @@
 ﻿@page
-@model WebApp___EasyList.Pages.ManagePermissionsModel
+@model WebApp___EasyList.Pages.ManagePermissions
 @{
     ViewData["Title"] = "Assign Permissions";
 }
 <script src="~/js/ManagePermissions.js"></script>
 <div class="bs-docs-section d-flex flex-column">
     <br />
-    <div class="d-flex flex-row justify-content-between">
-        <h3 class="display-7 mb-3">Manage Permissions</h3>
-        <div>
-            <button id="btnClean" class="source-button btn btn-warning w-auto mx-4" type="button" tabindex="0">Back</button>
-            <a id="btnViewPermissions" href="/Permissions" class="source-button btn btn-secondary w-auto mx-4" type="button" tabindex="0">View Permissions</a>
-            <button id="btnSave" class="source-button btn btn-primary w-auto mx-4" type="button" tabindex="0">Save</button>
-        </div>
+    <legend>Users</legend>
+    <div class="row">
+        <table id="tblManagePermission" class="display" style="width:100%">
+            <thead>
+            <th>ID</th>
+            <th>Name</th>
+            <th>First Lastname</th>
+            <th>Second Lastname</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Registration Date</th>
+            <th>Status</th>
+            </thead>
+        </table>
+        <br />
     </div>
-    <div id="tblUsersContainer">
-        <legend>Users</legend>
-        <div class="row">
-            <table id="tblManagePermission" class="display mt-5" style="width:100%">
-                <thead>
-                <th>ID</th>
-                <th>Name</th>
-                <th>First Lastname</th>
-                <th>Second Lastname</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Registration Date</th>
-                <th>Status</th>
-                </thead>
-            </table>
-            <br />
-        </div>
+    <legend>Permissions Control Table</legend>
+    <p>User to edit: <span id="username">No user selected yet.</span></p>
+    <div class="">
+        <table id="tblPermission" class="display" style="width:100%">
+            <thead>
+            <th>Id</th>
+            <th>Permission</th>
+            <th>Description</th>
+            <th>Status</th>
+            </thead>
+        </table>
     </div>
-    <div id="tblPermissionsContainer">
-        <legend>Permissions Control Table</legend>
-        <p>User to edit: <span id="username">No user selected yet.</span></p>
-        <div class="row">
-            <table id="tblPermission" class="display mt-5" style="width:100%">
-                <thead>
-                <th>Id</th>
-                <th>Permission</th>
-                <th>Description</th>
-                <th>Status</th>
-                </thead>
-            </table>
-        </div>
+
+    <div class="d-flex flex-row justify-content-around">
+        <button id="btnClean" class="source-button btn btn-info w-25 mx-4" type="button" tabindex="0"><i class="bi bi-code">Clean</i></button>
+        <button id="btnSave" class="source-button btn btn-primary w-25 mx-4" type="button" tabindex="0"><i class="bi bi-code">Save</i></button>
     </div>
 </div>

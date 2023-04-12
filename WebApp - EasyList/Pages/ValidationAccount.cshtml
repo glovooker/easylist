@@ -1,76 +1,63 @@
 ﻿@page
 @model WebApp___EasyList.Pages.ValidationAccountModel
 @{
-    ViewData["Title"] = "Validate Account";
 }
 <script src="~/js/ValidationAccount.js"></script>
-<div class="container my-5" id="divNumberVerification">
-    <div class="card shadow-sm mx-auto" style="max-width: 550px; border: 1px solid #e6e6e6">
-        <div class="card-body">
-            <h3 class="card-title text-center mb-4 fw-bold" style="font-size: 1.5rem; color: #F5805D">Account Verification</h3>
-            <form>
-                <div class="form-group">
-                    <p class="card-text mb-0">Enter your number to validate your account via SMS.</p>
-                </div>
-                <div class="row">
-                    <div class="col-md-4 mb-3 form-group">
-                        <label for="country-code" class="form-label mt-3 fw-semibold" style="color: #262626">Country Code</label>
-                        <input type="text" class="form-control" id="country-code" placeholder="Ej: +506">
-                        <div id="error-messageCountryCode" style="display: none; color: #A02923;font-size:0.7rem"></div>
-                    </div>
-                    <div class="col-md-8 mb-3 form-group">
-                        <label for="phone-number" class="form-label mt-3 fw-semibold" style="color: #262626">Phone Number</label>
-                        <input type="text" class="form-control" id="phone-number" placeholder="Ej: 8888-8888">
-                        <div id="error-messageNumber" style="display: none; color: #A02923;font-size:0.7rem"></div>
-                    </div>
-                </div>
-                <div class="form-check mb-3 form-group">
-                    <input type="checkbox" class="form-check-input" id="email-validation-checkbox">
-                    <label class="form-check-label fw-semibold" for="email-validation-checkbox" style="color: #262626">Validate with email.</label>
-                </div>
-                <div class="d-flex justify-content-center">
-                    <button type="button" class="btn btn-primary" id="btnValidateOTP">Send OTP</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-
-
-<div class="container my-5" id="divCodeOTP" style="display:none;">
-    <div class="card shadow-sm mx-auto" style="max-width: 550px; border: 1px solid #e6e6e6">
-        <div class="card-body">
-            <h3 class="card-title text-center mb-4 fw-bold" style="font-size: 1.5rem; color: #F5805D">Account Verification</h3>
-            <form>
-                <div class="form-group">
-                    <p class="card-text mb-0">Enter the code you received via SMS or email.</p>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="mb-3 col-md-8">
-                        <label for="OTP-code" class="form-label mt-3 fw-semibold" style="color: #262626">OTP Code</label>
-                        <input type="text" class="form-control" id="OTP-code" required>
-                        <div id="error-OTPCode" style="display: none; color: #A02923; font-size: 0.7rem"></div>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-center mt-4">
-                    <button type="button" class="btn btn-outline-secondary me-2" id="btnBack">Back</button>
-                    <button type="button" class="btn btn-primary" id="btnValidateAccount">Verify Account</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-
-<div class="container my-5" id="divVerificationCompleted" style="display:none;">
-    <div class="card shadow-sm mx-auto" style="max-width: 550px; border: 1px solid #e6e6e6">
-        <div class="card-body">
-            <h3 class="card-title text-center mb-4 fw-bold" style="font-size: 1.5rem; color: #F5805D">Account Verified!</h3>
-            <div class="text-center">
-                <button type="button" class="btn btn-primary" id="btnGoSignIn" style="width:10rem;">Go to sign in</button>
+<div class="container-fluid p-5 m-auto" id="divNumberVerification">
+    <div class="col-xs-12 col-md-5 mx-auto my-5 p-4  shadow border" style="border-radius:2.5rem; background-color:#e4e4e4">
+        <h2 class="fs-3" style="color:#F5805D">Account Verification</h2>
+        <p class="mb-0 fw-bolder" style="font-size:1.03rem;">Enter your number to validate your account via SMS.</p>
+        <div class="row ">
+            <div class="col-md-4 mb-3 form-group">
+                <label for="country-code" class="form-label mt-3 fw-semibold">Country Code</label>
+                <input type="text" class="form-control" id="country-code" placeholder="Ej: +506">
+                <div id="error-messageCountryCode" style="display: none; color: red;font-size:0.7rem"></div>
+            </div>
+            <div class="col-md-8 mb-3 form-group">
+                <label for="phone-number" class="form-label mt-3 fw-semibold">Phone Number</label>
+                <input type="text" class="form-control" id="phone-number" placeholder="Ej: 8888-8888">
+                <div id="error-messageNumber" style="display: none; color: red;font-size:0.7rem"></div>
             </div>
         </div>
+        <div class="form-check mb-3 form-group">
+            <input type="checkbox" class="form-check-input" id="email-validation-checkbox" >
+            <label class="form-check-label fw-semibold " for="email-validation-checkbox">Validate with email.</label>
+        </div>
+        <div class="text-center">
+            <button type="button" id="btnValidateOTP" class="btn btn-primary" style="width:8rem; background-color:#642D3D; color:#fff">Send OTP</button>
+        </div>
+
     </div>
 </div>
 
+<div class="row justify-content-center container-fluid p-5 m-auto" id="divCodeOTP">
+    <div class="col-xs-12 col-md-5 mx-auto my-5 p-4 shadow border" style="border-radius:2.5rem; background-color:#e4e4e4">
+            <div class="card-body">
+            <h3 class="card-title mb-2" style="color:#F5805D">Account Verification</h3>
+            <p class="card-text fw-semibold">Enter the code you received via SMS or email.</p>
+                <form class="align-items-center">
+                    <div class="row d-flex justify-content-center">
+                        <div class="mb-3 col-md-8  ">
+                        <label for="OTP-code" class="form-label fw-semibold">OTP Code</label>
+                            <input type="text" class="form-control" id="OTP-code" required>
+                            <div id="error-OTPCode" style="display: none; color: red;font-size:0.7rem"></div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                    <button type="button" id="btnValidateAccount" class="btn btn-primary" style="width:10rem; background-color:#642D3D; color:#fff">Verify Account</button>
+                    </div>
+                </form>
+            </div>
+
+    </div>
+</div>
+<div class="row justify-content-center" id="divVerificationCompleted">
+    <div class="col-xs-12 col-md-5 mx-auto my-5 p-4  shadow border" style="border-radius:2.5rem; background-color:#e4e4e4">
+        <div class="card-body ">
+            <h3 class="card-title mb-2 text-center" style="color:#F5805D">Account Verification</h3>
+                <div class="text-center">
+                <button type="button" class="btn btn-primary" id="btnGoSignIn" style="width:10rem; background-color:#642D3D; color:#fff">Go to sign in</button>
+                </div>
+        </div>
+    </div>
+</div>
