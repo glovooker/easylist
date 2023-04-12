@@ -29,8 +29,8 @@
 </head>
 
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <header class="mb-5">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom fixed-top box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand w-auto" asp-area="" asp-page="/Index"><img src="~/img/Logotype-H.svg" width="200px" class="logotype" alt="banner"></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -67,7 +67,7 @@
     </section>
 
     <div class="container">
-        <main role="main" class="pb-3">
+        <main role="main" class="py-5">
             @RenderBody()
         </main>
     </div>

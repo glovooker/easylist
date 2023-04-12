@@ -20,7 +20,6 @@ body {
     margin: 0;
     margin-top: -2vh;
     margin-top: -2vh;
-    margin-bottom: 5vh;
 }
 
 .banner_image {
@@ -50,11 +49,41 @@ body {
     white-space: nowrap;
 }
 
+.card-title {
+overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .avatar {
     width: 50px;
     height: 50px;
     border-radius: 50%;
+    object-fit: cover;
 }
+
+table {
+    margin: 0 auto;
+    font-size: 16px;
+    width: 100%;
+
+}
+
+    table th,
+    table td {
+        padding: 10px;
+        text-align: left;
+    }
+
+    table thead {
+        border-radius: 0.25rem;
+    }
+
+    table th {
+        background-color: #3E314B;
+        color: white;
+    }
+
 
 @media screen and (min-width: 768px) {
     .banner_image {
