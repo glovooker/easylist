@@ -9,44 +9,44 @@ function ManagePermissions() {
 
   this.InitView = function () {
       console.log('Permission init');
-      $('#formContainer').hide();
-      $('#btnBack').hide();
 
+    //Asignación del evento de click del botón
     $('#btnCreate').click(function () {
       var view = new ManagePermissions();
       view.Create();
     });
 
+    //Asignación del evento de click del botón
     $('#btnUpdate').click(function () {
       var view = new ManagePermissions();
       view.Update();
     });
 
+    //Asignación del evento de click del botón
+    $('#btnNew').click(function () {
+      var view = new ManagePermissions();
+      view.New();
+    });
+
+    //Asignación del evento de click del botón
     $('#btnDelete').click(function () {
       var view = new ManagePermissions();
       view.Delete();
     });
 
-      $('#btnNew').click(function () {
-          var view = new ManagePermissions();
-          view.New();
-      });
-
-      $('#btnBack').click(function () {
-          var view = new ManagePermissions();
-          view.Back();
-      });
-
+    //Llamado al evento de cargar la tabla con toda la data de permisos
     this.LoadTable();
   };
 
   this.Create = function () {
+    //Inicialización del DTO de permission
     var permission = {};
     permission.id = 0;
     permission.name = $('#txtName').val();
     permission.description = $('#txtDescription').val();
     permission.usertype = parseInt($('#selecType').val());
 
+      // Llamado al API
       var view = new ManagePermissions();
       var ctrlActions = new ControlActions();
       var serviceCreate = view.ApiService + '/createPermission';
@@ -55,11 +55,6 @@ function ManagePermissions() {
         toastr.success('Permission created successfully');
         var view = new ManagePermissions();
 
-            $('#tblContainer').show();
-            $('#formContainer').hide();
-            $('#btnNew').show();
-            $('#btnReturn').show();
-            $('#btnBack').hide();
         view.ReloadTable();
         view.CleanForm();
       });
@@ -73,6 +68,7 @@ function ManagePermissions() {
     permission.usertype = parseInt($('#selecType').val());
 
  
+      // Llamado al API
       var view = new ManagePermissions();
       var ctrlActions = new ControlActions();
       var serviceCreate = view.ApiService + '/updatePermission';
@@ -81,11 +77,6 @@ function ManagePermissions() {
         toastr.success('Permission updated successfully');
         var view = new ManagePermissions();
 
-          $('#tblContainer').show();
-          $('#formContainer').hide();
-          $('#btnNew').show();
-          $('#btnReturn').show();
-          $('#btnBack').hide();
         view.ReloadTable();
         view.CleanForm();
       });
@@ -97,6 +88,7 @@ function ManagePermissions() {
     permission.name = $('#txtName').val();
     permission.description = $('#txtDescription').val();
 
+    // Llamado al API
     var ctrlActions = new ControlActions();
     var serviceDelete = this.ApiService + '/deletePermission';
 
@@ -104,11 +96,6 @@ function ManagePermissions() {
       toastr.success('Permission deleted successfully');
       var view = new ManagePermissions();
 
-        $('#tblContainer').show();
-        $('#formContainer').hide();
-        $('#btnNew').show();
-        $('#btnReturn').show();
-        $('#btnBack').hide();
       view.ReloadTable();
       view.CleanForm();
     });
@@ -125,16 +112,7 @@ function ManagePermissions() {
     arrayColumnsData[0] = { 'data': 'id' };
     arrayColumnsData[1] = { 'data': 'name' };
     arrayColumnsData[2] = { 'data': 'description' };
-      arrayColumnsData[3] = {
-          'data': 'usertype',
-          'render': function (data) {
-              const userTypeMap = {
-                  1: 'Provider',
-                  2: 'Analyst',
-                  3: 'Administrator',
-              };
-              return userTypeMap[data] || data;
-          }, };
+    arrayColumnsData[3] = { 'data': 'usertype' };
 
     $('#tblPermission').dataTable({
       'ajax': {
@@ -155,11 +133,6 @@ function ManagePermissions() {
       $('#txtDescription').val(data.description);
       $('#selecType').val(data.usertype.toString());
 
-        $('#tblContainer').hide();
-        $('#formContainer').show();
-        $('#btnNew').hide();
-        $('#btnReturn').hide();
-        $('#btnBack').show();
       $('#btnCreate').prop('disabled', true);
       $('#btnDelete').prop('disabled', false);
       $('#btnUpdate').prop('disabled', false);
@@ -170,31 +143,13 @@ function ManagePermissions() {
     $('#tblPermission').DataTable().ajax.reload();
   };
 
-    this.New = function () {
-        $('#tblContainer').hide();
-        $('#formContainer').show();
-        $('#btnNew').hide();
-        $('#btnReturn').hide();
-        $('#btnBack').show();
-        $('#btnCreate').prop('disabled', false);
-        $('#btnDelete').prop('disabled', true);
-        $('#btnUpdate').prop('disabled', true);
+  this.New = function () {
+    $('#btnCreate').prop('disabled', false);
+    $('#btnDelete').prop('disabled', true);
+    $('#btnUpdate').prop('disabled', true);
 
-        this.CleanForm();
-    };
-
-    this.Back = function () {
-        $('#formContainer').hide();
-        $('#tblContainer').show();
-        $('#btnNew').show();
-        $('#btnReturn').show();
-        $('#btnBack').hide();
-        $('#btnCreate').prop('disabled', true);
-        $('#btnDelete').prop('disabled', false);
-        $('#btnUpdate').prop('disabled', false);
-
-        this.CleanForm();
-    };
+    this.CleanForm();
+  };
 
   this.CleanForm = function () {
     $('#txtName').val('');

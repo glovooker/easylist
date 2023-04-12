@@ -5,14 +5,8 @@
 }
 <script src="~/js/Reports.js"></script>
 <div class="bs-docs-section d-flex flex-column">
+    <h1>Reports</h1>
     <br />
-    <div class="d-flex flex-row justify-content-between">
-        <h3 class="display-7 mb-3">Reports</h3>
-        <div>
-            <button id="btnClean" class="source-button btn btn-info w-auto mx-4" type="button" tabindex="0">Clean</button>
-            <button id="btnSearch" class="source-button btn btn-primary w-auto mx-4" type="button" tabindex="0">Search</button>
-        </div>
-    </div>
     <div class="row">
         <div class="col-sm-6 form-group">
             <label for="startDate">Start Date:</label>
@@ -26,7 +20,7 @@
     <br />
     <legend>Users</legend>
     <div class="row">
-        <table id="tblPermission" class="display mt-5" style="width:100%">
+        <table id="tblPermission" class="display" style="width:100%">
             <thead>
             <th>ID</th>
             <th>Name</th>
@@ -43,17 +37,24 @@
     <br />
     <legend>Tenders</legend>
     <div class="row">
-        <table id="tblTender" class="display mt-5" style="width:100%">
+        <table id="tblTender" class="display" style="width:100%">
             <thead>
             <th>ID</th>
             <th>Title</th>
+            <th>Description</th>
             <th>Status</th>
-            <th>Max Offer Date</th>
-            <th>Max Deliver Date</th>
+            <th>MaxOfferDate</th>
+            <th>MaxDeliverDate</th>
             <th>Budget</th>
-            <th>Allocation</th>
+            <th>Automatic</th>
             </thead>
         </table>
         <br />
     </div>
+
+    <div class="d-flex flex-row justify-content-around">
+        <button id="btnClean" class="source-button btn btn-info w-25 mx-4" type="button" tabindex="0"><i class="bi bi-code">Clean</i></button>
+        <button id="btnSearch" class="source-button btn btn-primary w-25 mx-4" type="button" tabindex="0"><i class="bi bi-code">Search</i></button>
+    </div>
+
 </div>

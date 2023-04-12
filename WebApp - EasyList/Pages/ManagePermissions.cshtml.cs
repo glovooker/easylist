@@ -1,8 +1,9 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace WebApp___EasyList.Pages
 {
-    public class ManagePermissionsModel : PageModel
+    public class ManagePermissions : PageModel
     {
         public void OnGet()
         {
