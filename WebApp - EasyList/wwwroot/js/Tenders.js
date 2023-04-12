@@ -53,7 +53,7 @@ function TenderView() {
         tender.QRcode = "";
         tender.automatic = Boolean(parseInt($("#drpAutomatic").val()));
         tender.deliverLocation = $("#txtDeliverLocation").val();
-        tender.productTenders = productsTender;
+        tender.productTenders = productsTender || [];
 
         tender.productTenders.forEach(function (productTender) {
             productTender.tender_id = tender.id;
@@ -142,7 +142,7 @@ function TenderView() {
         tender.QRcode = "";
         tender.automatic = Boolean(parseInt($("#drpAutomatic").val()));
         tender.deliverLocation = $("#txtDeliverLocation").val();
-        tender.productTenders = productsTender;
+        tender.productTenders = productsTender || [];
 
         var isValid = true;
 
@@ -227,6 +227,7 @@ function TenderView() {
         tender.QRcode = "";
         tender.automatic = Boolean(parseInt($("#drpAutomatic").val()));
         tender.deliverLocation = $("#txtDeliverLocation").val();
+        tender.productTenders = productsTender || [];
 
         var isValid = true;
 

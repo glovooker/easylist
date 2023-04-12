@@ -66,7 +66,7 @@ function ProfileView() {
             $('#txtEmail').val(data.email);
             $('#txtPhone').val(data.phone);
             $('#drpStatus').val(data.userStatus);
-            $('#imgUser').attr('src', data.userPicture);
+            $('#imgUser').attr('src', data.userPicture || "/img/avatar.png");
         });
     };
 
