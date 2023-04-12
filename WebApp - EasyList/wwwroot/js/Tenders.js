@@ -47,8 +47,7 @@ function TenderView() {
         tender.QRcode = "";
         tender.automatic = Boolean(parseInt($("#drpAutomatic").val()));
         tender.deliverLocation = $("#txtDeliverLocation").val();
-        tender.productTenders = productsTender;
-        console.log(tender);
+        tender.productTenders = productsTender || [];
 
         var isValid = true;
 
@@ -133,8 +132,7 @@ function TenderView() {
         tender.QRcode = "";
         tender.automatic = Boolean(parseInt($("#drpAutomatic").val()));
         tender.deliverLocation = $("#txtDeliverLocation").val();
-        tender.productTenders = productsTender;
-        console.log(tender);
+        tender.productTenders = productsTender || [];
 
         var isValid = true;
 
@@ -219,6 +217,7 @@ function TenderView() {
         tender.QRcode = "";
         tender.automatic = Boolean(parseInt($("#drpAutomatic").val()));
         tender.deliverLocation = $("#txtDeliverLocation").val();
+        tender.productTenders = productsTender || [];
 
         var isValid = true;
 
