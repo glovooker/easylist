@@ -3,15 +3,17 @@
 @{
     ViewData["Title"] = "Action Log";
 }
-<script src="~/js/actionlog.js"></script>
+<script src="~/js/auditlog.js"></script>
 <div class="bs-docs-section d-flex flex-column">
     <br />
-    <legend>Action Log</legend>
+    <div class="d-flex flex-row justify-content-between">
+        <h3 class="display-7 mb-3">Audit Log</h3>
+    </div>
     <div class="row">
-        <table id="tblLogAction" class="display" style="width:100%">
+        <table id="tblLogAction" class="display mt-5" style="width:100%">
             <thead>
             <th>ID</th>
-            <th>Action DateTime</th>
+            <th>Action Date & Time</th>
             <th>Action Type</th>
             <th>Affected Object ID</th>
             <th>Affected Table</th>

@@ -14,6 +14,12 @@ function ManagePermissions() {
     this.InitView = function () {
         console.log('User init');
 
+        $('#btnClean').hide();
+        $('#btnSave').hide();
+        $('#btnViewPermissions').show();
+        $('#tblUsersContainer').show();
+        $('#tblPermissionsContainer').hide();
+
         //Llamado al evento de cargar la tabla con toda la data de usuarios
         this.LoadTable();
     };
@@ -31,9 +37,37 @@ function ManagePermissions() {
         arrayColumnsData[2] = { 'data': 'firstLastName' };
         arrayColumnsData[3] = { 'data': 'secondLastName' };
         arrayColumnsData[4] = { 'data': 'email' };
-        arrayColumnsData[5] = { 'data': 'phone' };
-        arrayColumnsData[6] = { 'data': 'registrationDate' };
-        arrayColumnsData[7] = { 'data': 'userStatus' };
+        arrayColumnsData[5] = {
+            'data': 'phone',
+            'render': function (data) {
+                const cleanedNumber = ('' + data).replace(/\D/g, '');
+                const match = cleanedNumber.match(/^(\d{3})(\d{4})(\d{4})$/);
+                if (match) {
+                    return `(+${match[1]}) ${match[2]}-${match[3]}`;
+                }
+                return data;
+            },
+        };
+        arrayColumnsData[6] = {
+            'data': 'registrationDate',
+            'render': function (data) {
+                const isoDate = new Date(data);
+                const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+                return isoDate.toLocaleDateString('en-GB', options).replace(/\//g, '/');
+            },
+        };
+        arrayColumnsData[7] = {
+            'data': 'userStatus',
+            'render': function (data) {
+                const statusMap = {
+                    0: 'Active',
+                    1: 'Suspended',
+                    2: 'Banned',
+                    4: 'Inactive',
+                };
+                return statusMap[data] || data;
+            },
+        };
 
         $('#tblManagePermission').dataTable({
             'ajax': {
@@ -110,6 +144,11 @@ function PermissionsView() {
         this.DestroyTable();
         this.LoadTableEmpty();
         permissionValue = [];
+        $('#btnClean').hide();
+        $('#btnSave').hide();
+        $('#btnViewPermissions').show();
+        $('#tblUsersContainer').show();
+        $('#tblPermissionsContainer').hide();
     };
 
     this.DestroyTable = function () {
@@ -233,6 +272,12 @@ function PermissionsView() {
                 permissionValue.reverse();
             }
         });
+
+        $('#btnClean').show();
+        $('#btnSave').show();
+        $('#btnViewPermissions').hide();
+        $('#tblUsersContainer').hide();
+        $('#tblPermissionsContainer').show();
     };
 
     function checkPermission(id) {

@@ -91,5 +91,21 @@ namespace EasyListAPI.Controllers
             }
         }
 
+        [HttpDelete]
+        [Route("deleteValidation")]
+        public async Task<IActionResult> DeleteValidation(User user)
+        {
+            try
+            {
+                var vm = new ValidationManager();
+                vm.Delete(user);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }
