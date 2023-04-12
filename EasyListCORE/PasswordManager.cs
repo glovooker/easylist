@@ -1,7 +1,8 @@
-﻿using DTOs;
-using EasyListDataAccess.CRUD;
+﻿ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using DTOs;
+using EasyListDataAccess.CRUD;
 
 namespace EasyListCORE
 {
@@ -20,6 +21,7 @@ namespace EasyListCORE
                     throw new Exception("You can't use a previous password. Please use a new one!");
                 }
             }
+
 
             crudPassword.Create(password);
         }

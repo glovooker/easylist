@@ -6,9 +6,8 @@ function TenderView() {
     this.ApiService = "Tender";
 
     this.InitView = function () {
+
         console.log("Tender init");
-        $('#formContainer').hide();
-        $('#btnBack').hide();
 
         $("#btnCreate").click(function () {
             var view = new TenderView();
@@ -30,11 +29,6 @@ function TenderView() {
             view.New();
         });
 
-        $('#btnBack').click(function () {
-            var view = new TenderView();
-            view.Back();
-        });
-
         this.LoadTable();
 
         loadProductSelect();
@@ -54,10 +48,6 @@ function TenderView() {
         tender.automatic = Boolean(parseInt($("#drpAutomatic").val()));
         tender.deliverLocation = $("#txtDeliverLocation").val();
         tender.productTenders = productsTender || [];
-
-        tender.productTenders.forEach(function (productTender) {
-            productTender.tender_id = tender.id;
-        })
 
         var isValid = true;
 
@@ -117,20 +107,20 @@ function TenderView() {
         var serviceCreate = this.ApiService + "/createTender";
 
         ctrlActions.PostToAPIv1(serviceCreate, tender, function () {
-            toastr.success('Tender created', 'Success!')
+
             var view = new TenderView();
 
-            $('#tblContainer').show();
-            $('#formContainer').hide();
-            $('#btnNew').show();
-            $('#btnBack').hide();
             view.ReloadTable();
             view.CleanForm();
+
+            toastr.success('Tender created', 'Success!')
+
         });
 
     };
 
     this.Update = function () {
+
         var tender = {};
         tender.id = parseInt($('#txtID').val()) || 0;
         tender.title = $("#txtTitle").val();
@@ -202,16 +192,16 @@ function TenderView() {
         var serviceUpdate = this.ApiService + "/updateTender";
 
         ctrlActions.PutToAPI(serviceUpdate, tender, function () {
-            toastr.success('Tender updated', 'Success!');
+
             var view = new TenderView();
 
-            $('#tblContainer').show();
-            $('#formContainer').hide();
-            $('#btnNew').show();
-            $('#btnBack').hide();
             view.ReloadTable();
             view.CleanForm();
+
+            toastr.success('Tender updated', 'Success!')
+
         });
+
     };
 
     this.Delete = function () {
@@ -287,16 +277,16 @@ function TenderView() {
         var serviceDelete = this.ApiService + "/deleteTender";
 
         ctrlActions.DeleteToAPI(serviceDelete, tender, function () {
-            toastr.success('Tender deleted', 'Success!');
+
             var view = new TenderView();
 
-            $('#tblContainer').show();
-            $('#formContainer').hide();
-            $('#btnNew').show();
-            $('#btnBack').hide();
             view.ReloadTable();
             view.CleanForm();
+
+            toastr.success('Tender deleted', 'Success!')
+
         });
+
     };
 
     this.LoadTable = function () {
@@ -309,49 +299,13 @@ function TenderView() {
         var arrayColumnsData = [];
         arrayColumnsData[0] = { 'data': 'id' };
         arrayColumnsData[1] = { 'data': 'title' };
-        arrayColumnsData[2] = {
-            'data': 'tenderStatus',
-            'render': function (data) {
-                const statusMap = {
-                    0: 'Open',
-                    1: 'Closed',
-                    2: 'Ongoing',
-                    3: 'Finished',
-                    4: 'Terminated',
-                };
-                return statusMap[data] || data;
-            },
-        };
-        arrayColumnsData[3] = {
-            'data': 'maxOfferDate',
-            'render': function (data) {
-                const isoDate = new Date(data);
-                const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
-                return isoDate.toLocaleDateString('en-GB', options).replace(/\//g, '/');
-            }, };
-        arrayColumnsData[4] = {
-            'data': 'maxDeliverDate',
-            'render': function (data) {
-                const isoDate = new Date(data);
-                const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
-                return isoDate.toLocaleDateString('en-GB', options).replace(/\//g, '/');
-            }, };
-        arrayColumnsData[5] = {
-            'data': 'budget',
-            'render': function (data) {
-                return `$ ${data}`;
-            },
-        };
-        arrayColumnsData[6] = {
-            'data': 'automatic',
-            'render': function (data) {
-                const automaticMap = {
-                    'true': 'Automatic',
-                    'false': 'Manual'
-                };
-                return automaticMap[data] || data;
-            }, };
-        arrayColumnsData[7] = { 'data': 'deliverLocation' };
+        arrayColumnsData[2] = { 'data': 'description' };
+        arrayColumnsData[3] = { 'data': 'tenderStatus' };
+        arrayColumnsData[4] = { 'data': 'maxOfferDate' };
+        arrayColumnsData[5] = { 'data': 'maxDeliverDate' };
+        arrayColumnsData[6] = { 'data': 'budget' };
+        arrayColumnsData[7] = { 'data': 'automatic' };
+        arrayColumnsData[8] = { 'data': 'deliverLocation' };
 
         $('#tblTender').dataTable({
             'ajax': {
@@ -385,10 +339,6 @@ function TenderView() {
 
             loadProducts(productsTender);
 
-            $('#tblContainer').hide();
-            $('#formContainer').show();
-            $('#btnNew').hide();
-            $('#btnBack').show();
             $('#btnCreate').prop('disabled', true);
             $('#btnDelete').prop('disabled', false);
             $('#btnUpdate').prop('disabled', false);
@@ -401,25 +351,9 @@ function TenderView() {
     };
 
     this.New = function () {
-        $('#tblContainer').hide();
-        $('#formContainer').show();
-        $('#btnNew').hide();
-        $('#btnBack').show();
         $('#btnCreate').prop('disabled', false);
         $('#btnDelete').prop('disabled', true);
         $('#btnUpdate').prop('disabled', true);
-
-        this.CleanForm();
-    };
-
-    this.Back = function () {
-        $('#formContainer').hide();
-        $('#tblContainer').show();
-        $('#btnNew').show();
-        $('#btnBack').hide();
-        $('#btnCreate').prop('disabled', true);
-        $('#btnDelete').prop('disabled', false);
-        $('#btnUpdate').prop('disabled', false);
 
         this.CleanForm();
     };

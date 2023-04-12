@@ -13,7 +13,7 @@
                 var dropdownHtml = `
                     <div class="dropdown">
                       <button class="btn btn-primary bg-white text-primary dropdown-toggle" type="button" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Hi, ${user.name}!  <img src="${user.userPicture ? user.userPicture : `/img/avatar.png`}" class="avatar mx-2 img-thumbnail mb-2 rounded-circle img-fluid" alt="${user.name}">
+                        Hi, ${user.name}!  <img src="${user.userPicture ? user.userPicture : `/img/avatar.png`}" class="avatar mx-2" alt="${user.name}">
                       </button>
                       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                         <a class="dropdown-item" href="/Settings" asp-area="" asp-page="/Settings">Settings</a>

@@ -1,76 +1,77 @@
 ﻿@page
-@model WebApp___EasyList.Pages.MembershipsModel
+@model WebApp___EasyList.Pages.MembershipModel
 @{
     ViewData["Title"] = "Memberships";
 }
 <script src="~/js/memberships.js"></script>
 <div class="bs-docs-section d-flex flex-column">
     <br />
-    <div class="d-flex flex-row justify-content-between">
-        <h3 class="display-7 mb-3">Plans & Memberships</h3>
-        <div>
-            <button id="btnNew" class="btn btn-info w-auto mx-4" type="button" tabindex="0">New</button>
-            <button id="btnBack" class="btn btn-warning w-auto mx-4" type="button" tabindex="0">Back</button>
-        </div>
-    </div>
-    <di class="row" id="tblContainer">
-        <table id="tblMemberships" class="display mt-5" style="width:100%">
+    <legend style="color:#642D3D">Memberships</legend>
+    <di class="row">
+        <table id="tblMemberships" class="display" style="width:100%">
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
                     <th>Description</th>
-                    <th>Billing</th>
+                    <th>Type</th>
                     <th>Cost</th>
                 </tr>
             </thead>
         </table>
         <br />
     </di>
-    <div class="container my-5" id="formContainer">
-        <div class="card shadow-sm mx-auto" style="max-width: 750px; border: 1px solid #e6e6e6">
-            <div class="card-body">
-                <h3 class="card-title text-center mb-4 fw-bold" style="font-size: 1.5rem; color: #F5805D">Membership Form</h3>
+    <div class="row d-flex justify-content-center p-4 m-4 shadow border" style="border-radius:2.5rem; background-color:#e4e4e4">
+        <div class="col-lg-10">
+            <div class="bs-component">
                 <form>
                     <fieldset>
-                        <div class="row">
-                            <div class="col-lg-6 col-md-12 form-group">
-                                <label for="txtID" class="form-label mt-1">ID</label>
-                                <input disabled type="number" class="form-control" id="txtID" aria-describedby="emailHelp" placeholder="Membership ID">
-                            </div>
-                            <div class="col-lg-6 col-md-12 form-group">
-                                <label for="txtName" class="form-label mt-1">Name</label>
-                                <input type="text" class="form-control" id="txtName" aria-describedby="emailHelp" placeholder="Enter the name">
-                                <div id="error-messageName" style="display: none; color: red; font-size:0.7rem"></div>
-                            </div>
-                            <div class="col-lg-6 col-md-12 form-group">
-                                <label for="drpType" class="form-label mt-1">Billing Type</label>
-                                <select class="form-select" id="drpType">
-                                    <option value=0>Monthly</option>
-                                    <option value=1>Annual</option>
-                                </select>
-                                <div id="error-messageType" style="display: none; color: red; font-size:0.7rem"></div>
-                            </div>
-                            <div class="col-lg-6 col-md-12 form-group">
-                                <label for="txtCost" class="form-label mt-1">Cost</label>
-                                <input type="number" class="form-control" id="txtCost" aria-describedby="emailHelp" placeholder="Enter the cost">
-                                <small id="emailHelp" class="form-text text-muted">Please insert only costs in colones(₡).</small>
-                                <div id="error-messageCost" style="display: none; color: red; font-size:0.7rem"></div>
-                            </div>
-                            <div class="col-12 form-group">
-                                <label for="txtDescription" class="form-label mt-1">Description</label>
-                                <textarea class="form-control" id="txtDescription" rows="2" placeholder="Enter the description"></textarea>
-                                <div id="error-messageDescription" style="display: none; color: red; font-size:0.7rem"></div>
-                            </div>
-                        </div>
+                        <legend style="color:#F5805D">Membership Form</legend>
                     </fieldset>
-                    <div class="d-flex flex-row justify-content-around mt-4">
-                        <button id="btnCreate" class="source-button btn btn-primary w-25 mx-4" type="button" tabindex="0">Save</button>
-                        <button id="btnUpdate" class="source-button btn btn-warning w-25 mx-4" type="button" tabindex="0">Update</button>
-                        <button id="btnDelete" class="source-button btn btn-danger w-25 mx-4" type="button" tabindex="0">Delete</button>
+                    <div class="w-100 d-flex flex-row justify-content-between">
+                        <div class="w-50 m-2 form-group">
+                            <label for="txtID" class="form-label mt-1">ID</label>
+                            <input disabled type="number" class="form-control" id="txtID" aria-describedby="emailHelp" placeholder="Membership ID" />
+                        </div>
+                        <div class="w-50 m-2 form-group">
+                            <label for="txtName" class="form-label mt-1">Name</label>
+                            <input type="text" class="form-control" id="txtName" aria-describedby="emailHelp" placeholder="Enter the name" />
+                            <div id="error-messageName" style="display: none; color: red; font-size:0.7rem"></div>
+                        </div>
+                        <div class="w-50 m-2 form-group">
+                            <label for="drpType" class="form-label mt-1">Membership type</label>
+                            <select class="form-select" id="drpType">
+                                <option value=0>Monthly</option>
+                                <option value=1>Annual</option>
+                            </select>
+                            <div id="error-messageType" style="display: none; color: red; font-size:0.7rem"></div>
+                        </div>
+                    </div>
+                    <div class="w-100 d-flex flex-row justify-content-between">
+                        <div class="w-50 m-2 form-group">
+                            <label for="txtDescription" class="form-label mt-1">Description</label>
+                            <textarea class="form-control" id="txtDescription" rows="3" placeholder="Enter the description" style="height:2.5rem"></textarea>
+                            <div id="error-messageDescription" style="display: none; color: red; font-size:0.7rem"></div>
+                        </div>
+                        <div class="w-50 m-2 form-group">
+                            <label for="txtCost" class="form-label mt-1">Cost</label>
+                            <input type="number" class="form-control" id="txtCost" aria-describedby="emailHelp" placeholder="Enter the cost" />
+                            <small id="emailHelp" class="form-text text-muted">Please insert only costs in colones(₡).</small>
+                            <div id="error-messageCost" style="display: none; color: red; font-size:0.7rem"></div>
+                        </div>
                     </div>
                 </form>
+                <br />
+                <div class="d-flex flex-row justify-content-around">
+                    <button id="btnNew" class="source-button btn btn-info w-25 mx-4" type="button" tabindex="0"><i class="bi bi-code">New</i></button>
+                    <button id="btnCreate" class="source-button btn btn-primary w-25 mx-4" type="button" tabindex="0"><i class="bi bi-code">Save</i></button>
+                    <button id="btnUpdate" class="source-button btn btn-warning w-25 mx-4" type="button" tabindex="0"><i class="bi bi-code">Update</i></button>
+                    <button id="btnDelete" class="source-button btn btn-danger w-25 mx-4" type="button" tabindex="0"><i class="bi bi-code">Delete</i></button>
+                </div>
+
             </div>
+
         </div>
+
     </div>
 </div>
