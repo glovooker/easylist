@@ -53,6 +53,7 @@
                             user.password = '';
                             var serviceUpdateUser = "User/updateUser";
                             ctrlActions.PutToAPI(serviceUpdateUser, user, function () {
+                                localStorage.removeItem('userEmail');
                                 toastr.success('Your account has been verified', 'Verification Successful');
                                 $("#divCodeOTP").hide();
                                 $("#divVerificationCompleted").show();
@@ -107,7 +108,6 @@
         if ((countryCode !== '' && phoneNumber !== '') || checkBoxEmail.is(":checked")) {
             $("#error-messageCountryCode").hide();
             $("#error-messageNumber").hide();
-            $("#divNumberVerification").hide();
 
             toastr.options = {
                 "positionClass": "toast-top-center",
@@ -155,12 +155,72 @@
                     validation.validationDateExpired = new Date();
                     validation.validationCount = 0;
 
-                    ctrlActions.PostToAPIv1(service, validation, function () {
-                        toastr.success(mensaje, 'The OTP code.');
-                        $("#divCodeOTP").show();
+                    var serviceGetValidation = self.ApiService + "/getValidationByUserId&Status";
+                    var url = serviceGetValidation + "?userId=" + localStorage.getItem('userEmail');
+                    ctrlActions.GetToApi(url, function (result) {
+                        if (result.response != null) {
+                            // Resto del código
+                            toastr.success("ou already have an OTP to be activated", 'The OTP code.');
+
+                            $("#divNumberVerification").hide();
+                            $("#divCodeOTP").show();
+
+                        } else {
+                            // El array está vacío o es nulo
+                            ctrlActions.PostToAPIv1(service, validation, function () {
+                                toastr.success(mensaje, 'The OTP code.');
+                                $("#divNumberVerification").hide();
+                                $("#divCodeOTP").show();
+                            });
+                        }
                     });
                 });
+            } else if (user.phone == "" && checkBoxEmail.is(":checked")) {
+                var service = self.ApiService + "/createValidation";
+
+                var validation = {};
+
+                validation.id = 0;
+                validation.userId = localStorage.getItem('userEmail');
+
+                if ((countryCode !== '' && phoneNumber !== '') && !checkBoxEmail.is(":checked")) {
+                    validation.validationType = 1;
+                    var mensaje = "It was sent to your phone number.";
+                }
+                else if (checkBoxEmail.is(":checked") && (countryCode === '' && phoneNumber === '')) {
+                    validation.validationType = 0;
+                    var mensaje = "It was sent to your email.";
+                }
+                else if ((countryCode !== '' && phoneNumber !== '') && checkBoxEmail.is(":checked")) {
+                    validation.validationType = 2;
+                    var mensaje = "It was sent to your phone number and your email.";
+                }
+                validation.validationStatus = 0;
+                validation.validationCode = "";
+                validation.validationDateCreation = new Date();
+                validation.validationDateExpired = new Date();
+                validation.validationCount = 0;
+
+                var serviceGetValidation = self.ApiService + "/getValidationByUserId&Status";
+                var url = serviceGetValidation + "?userId=" + localStorage.getItem('userEmail');
+                ctrlActions.GetToApi(url, function (result) {
+                    if (result.response != null) {
+                        // Resto del código
+                        toastr.success("You already have an OTP to be activated", 'The OTP code.');
+                        $("#divNumberVerification").hide();
+                        $("#divCodeOTP").show();
+
+                    } else {
+                        // El array está vacío o es nulo
+                        ctrlActions.PostToAPIv1(service, validation, function () {
+                            toastr.success(mensaje, 'The OTP code.');
+                            $("#divNumberVerification").hide();
+                            $("#divCodeOTP").show();
+                        });
+                    }
+                });
             }
+
         }
     }
     

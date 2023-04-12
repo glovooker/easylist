@@ -1,43 +1,43 @@
-﻿//Controla el comportamiento de la página/vista de Users.cshtml
-
-//Definición de la clase ManagePermissions
-function ManagePermissions() {
+﻿
+function ManageUsers() {
     this.ViewName = 'UserView';
     this.ApiService = 'User';
 
     this.InitView = function () {
         console.log('User init');
+        $('#formContainer').hide();
+        $('#btnBack').hide();
 
-        //Asignación del evento de click del botón
         $('#btnCreate').click(function () {
-            var view = new ManagePermissions();
+            var view = new ManageUsers();
             view.Create();
         });
 
-        //Asignación del evento de click del botón
         $('#btnUpdate').click(function () {
-            var view = new ManagePermissions();
+            var view = new ManageUsers();
             view.Update();
         });
 
-        //Asignación del evento de click del botón
-        $('#btnNew').click(function () {
-            var view = new ManagePermissions();
-            view.New();
-        });
-
-        //Asignación del evento de click del botón
         $('#btnDelete').click(function () {
-            var view = new ManagePermissions();
+            var view = new ManageUsers();
             view.Delete();
         });
 
-        //Llamado al evento de cargar la tabla con toda la data de usuarios
+        $('#btnNew').click(function () {
+            var view = new ManageUsers();
+            view.New();
+        });
+
+        $('#btnBack').click(function () {
+            var view = new ManageUsers();
+            view.Back();
+        });
+
         this.LoadTable();
     };
 
     this.Create = function () {
-        //Inicialización del DTO de user
+
         var user = {};
         user.id = parseInt($('#txtID').val()) || 0;
         user.name = $('#txtName').val();
@@ -49,21 +49,25 @@ function ManagePermissions() {
         user.registrationDate = new Date().toISOString();
         user.userStatus = parseInt($('#drpStatus').val());
 
-        // Call CaptureImageURL with a callback function
+
         CaptureImageURL('userPic', function (imageUrl) {
             var view = new ManagePermissions();
             if (imageUrl === undefined) {
                 imageUrl = document.getElementById('imgUser').src;
             }
             user.userPicture = imageUrl;
-            // Llamado al API
+
             var ctrlActions = new ControlActions();
             var serviceCreate = view.ApiService + '/createUser';
 
             ctrlActions.PostToAPIv1(serviceCreate, user, function () {
-                toastr.success('User created successfully');
-                var view = new ManagePermissions();
+                toastr.success('User created', 'Success!');
+                var view = new ManageUsers();
 
+                $('#tblContainer').show();
+                $('#formContainer').hide();
+                $('#btnNew').show();
+                $('#btnBack').hide();
                 view.ReloadTable();
                 view.CleanForm();
             });
@@ -82,9 +86,8 @@ function ManagePermissions() {
         user.registrationDate = new Date().toISOString();
         user.userStatus = parseInt($('#drpStatus').val());
 
-        // Call CaptureImageURL with a callback function
         CaptureImageURL('userPic', function (imageUrl) {
-            var view = new ManagePermissions();
+            var view = new ManageUsers();
             if (imageUrl === undefined) {
                 imageUrl = document.getElementById('imgUser').src;
             }
@@ -94,9 +97,13 @@ function ManagePermissions() {
             var serviceCreate = view.ApiService + '/updateUser';
 
             ctrlActions.PutToAPI(serviceCreate, user, function () {
-                toastr.success('User updated successfully');
-                var view = new ManagePermissions();
+                toastr.success('User updated', 'Success!');
+                var view = new ManageUsers();
 
+                $('#tblContainer').show();
+                $('#formContainer').hide();
+                $('#btnNew').show();
+                $('#btnBack').hide();
                 view.ReloadTable();
                 view.CleanForm();
             });
@@ -121,8 +128,12 @@ function ManagePermissions() {
 
         ctrlActions.DeleteToAPI(serviceDelete, user, function () {
             toastr.success('User deleted successfully');
-            var view = new ManagePermissions();
+            var view = new ManageUsers();
 
+            $('#tblContainer').show();
+            $('#formContainer').hide();
+            $('#btnNew').show();
+            $('#btnBack').hide();
             view.ReloadTable();
             view.CleanForm();
         });
@@ -141,11 +152,39 @@ function ManagePermissions() {
         arrayColumnsData[2] = { 'data': 'firstLastName' };
         arrayColumnsData[3] = { 'data': 'secondLastName' };
         arrayColumnsData[4] = { 'data': 'email' };
-        arrayColumnsData[5] = { 'data': 'phone' };
-        arrayColumnsData[6] = { 'data': 'registrationDate' };
-        arrayColumnsData[7] = { 'data': 'userStatus' };
+        arrayColumnsData[5] = {
+            'data': 'phone',
+            'render': function (data) {
+                const cleanedNumber = ('' + data).replace(/\D/g, '');
+                const match = cleanedNumber.match(/^(\d{3})(\d{4})(\d{4})$/);
+                if (match) {
+                    return `(+${match[1]}) ${match[2]}-${match[3]}`;
+                }
+                return data;
+            },
+        };
+        arrayColumnsData[6] = {
+            'data': 'registrationDate',
+            'render': function (data) {
+                const isoDate = new Date(data);
+                const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+                return isoDate.toLocaleDateString('en-GB', options).replace(/\//g, '/');
+            },
+        };
+        arrayColumnsData[7] = {
+            'data': 'userStatus',
+            'render': function (data) {
+                const statusMap = {
+                    0: 'Active',
+                    1: 'Suspended',
+                    2: 'Banned',
+                    4: 'Inactive',
+                };
+                return statusMap[data] || data;
+            },
+        };
 
-        $('#tblPermission').dataTable({
+        $('#tblUsers').dataTable({
             'ajax': {
                 'url': urlService,
                 'dataSrc': '',
@@ -153,10 +192,10 @@ function ManagePermissions() {
             'columns': arrayColumnsData,
         });
 
-        $('#tblPermission tbody').on('click', 'tr', function () {
+        $('#tblUsers tbody').on('click', 'tr', function () {
             var tr = $(this).closest('tr');
 
-            var data = $('#tblPermission').DataTable().row(tr).data();
+            var data = $('#tblUsers').DataTable().row(tr).data();
 
             $('#txtID').val(data.id);
             $('#txtName').val(data.name);
@@ -167,6 +206,10 @@ function ManagePermissions() {
             $('#drpStatus').val(data.userStatus);
             document.getElementById('imgUser').src = data.userPicture;
 
+            $('#tblContainer').hide();
+            $('#formContainer').show();
+            $('#btnNew').hide();
+            $('#btnBack').show();
             $('#btnCreate').prop('disabled', true);
             $('#btnDelete').prop('disabled', false);
             $('#btnUpdate').prop('disabled', false);
@@ -179,23 +222,39 @@ function ManagePermissions() {
         if (file) {
             const reader = new FileReader();
             reader.addEventListener('load', (event) => {
-                callback(event.target.result); // call the callback with the image URL
+                callback(event.target.result);
             });
 
             reader.readAsDataURL(file);
         } else {
-            callback(); // call the callback with no image URL
+            callback();
         }
     }
 
     this.ReloadTable = () => {
-        $('#tblPermission').DataTable().ajax.reload();
+        $('#tblUsers').DataTable().ajax.reload();
     };
 
     this.New = function () {
+        $('#tblContainer').hide();
+        $('#formContainer').show();
+        $('#btnNew').hide();
+        $('#btnBack').show();
         $('#btnCreate').prop('disabled', false);
         $('#btnDelete').prop('disabled', true);
         $('#btnUpdate').prop('disabled', true);
+
+        this.CleanForm();
+    };
+
+    this.Back = function () {
+        $('#formContainer').hide();
+        $('#tblContainer').show();
+        $('#btnNew').show();
+        $('#btnBack').hide();
+        $('#btnCreate').prop('disabled', true);
+        $('#btnDelete').prop('disabled', false);
+        $('#btnUpdate').prop('disabled', false);
 
         this.CleanForm();
     };
@@ -213,9 +272,7 @@ function ManagePermissions() {
     };
 }
 
-//Instanciamiento inicial de la clase
-//se ejecuta siempre al finalizar la carga de la vista.
 $(document).ready(function () {
-    var view = new ManagePermissions();
+    var view = new ManageUsers();
     view.InitView();
 });

@@ -36,8 +36,25 @@ function ManagePermissions() {
         arrayColumnsData[2] = { 'data': 'firstLastName' };
         arrayColumnsData[3] = { 'data': 'secondLastName' };
         arrayColumnsData[4] = { 'data': 'email' };
-        arrayColumnsData[5] = { 'data': 'phone' };
-        arrayColumnsData[6] = { 'data': 'registrationDate' };
+        arrayColumnsData[5] = {
+            'data': 'phone',
+            'render': function (data) {
+                const cleanedNumber = ('' + data).replace(/\D/g, '');
+                const match = cleanedNumber.match(/^(\d{3})(\d{4})(\d{4})$/);
+                if (match) {
+                    return `(+${match[1]}) ${match[2]}-${match[3]}`;
+                }
+                return data;
+            },
+        };
+        arrayColumnsData[6] = {
+            'data': 'registrationDate',
+            'render': function (data) {
+                const isoDate = new Date(data);
+                const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+                return isoDate.toLocaleDateString('en-GB', options).replace(/\//g, '/');
+            },
+        };
 
         $('#tblPermission').dataTable({
             'ajax': {
@@ -77,8 +94,25 @@ function ManagePermissions() {
             { 'data': 'firstLastName' },
             { 'data': 'secondLastName' },
             { 'data': 'email' },
-            { 'data': 'phone' },
-            { 'data': 'registrationDate' }
+            {
+                'data': 'phone',
+                'render': function (data) {
+                    const cleanedNumber = ('' + data).replace(/\D/g, '');
+                    const match = cleanedNumber.match(/^(\d{3})(\d{4})(\d{4})$/);
+                    if (match) {
+                        return `(+${match[1]}) ${match[2]}-${match[3]}`;
+                    }
+                    return data;
+                },
+            },
+            {
+                'data': 'registrationDate',
+                'render': function (data) {
+                    const isoDate = new Date(data);
+                    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+                    return isoDate.toLocaleDateString('en-GB', options).replace(/\//g, '/');
+                },
+            }
         ];
 
         $('#tblPermission').dataTable({
@@ -181,12 +215,51 @@ function TenderView() {
         var arrayColumnsData = [];
         arrayColumnsData[0] = { 'data': 'id' };
         arrayColumnsData[1] = { 'data': 'title' };
-        arrayColumnsData[2] = { 'data': 'description' };
-        arrayColumnsData[3] = { 'data': 'tenderStatus' };
-        arrayColumnsData[4] = { 'data': 'maxOfferDate' };
-        arrayColumnsData[5] = { 'data': 'maxDeliverDate' };
-        arrayColumnsData[6] = { 'data': 'budget' };
-        arrayColumnsData[7] = { 'data': 'automatic' };
+        arrayColumnsData[2] = {
+            'data': 'tenderStatus',
+            'render': function (data) {
+                const statusMap = {
+                    0: 'Open',
+                    1: 'Closed',
+                    2: 'Ongoing',
+                    3: 'Finished',
+                    4: 'Terminated',
+                };
+                return statusMap[data] || data;
+            },
+        };
+        arrayColumnsData[3] = {
+            'data': 'maxOfferDate',
+            'render': function (data) {
+                const isoDate = new Date(data);
+                const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+                return isoDate.toLocaleDateString('en-GB', options).replace(/\//g, '/');
+            },
+        };
+        arrayColumnsData[4] = {
+            'data': 'maxDeliverDate',
+            'render': function (data) {
+                const isoDate = new Date(data);
+                const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+                return isoDate.toLocaleDateString('en-GB', options).replace(/\//g, '/');
+            },
+        };
+        arrayColumnsData[5] = {
+            'data': 'budget',
+            'render': function (data) {
+                return `$ ${data}`;
+            },
+        };
+        arrayColumnsData[6] = {
+            'data': 'automatic',
+            'render': function (data) {
+                const automaticMap = {
+                    'true': 'Automatic',
+                    'false': 'Manual'
+                };
+                return automaticMap[data] || data;
+            },
+        };
 
         $('#tblTender').dataTable({
             'ajax': {
@@ -210,12 +283,51 @@ function TenderView() {
         var arrayColumnsData = [
             { 'data': 'id' },
             { 'data': 'title' },
-            { 'data': 'description' },
-            { 'data': 'tenderStatus' },
-            { 'data': 'maxOfferDate' },
-            { 'data': 'maxDeliverDate' },
-            { 'data': 'budget' },
-            { 'data': 'automatic' },
+            {
+                'data': 'tenderStatus',
+                'render': function (data) {
+                    const statusMap = {
+                        0: 'Open',
+                        1: 'Closed',
+                        2: 'Ongoing',
+                        3: 'Finished',
+                        4: 'Terminated',
+                    };
+                    return statusMap[data] || data;
+                },
+            },
+            {
+                'data': 'maxOfferDate',
+                'render': function (data) {
+                    const isoDate = new Date(data);
+                    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+                    return isoDate.toLocaleDateString('en-GB', options).replace(/\//g, '/');
+                },
+            },
+            {
+                'data': 'maxDeliverDate',
+                'render': function (data) {
+                    const isoDate = new Date(data);
+                    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+                    return isoDate.toLocaleDateString('en-GB', options).replace(/\//g, '/');
+                },
+            },
+            {
+                'data': 'budget',
+                'render': function (data) {
+                    return `$ ${data}`;
+                },
+            },
+            {
+                'data': 'automatic',
+                'render': function (data) {
+                    const automaticMap = {
+                        'true': 'Automatic',
+                        'false': 'Manual'
+                    };
+                    return automaticMap[data] || data;
+                },
+            },
         ];
 
         $('#tblTender').dataTable({

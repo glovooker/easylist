@@ -4,6 +4,9 @@
 
     this.InitView = function () {
         console.log("Membership init");
+        $('#formContainer').hide();
+        $('#btnBack').hide();
+
         $('#btnCreate').click(function () {
             var view = new MembershipsView();
             view.Create();
@@ -14,14 +17,19 @@
             view.Update();
         });
 
+        $('#btnDelete').click(function () {
+            var view = new MembershipsView();
+            view.Delete();
+        });
+
         $('#btnNew').click(function () {
             var view = new MembershipsView();
             view.New();
         });
 
-        $('#btnDelete').click(function () {
+        $('#btnBack').click(function () {
             var view = new MembershipsView();
-            view.Delete();
+            view.Back();
         });
 
         this.LoadTable();
@@ -65,9 +73,13 @@
             var serviceCreate = view.ApiService + '/createMembership';
 
             ctrlActions.PostToAPIv1(serviceCreate, membership, function () {
-                toastr.success('Success!', 'Membership created successfully')
+                toastr.success('Membership created successfully', 'Success!')
                 var view = new MembershipsView();
 
+                $('#tblContainer').show();
+                $('#formContainer').hide();
+                $('#btnNew').show();
+                $('#btnBack').hide();
                 view.ReloadTable();
                 view.CleanForm();
             })
@@ -114,10 +126,13 @@
             var serviceUpdate = view.ApiService + '/updateMembership';
 
             ctrlActions.PutToAPI(serviceUpdate, membership, function () {
-                toastr.success('Success!', 'Membership updated successfully')
-
+                toastr.success('Membership updated successfully', 'Success!')
                 var view = new MembershipsView();
 
+                $('#tblContainer').show();
+                $('#formContainer').hide();
+                $('#btnNew').show();
+                $('#btnBack').hide();
                 view.ReloadTable();
                 view.CleanForm();
             });
@@ -164,10 +179,13 @@
             var serviceDelete = view.ApiService + '/deleteMembership';
 
             ctrlActions.DeleteToAPI(serviceDelete, membership, function () {
-                toastr.success('Success!', 'Membership deleted successfully')
-
+                toastr.success('Membership deleted successfully', 'Success!');
                 var view = new MembershipsView();
 
+                $('#tblContainer').show();
+                $('#formContainer').hide();
+                $('#btnNew').show();
+                $('#btnBack').hide();
                 view.ReloadTable();
                 view.CleanForm();
             });
@@ -187,8 +205,21 @@
         arrayColumnsData[0] = { 'data': 'id' };
         arrayColumnsData[1] = { 'data': 'name' };
         arrayColumnsData[2] = { 'data': 'description' };
-        arrayColumnsData[3] = { 'data': 'membershipType' };
-        arrayColumnsData[4] = { 'data': 'cost' };
+        arrayColumnsData[3] = {
+            'data': 'membershipType',
+            'render': function (data) {
+                const statusMap = {
+                    0: 'Montly',
+                    1: 'Annual'
+                };
+                return statusMap[data] || data;
+            },
+        };
+        arrayColumnsData[4] = {
+            'data': 'cost',
+            'render': function (data) {
+                return `$ ${data}`;
+            }, };
 
         $('#tblMemberships').dataTable({
             'ajax': {
@@ -208,6 +239,10 @@
             $('#drpType').val(data.membershipType);
             $('#txtCost').val(data.cost);
 
+            $('#tblContainer').hide();
+            $('#formContainer').show();
+            $('#btnNew').hide();
+            $('#btnBack').show();
             $('#btnCreate').prop('disabled', true);
             $('#btnDelete').prop('disabled', false);
             $('#btnUpdate').prop('disabled', false);
@@ -228,16 +263,28 @@
     }
 
     this.New = function () {
+        $('#tblContainer').hide();
+        $('#formContainer').show();
+        $('#btnNew').hide();
+        $('#btnBack').show();
         $('#btnCreate').prop('disabled', false);
         $('#btnDelete').prop('disabled', true);
         $('#btnUpdate').prop('disabled', true);
 
         this.CleanForm();
-        location.reload()
-    }
+    };
 
+    this.Back = function () {
+        $('#formContainer').hide();
+        $('#tblContainer').show();
+        $('#btnNew').show();
+        $('#btnBack').hide();
+        $('#btnCreate').prop('disabled', true);
+        $('#btnDelete').prop('disabled', false);
+        $('#btnUpdate').prop('disabled', false);
 
-
+        this.CleanForm();
+    };
 }
 
 $(document).ready(function () {
