@@ -152,6 +152,17 @@ namespace EasyListDataAccess.Mapper
 
             return sqlOperation;
         }
+        public SqlOperation GetDeleteValidationStatement (BaseEntity entity)
+        {
+            var sqlOperation = new SqlOperation();
+
+            var user = (User)entity;
+
+            sqlOperation.ProcedureName = "DEL_ALL_USUARIO_VALIDACION_PR";
+            sqlOperation.AddIntParam("P_ID_USUARIO", user.Id);
+
+            return sqlOperation;
+        }
 
         public SqlOperation GetDeleteStatement(BaseEntity entity)
         {
