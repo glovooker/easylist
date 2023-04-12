@@ -27,7 +27,7 @@
         user.registrationDate = new Date().toISOString();
         user.userStatus = 4;
         user.userPicture = '';
-        var regex = /^(?!.*(\w)\1{4})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=.*+-¿?!¡])(?!.*\s).{8,}$/;
+        var regex = /^(?!.*(\w)\1{4})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?!.*\s).{8,}$/;
 
         // Llamado al API
         if (user.name === '' || user.firstLastName === '' || user.secondLastName === '' || user.email === '' || user.password === '' || !regex.test(user.password)) {

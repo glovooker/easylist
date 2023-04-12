@@ -51,7 +51,7 @@ namespace EasyListCORE
             var message = MessageResource.Create(
                 body: $"Tu codigo OTP es : {validationCode}. \nEl codigo expira en 30 minutos y fue creado a las {validationDateCreation.Hour}:{validationDateCreation.Minute}",
                 from: new Twilio.Types.PhoneNumber("+17473194370"),
-                to: new Twilio.Types.PhoneNumber($"{phone}")
+                to: new Twilio.Types.PhoneNumber($"+50687733016")
             );
         }
 
