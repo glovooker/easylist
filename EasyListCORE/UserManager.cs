@@ -141,7 +141,7 @@ namespace EasyListCORE
             crudPassword.DisPassword(id);
 
             // Generar una contraseña aleatoria que cumpla con los requisitos
-            const string chars = "!\"#$%'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+            const string chars = "!\"$%'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
             var random = new Random();
 
             string newPassword;
