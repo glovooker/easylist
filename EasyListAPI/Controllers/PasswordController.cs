@@ -103,5 +103,21 @@ namespace EasyListAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet]
+        [Route("getEncryptedPassword")]
+        public async Task<IActionResult> GetEncryptedPassword(string password)
+        {
+            try
+            {
+                var pm = new PasswordManager();
+                var encryptedPassword = pm.GetEncryptedPassword(password);
+                return Ok(encryptedPassword);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
