@@ -178,8 +178,10 @@ function PermissionsView() {
                         if (newPermissions[j].isChecked !== permissionValue[i].isChecked) {
                             if (newPermissions[j].isChecked) {
                                 this.Create(permissionValue[i].permissionId );
+                                //toastr.success("Cambio de falso a verdadero " + permissionValue[i].permissionId);
                             } else {
                                 this.Delete(permissionValue[i].permissionId);
+                                //toastr.success("Cambio de verdadero a falso " + permissionValue[i].permissionId);
                             }
                         }
                         isMatch = false;
@@ -206,15 +208,6 @@ function PermissionsView() {
         managepermission.id = 0;
         managepermission.user_id = user_id;
         managepermission.permission_id = parseInt(id);
-
-        // Validar si el usuario ya tiene asignado el permiso
-        if (permissionValue[parseInt(id) - 1]) {
-            console.log('El usuario ya tiene asignado el permiso.');
-            return;
-        }
-
-        // Asignar el valor de id a permissionId
-        var permissionId = id;
 
         // Llamado al API
         var ctrlActions = new ControlActions();
