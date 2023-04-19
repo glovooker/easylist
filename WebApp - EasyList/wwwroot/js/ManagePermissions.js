@@ -178,10 +178,8 @@ function PermissionsView() {
                         if (newPermissions[j].isChecked !== permissionValue[i].isChecked) {
                             if (newPermissions[j].isChecked) {
                                 this.Create(permissionValue[i].permissionId );
-                                //toastr.success("Cambio de falso a verdadero " + permissionValue[i].permissionId);
                             } else {
                                 this.Delete(permissionValue[i].permissionId);
-                                //toastr.success("Cambio de verdadero a falso " + permissionValue[i].permissionId);
                             }
                         }
                         isMatch = false;
