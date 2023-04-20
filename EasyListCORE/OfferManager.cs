@@ -136,7 +136,19 @@ namespace EasyListCORE
             return null;
         }
 
+        public List<Offer> RetrieveByTenderId(int id)
+        {
+            var crudOffer = new OfferCrudFactory();
+            var existingOffers = crudOffer.RetrieveByTenderId<Offer>(id);
 
+            if (existingOffers == null)
+            {
+                throw new Exception("This tender has no offers!");
+            }
+
+            return existingOffers;
+
+        }
     }
 
 }

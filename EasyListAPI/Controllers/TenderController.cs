@@ -122,5 +122,26 @@ namespace EasyListAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet]
+        [Route("retrieveTendersByAnalystId")]
+        public async Task<IActionResult> retrieveTendersByAnalystId(int id)
+        {
+            try
+            {
+
+                var tm = new TenderManager();
+
+                var tender = tm.RetrieveByAnalystId(id);
+
+                return Ok(tender);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
     }
 }
