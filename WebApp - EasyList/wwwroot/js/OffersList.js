@@ -12,6 +12,11 @@
 
     }
 
+    this.LoadTable = function () {
+        var ctrlActions = new ControlActions();
+
+    };
+
     this.Back = function () {
         localStorage.removeItem('tenderID');
         window.location.href = "/Tenders";
