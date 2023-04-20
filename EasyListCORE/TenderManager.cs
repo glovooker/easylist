@@ -121,6 +121,20 @@ namespace EasyListCORE
             return crudTender.RetrieveByDate<Tender>(startDate, endDate);
         }
 
+        public List<Tender> RetrieveByAnalystId(int id)
+        {
+            var crudTender = new TenderCrudFactory();
+            var existLicitacion = crudTender.RetrieveByAnalystId<Tender>(id);
+
+            if (existLicitacion == null)
+            {
+                throw new Exception("The analyst has no tenders!");
+            }
+
+            return existLicitacion;
+
+        }
+
     }
 
 }
