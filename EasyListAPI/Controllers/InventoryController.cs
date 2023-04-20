@@ -62,6 +62,24 @@ namespace EasyListAPI.Controllers
             }
         }
 
+        [HttpDelete]
+        [Route("deleteAllInventorys")]
+        public async Task<IActionResult> DeleteAllInventory(int id)
+        {
+            try
+            {
+
+                var im = new InventoryManager();
+                im.DeleteAll(id);
+                return Ok("The inventorys has been succesfully delete.");
+
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpGet]
         [Route("retrieveAllInventorys")]
         public async Task<IActionResult> RetrieveAllInventory()
@@ -71,6 +89,24 @@ namespace EasyListAPI.Controllers
 
                 var im = new InventoryManager();
                 return Ok(im.RetrieveAll());
+
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("retrieveInventorys")]
+        public async Task<IActionResult> RetrieveInventorys(int id)
+        {
+            try
+            {
+
+                var im = new InventoryManager();
+                var inventory = im.RetrieveByInventoryId(id);
+                return Ok(inventory);
 
             }
             catch(Exception ex)

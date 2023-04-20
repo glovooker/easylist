@@ -33,10 +33,25 @@ namespace EasyListCORE
 
         }
 
+        public void DeleteAll(int id)
+        {
+
+            var crudInventory = new InventoryCrudFactory();
+
+            crudInventory.DeleteAll(id);
+
+        }
+
         public List<Inventory> RetrieveAll()
         {
             var crudInventory = new InventoryCrudFactory();
             return crudInventory.RetrieveAll<Inventory>();
+        }
+
+        public List<Inventory> RetrieveByInventoryId(int id)
+        {
+            var inventoryFactory = new InventoryCrudFactory();
+            return inventoryFactory.RetrieveByInventoryId<Inventory>(id);
         }
 
     }
