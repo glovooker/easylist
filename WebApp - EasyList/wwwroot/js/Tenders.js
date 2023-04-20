@@ -35,6 +35,11 @@ function TenderView() {
             view.Back();
         });
 
+        $('#btnOffers').click(function () {
+            var view = new TenderView();
+            view.Offers();
+        });
+
         this.LoadTable();
 
         loadProductSelect();
@@ -124,6 +129,7 @@ function TenderView() {
             $('#formContainer').hide();
             $('#btnNew').show();
             $('#btnBack').hide();
+            $('#btnOffers').hide();
             view.ReloadTable();
             view.CleanForm();
         });
@@ -209,6 +215,7 @@ function TenderView() {
             $('#formContainer').hide();
             $('#btnNew').show();
             $('#btnBack').hide();
+            $('#btnOffers').hide();
             view.ReloadTable();
             view.CleanForm();
         });
@@ -294,6 +301,7 @@ function TenderView() {
             $('#formContainer').hide();
             $('#btnNew').show();
             $('#btnBack').hide();
+            $('#btnOffers').hide();
             view.ReloadTable();
             view.CleanForm();
         });
@@ -389,6 +397,7 @@ function TenderView() {
             $('#formContainer').show();
             $('#btnNew').hide();
             $('#btnBack').show();
+            $('#btnOffers').show();
             $('#btnCreate').prop('disabled', true);
             $('#btnDelete').prop('disabled', false);
             $('#btnUpdate').prop('disabled', false);
@@ -404,6 +413,7 @@ function TenderView() {
         $('#tblContainer').hide();
         $('#formContainer').show();
         $('#btnNew').hide();
+        $('#btnOffers').hide();
         $('#btnBack').show();
         $('#btnCreate').prop('disabled', false);
         $('#btnDelete').prop('disabled', true);
@@ -417,6 +427,7 @@ function TenderView() {
         $('#tblContainer').show();
         $('#btnNew').show();
         $('#btnBack').hide();
+        $('#btnOffers').hide();
         $('#btnCreate').prop('disabled', true);
         $('#btnDelete').prop('disabled', false);
         $('#btnUpdate').prop('disabled', false);
@@ -436,6 +447,14 @@ function TenderView() {
         $("#txtDeliverLocation").val("");
         $("#productsContainer").empty();
     };
+
+    this.Offers = function () {
+        var tenderID = parseInt($('#txtID').val()) || 0;
+        localStorage.setItem('tenderID', tenderID);
+        window.location.href = "/OffersList";
+      
+
+    }
 
     var inputBudget = document.getElementById("txtBudget");
 
