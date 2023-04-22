@@ -8,27 +8,36 @@ function TenderView() {
     this.InitView = function () {
         console.log("Tender init");
 
-        $("#btnSearch").click(function () {
+        $("#btnBack").click(function () {
             var view = new TenderView();
-            view.Search();
-            //La función Search sera eliminada debido a que el id se extraera del localStorage, por lo correcto seria solamente
-            //view.LoadTable(analystId0);
+            view.Back();
         });
+
+        $('#btnBack').hide();
+        $('#tblOfferContainer').hide();
+        $('#TenderProductsContainer').hide();
+        $('#OfferProductsContainer').hide();
+
+        this.LoadTable();
+
     };
 
-    //La función Search sera eliminada debido a que el id se extraera del localStorage
-    this.Search = function () {
-        var analystId = document.getElementById('txtAnalystID').value;
-        this.txtAnalystID = analystId;
-        $('#tblTender').DataTable().destroy();
-        $('#tblOffer').DataTable().destroy();
-        $('#tblOffer tbody').empty();
+    this.Back = function () {
 
-
-        this.LoadTable(this.txtAnalystID);
+        $('#btnSearch').show();
+        $('#btnBack').hide();
+        $('#TenderProductsContainer').hide();
+        $('#tblTenderContainer').show();
+        $('#tblOfferContainer').hide();
+        $('#OfferProductsContainer').hide();
     };
 
-    this.LoadTable = function (analystId) {
+    this.LoadTable = function () {
+
+        //La variable analystId extraera el Id del usuario utilizando el localStorage
+
+        var analystId = 0;
+
         var ctrlActions = new ControlActions();
 
         var urlService = ctrlActions.GetUrlApiService(
@@ -95,9 +104,43 @@ function TenderView() {
 
         $('#tblTender tbody').on('click', 'tr', function () {
 
+            $('#btnBack').show();;
+
+            $('#TenderProductsContainer').show();
+
+            $('#tblOfferContainer').show();
+
+            $('#tblTenderContainer').hide();
+
             $('#tblOffer').DataTable().destroy();
 
             var tr = $(this).closest('tr');
+
+            var data = $('#tblTender').DataTable().row(tr).data();
+
+            productsTender = data.productTenders;
+
+            var maxOfferDate = new Date(data.maxOfferDate);
+            var maxDeliverDate = new Date(data.maxDeliverDate);
+            var dateOffer = maxOfferDate.toISOString().substring(0, 10);
+            var dateDeliver = maxDeliverDate.toISOString().substring(0, 10);
+
+            $('#txtID').text(data.id);
+            $('#txtTitle').text(data.title);
+            $('#txtDescription').text(data.description);
+            $('#drpStatus').text(data.tenderStatus);
+            $('#txtMaxOfferDate').text(dateOffer);
+            $('#txtMaxDeliverDate').text(dateDeliver);
+            $('#txtBudget').text(data.budget);
+            $('#drpAutomatic').text(Number(data.automatic));
+            $('#txtDeliverLocation').text(data.deliverLocation);
+
+            loadTenderProducts(productsTender);
+
+            $('#tblContainer').hide();
+            $('#btnNew').hide();
+            $('#btnBack').show();
+
             var tenderId = tr.find('td:first').text();
             this.OfferView = new OfferView();
 
@@ -117,6 +160,35 @@ function TenderView() {
 
 }
 
+loadTenderProducts = function (products) {
+    $("#productsTenderContainer").empty();
+
+    products.forEach(function (productTender) {
+        // Fetch the product name from a URL
+        fetch('https://localhost:7103/api/Product/getProductById?id=' + productTender.product_id)
+            .then(response => response.json())
+            .then(product => {
+                productTender.name = product.name;
+
+                // Create the product card with the updated name
+                var productCard = $(`
+                    <div class='card w-100 mt-2' id="product${productTender.id}">
+                        <div class='card-body d-flex flex-row justify-content-around align-items-center'>
+                            <h5 class='card-title m-0'>${productTender.name}</h5>
+                            <div class='d-flex flex-row justify-content-around align-items-center w-50'>
+                                <p class='card-text m-0'>${productTender.quantity} items</p>
+                                <p class='card-text m-0'>$${productTender.price}</p>
+                            </div>
+                        </div>
+                    </div>
+                `);
+
+                $("#productsTenderContainer").append(productCard);
+            })
+            .catch(error => console.error(error));
+    });
+}
+
 $(document).ready(function () {
     var view = new TenderView();
     view.InitView();
@@ -131,6 +203,16 @@ function OfferView() {
 
     this.InitView = function () {
         console.log("Offer init");
+
+        $("#btnClose").click(function () {
+            var view = new OfferView();
+            view.Close();
+        });
+
+    };
+
+    this.Close = function () {
+        $('#OfferProductsContainer').hide();
     };
 
     this.LoadTable = function (tenderId) {
@@ -177,12 +259,65 @@ function OfferView() {
             'columns': arrayColumnsData,
         });
 
+        $('#tblOffer tbody').on('click', 'tr', function () {
+
+            $("#OfferProductsContainer").show();
+
+            var tr = $(this).closest('tr');
+
+            var data = $('#tblOffer').DataTable().row(tr).data();
+
+            productsOffer = data.productOffers;
+
+            var maxDeliverDate = new Date(data.dueDate);
+            var dateDeliver = maxDeliverDate.toISOString().substring(0, 10);
+
+            $('#Offer_txtOfferID').text(data.id);
+            $('#Offer_txtTenderID').text(data.id);
+            $('#Offer_txtUserID').text(data.id);
+            $('#Offer_txtTitle').text(data.title);
+            $('#Offer_txtMaxDeliverDate').text(dateDeliver);
+            $('#Offer_txtBudget').text(data.totalCost);
+
+            loadOfferProducts(productsOffer);
+
+        });
+
     };
 
     this.ReloadTable = () => {
         $('#tblOffer').DataTable().ajax.reload();
     };
 
+}
+
+loadOfferProducts = function (products) {
+    $("#productsOfferContainer").empty();
+
+    products.forEach(function (productOffer) {
+        // Fetch the product name from a URL
+        fetch('https://localhost:7103/api/Product/getProductById?id=' + productOffer.product_id)
+            .then(response => response.json())
+            .then(product => {
+                productOffer.name = product.name;
+
+                // Create the product card with the updated name
+                var productCard = $(`
+                    <div class='card w-100 mt-2' id="product${productOffer.id}">
+                        <div class='card-body d-flex flex-row justify-content-around align-items-center'>
+                            <h5 class='card-title m-0'>${productOffer.name}</h5>
+                            <div class='d-flex flex-row justify-content-around align-items-center w-50'>
+                                <p class='card-text m-0'>${productOffer.quantity} items</p>
+                                <p class='card-text m-0'>$${productOffer.price}</p>
+                            </div>
+                        </div>
+                    </div>
+                `);
+
+                $("#productsOfferContainer").append(productCard);
+            })
+            .catch(error => console.error(error));
+    });
 }
 
 $(document).ready(function () {
