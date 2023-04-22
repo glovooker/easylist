@@ -7,6 +7,7 @@ function TenderView() {
 
     this.InitView = function () {
         console.log("Tender init");
+     
         $('#formContainer').hide();
         $('#btnBack').hide();
 

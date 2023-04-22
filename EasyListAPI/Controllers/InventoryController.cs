@@ -4,13 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EasyListAPI.Controllers
 {
-    [Route("api/controller")]
+    [Route("api/[controller]")]
     [ApiController]
     public class InventoryController : Controller
     {
 
         [HttpPost]
-        [Route("createInvetory")]
+        [Route("createInventory")]
         public async Task<IActionResult> CreateInventory(Inventory inventory)
         {
             try

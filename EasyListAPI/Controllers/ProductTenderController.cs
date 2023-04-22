@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EasyListAPI.Controllers
 {
-    [Route("api/controller")]
+    [Route("api/[controller]")]
     [ApiController]
     public class ProductTenderController : Controller
     {
