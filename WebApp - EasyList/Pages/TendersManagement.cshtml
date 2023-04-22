@@ -8,14 +8,9 @@
     <br />
     <div class="d-flex flex-row justify-content-between">
         <h3 class="display-7 mb-3">Tenders Management</h3>
-        <!-- Esta seccion sera eliminada debido a que el id informacion sera extraido del localStorage -->
+
         <div>
-            <label for="txtAnalystID" class="form-label mt-1">Analyst ID</label>
-            <input type="number" class="form-control" id="txtAnalystID" aria-describedby="emailHelp" placeholder="Analyst ID" style="margin: 0 auto;" />
-        </div>
-        <!-- _________________________________________________________________________________________ -->
-        <div>
-            <button id="btnSearch" class="btn btn-info w-auto mx-4" type="button" tabindex="0">Search</button>
+            <button id="btnBack" class="btn btn-warning w-auto mx-4" type="button" tabindex="0">Back</button>
         </div>
     </div>
     <div class="row" id="tblTenderContainer">
@@ -33,10 +28,76 @@
         </table>
         <br/>
     </div>
-    <br />
-    <h3 class="display-7 mb-3">Offers</h3>
+
+    <div class="container my-3" id="TenderProductsContainer">
+        <div class="card shadow-sm mx-auto" style="max-width: 1100px; border: 1px solid #e6e6e6">
+            <div class="card-body">
+                <h3 class="card-title text-center mb-4 fw-bold" style="font-size: 1.5rem; color: #F5805D">Tender Form</h3>
+                <form>
+                    <fieldset>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-12 form-group">
+                                <label for="txtTitle" class="form-label mt-1">Title</label>
+                                <p class="form-control" id="txtTitle"></p>
+                                <h5 style="padding-top: 20px;">Products</h5>
+                                <div class="d-flex flex-column justify-content-around align-items-center" id="productsTenderContainer"></div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-12">
+                                <div class="row">
+                                    <div class="col-sm-12 form-group">
+                                        <label for="txtID" class="form-label mt-1">ID</label>
+                                        <p class="form-control" id="txtID"></p>
+                                    </div>
+                                    <div class="col-sm-12 form-group">
+                                        <label for="drpAutomatic" class="form-label">Automatic</label>
+                                        <p class="form-control" id="drpAutomatic"></p>
+                                    </div>
+                                    <div class="col-sm-12 form-group">
+                                        <label for="txtDescription" class="form-label">Description</label>
+                                        <p class="form-control" id="txtDescription"></p>
+                                    </div>
+                                    <div class="col-sm-12 form-group">
+                                        <label for="txtDeliverLocation" class="form-label">Deliver Location</label>
+                                        <p class="form-control" id="txtDeliverLocation"></p>
+                                    </div>
+                                    <div class="col-sm-12 form-group">
+                                        <label for="txtMaxDeliverDate" class="form-label pt-3">Delivery Date</label>
+                                        <p class="form-control" id="txtMaxDeliverDate"></p>
+                                    </div>
+                                    <div class="col-sm-12 form-group">
+                                        <label for="txtMaxOfferDate" class="form-label pt-3">Offer Date</label>
+                                        <p class="form-control" id="txtMaxOfferDate"></p>
+                                    </div>
+                                    <div class="col-sm-12 form-group">
+                                        <label for="txtBudget" class="form-label pt-3">Budget</label>
+                                        <p class="form-control" id="txtBudget"></p>
+                                    </div>
+                                    <div class="col-sm-12 form-group">
+                                        <label for="drpStatus" class="form-label pt-3">Status</label>
+                                        <p class="form-control" id="drpStatus"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+                <br />
+            </div>
+        </div>
+    </div>
+
     <br />
     <div class="row" id="tblOfferContainer">
+        <div class="d-flex flex-row justify-content-between">
+            <h4 class="display-7 mb-3">View Offers</h4>
+
+            <div>
+                <button id="btnClose" class="btn btn-info w-auto mx-4" type="button" tabindex="0">Close</button>
+            </div>
+        </div>
+        
+        <br />
         <table id="tblOffer" class="display mt-5" style="width:100%">
             <thead>
             <th>ID</th>
@@ -49,4 +110,45 @@
         </table>
         <br />
     </div>
+
+    <div class="container my-5" id="OfferProductsContainer">
+        <div class="card shadow-sm mx-auto" style="max-width: 1100px; border: 1px solid #e6e6e6">
+            <div class="card-body">
+                <h3 class="card-title text-center mb-4 fw-bold" style="font-size: 1.5rem; color: #F5805D">Offer Form</h3>
+                <form>
+                    <fieldset>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-12 form-group">
+                                <label for="txtTenderID" class="form-label mt-1">Tender ID</label>
+                                <p id="Offer_txtTenderID" class="form-control" aria-describedby="emailHelp" style="margin: 0 auto;"></p>
+                                <h5 style="padding-top: 20px;">Products</h5>
+                                <div class="d-flex flex-column justify-content-around align-items-center" id="productsOfferContainer"></div>
+                            </div>
+                            <div class="col-lg-6 col-md-12">
+                                <div class="row">
+                                    <div class="col-sm-12 form-group">
+                                        <label for="txtOfferID" class="form-label mt-1">Offer ID</label>
+                                        <p id="Offer_txtOfferID" class="form-control" aria-describedby="emailHelp" style="margin: 0 auto;"></p>
+                                    </div>
+                                    <div class="col-sm-12 form-group">
+                                        <label for="txtMaxDeliverDate" class="form-label pt-3">Delivery Date</label>
+                                        <p id="Offer_txtMaxDeliverDate" class="form-control"></p>
+                                    </div>
+                                    <div class="col-sm-12 form-group">
+                                        <label for="txtBudget" class="form-label pt-3">Budget</label>
+                                        <p id="Offer_txtBudget" class="form-control"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+                <br />
+                <div class="d-flex flex-row justify-content-around">
+                    <button id="btnAward" class="btn btn-primary w-25 mx-4" type="button" tabindex="0">Award</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>

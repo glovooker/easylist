@@ -336,14 +336,16 @@ function TenderView() {
                 const isoDate = new Date(data);
                 const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
                 return isoDate.toLocaleDateString('en-GB', options).replace(/\//g, '/');
-            }, };
+            },
+        };
         arrayColumnsData[4] = {
             'data': 'maxDeliverDate',
             'render': function (data) {
                 const isoDate = new Date(data);
                 const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
                 return isoDate.toLocaleDateString('en-GB', options).replace(/\//g, '/');
-            }, };
+            },
+        };
         arrayColumnsData[5] = {
             'data': 'budget',
             'render': function (data) {
@@ -358,7 +360,8 @@ function TenderView() {
                     'false': 'Manual'
                 };
                 return automaticMap[data] || data;
-            }, };
+            },
+        };
         arrayColumnsData[7] = { 'data': 'deliverLocation' };
 
         $('#tblTender').dataTable({
@@ -452,7 +455,7 @@ function TenderView() {
         var tenderID = parseInt($('#txtID').val()) || 0;
         localStorage.setItem('tenderID', tenderID);
         window.location.href = "/OffersList";
-      
+
 
     }
 
@@ -479,10 +482,10 @@ loadProductSelect = () => {
         .then(products => {
             const select = document.getElementById('drpProduct');
             products.forEach(product => {
-                    const option = document.createElement('option');
-                    option.value = product.id;
-                    option.text = product.name;
-                    select.appendChild(option);
+                const option = document.createElement('option');
+                option.value = product.id;
+                option.text = product.name;
+                select.appendChild(option);
             });
         })
         .catch(error => console.error(error));

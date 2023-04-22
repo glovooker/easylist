@@ -249,6 +249,7 @@ function OfferView() {
         });
 
         $('#tblOffer tbody').on('click', 'tr', function () {
+
             var tr = $(this).closest('tr');
 
             var data = $('#tblOffer').DataTable().row(tr).data();

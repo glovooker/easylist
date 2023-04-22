@@ -124,14 +124,19 @@ namespace EasyListCORE
         public List<Tender> RetrieveByAnalystId(int id)
         {
             var crudTender = new TenderCrudFactory();
-            var existLicitacion = crudTender.RetrieveByAnalystId<Tender>(id);
+            var crudProductTender = new ProductTenderCrudFactory();
+            var tenderList = crudTender.RetrieveByAnalystId<Tender>(id);
 
-            if (existLicitacion == null)
+            if (tenderList == null)
             {
                 throw new Exception("The analyst has no tenders!");
             }
+            foreach (var tender in tenderList)
+            {
+                tender.ProductTenders = crudProductTender.RetrieveByTenderId<ProductTender>(tender.Id);
+            }
 
-            return existLicitacion;
+            return tenderList;
 
         }
 
