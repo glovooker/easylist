@@ -269,6 +269,8 @@ function OfferView() {
 
             productsOffer = data.productOffers;
 
+            //agregar un if para validar si existen datos en la tabla para ejecutar la funcion de mostrar info
+
             var maxDeliverDate = new Date(data.dueDate);
             var dateDeliver = maxDeliverDate.toISOString().substring(0, 10);
 
