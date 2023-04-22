@@ -83,6 +83,8 @@ function ManagePermissions() {
     };
 
     this.LoadTableEmpty = function () {
+        $('#btnBack').hide();
+        $('#OfferContainer').hide();
         // Destruir la tabla existente si ya ha sido inicializada
         if ($.fn.DataTable.isDataTable('#tblPermission')) {
             $('#tblPermission').DataTable().destroy();
@@ -198,6 +200,11 @@ function TenderView() {
         $('#btnClean').click(function () {
             var view = new TenderView();
             view.Clean();
+        });
+
+        $('#btnBack').click(function () {
+            var view = new TenderView();
+            view.Back();
         });
 
         //Llamado al evento de cargar la tabla con toda la data de usuarios
@@ -337,7 +344,74 @@ function TenderView() {
         });
 
         this.tableLoaded = true; // actualizar la bandera
+
+        $('#tblTender tbody').off('click').on('click', 'tr', function () {
+            var tr = $(this).closest('tr');
+            var data = $('#tblTender').DataTable().row(tr).data();
+            var tenderID = data.id;
+            console.log(tenderID);
+            LoadOffersList(tenderID);
+            $('#btnBack').show();
+            $('#btnClean').hide();
+            $('#btnSearch').hide();
+            $('#OfferContainer').show();
+            $('#reportsContainer').hide();
+        });
+
     };
+    function LoadOffersList(tenderID) {
+        var ctrlActions = new ControlActions();
+        var urlService = ctrlActions.GetUrlApiService(
+            "Offer" + '/retrieveOffersByTenderId?id=' + tenderID
+        );
+
+        var arrayColumnsData = [];
+        arrayColumnsData[0] = { 'data': 'id' };
+        arrayColumnsData[1] = { 'data': 'user_id' };
+        arrayColumnsData[2] = { 'data': 'tender_id' };
+        arrayColumnsData[3] = {
+            'data': 'chosen',
+            'render': function (data) {
+                const statusMap = {
+                    false: 'No',
+                    true: 'Yes',
+                };
+                return statusMap[data] || data;
+            },
+        };
+        arrayColumnsData[4] = {
+            'data': 'dueDate',
+            'render': function (data) {
+                const isoDate = new Date(data);
+                const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+                return isoDate.toLocaleDateString('en-GB', options).replace(/\//g, '/');
+            },
+        };
+        arrayColumnsData[5] = {
+            'data': 'totalCost',
+            'render': function (data) {
+                return `$ ${data}`;
+            },
+        };
+
+        $('#tblOffer').dataTable({
+            'ajax': {
+                'url': urlService,
+                'dataSrc': '',
+            },
+            'columns': arrayColumnsData,
+        });
+    };
+
+    this.Back = function () {
+        $('#btnBack').hide();
+        $('#btnClean').show();
+        $('#btnSearch').show();
+        $('#OfferContainer').hide();
+        $('#reportsContainer').show();
+        var table = $('#tblOffer').DataTable();
+        table.destroy();
+    }
 
     this.Clean = function () {
         // Limpiar los inputs endDate y startDate
