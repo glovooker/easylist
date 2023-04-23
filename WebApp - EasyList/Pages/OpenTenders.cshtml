@@ -1,0 +1,67 @@
+﻿@page
+@model WebApp___EasyList.Pages.OpenTendersModel
+@{
+    ViewData["Title"] = "OpenTenders";
+}
+<script src="~/js/OpenTenders.js"></script>
+<div class="bs-docs-section d-flex flex-column">
+    <br />
+    <div class="d-flex flex-row justify-content-between">
+        <h3 class="display-7 mb-3">Tenders</h3>
+        <div>
+            <button id="btnBack" class="btn btn-warning w-auto mx-4" type="button" tabindex="0" onclick="goBack()">Back</button>
+        </div>
+    </div>
+    <div class="container my-5" id="formContainer">
+        <div class="card shadow-sm mx-auto" style="max-width: 1100px; border: 1px solid #e6e6e6">
+            <div class="card-body">
+                <h3 class="card-title text-center mb-4 fw-bold" style="font-size: 1.5rem; color: #F5805D">Tender View</h3>
+                <form>
+                    <fieldset>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-12 form-group">
+                                <label for="txtTitle" class="form-label mt-1"><h4>Title</h4></label>
+                                <div type="text" id="tenderName"> </div>
+                                <h5 style="padding-top: 20px;">Products</h5>
+                                <div class="d-flex flex-column justify-content-around align-items-center" id="productsContainer"></div>
+
+                            </div>
+                            <div class="col-lg-6 col-md-12">
+                                <div class="row">
+                                    <div class="col-sm-12 form-group">
+                                        <label for="tenderId" class="form-label mt-1"><h5>ID</h5></label>
+                                        <div type="number" id="tenderId" aria-describedby="emailHelp" placeholder="Tender ID" style="margin: 0 auto;"></div>
+                                    </div>
+                                    <div class="col-sm-12 form-group">
+                                        <label for="tenderDescription" class="form-label"><h5>Description</h5></label>
+                                        <div type="text" id="tenderDescription" placeholder="Enter your description"></div>
+                                    </div>
+                                    <div class="col-sm-12 form-group">
+                                        <label for="tenderDeliverLocation" class="form-label"><h5>Deliver Location</h5></label>
+                                        <div type="text" id="tenderDeliverLocation" placeholder="Enter your deliver location"></div>
+                                    </div>
+                                    <div class="col-sm-12 form-group">
+                                        <label for="tenderDeliverDate" class="form-label pt-3"><h5>Delivery Date</h5></label>
+                                        <div type="date" id="tenderDeliverDate" placeholder="Enter the maximum date for delivery"></div>
+                                    </div>
+                                    <div class="col-sm-12 form-group">
+                                        <label for="tenderDeliverOffer" class="form-label pt-3"><h5>Offer Date</h5></label>
+                                        <div type="date" id="tenderDeliverOffer" placeholder="Enter the maximum date for offers"></div>
+                                    </div>
+                                    <div class="col-sm-12 form-group">
+                                        <label for="tenderBudget" class="form-label pt-3"><h5>Budget</h5></label>
+                                        <div type="number" id="tenderBudget" placeholder="Enter your budget"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+                <br />
+                <div class="d-flex flex-row justify-content-around">
+                    <button id="btnCreate" class="btn btn-primary w-25 mx-4" type="button" tabindex="0">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
