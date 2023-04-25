@@ -349,7 +349,6 @@ function TenderView() {
             var tr = $(this).closest('tr');
             var data = $('#tblTender').DataTable().row(tr).data();
             var tenderID = data.id;
-            console.log(tenderID);
             LoadOffersList(tenderID);
             $('#btnBack').show();
             $('#btnClean').hide();
@@ -357,8 +356,8 @@ function TenderView() {
             $('#OfferContainer').show();
             $('#reportsContainer').hide();
         });
-
     };
+
     function LoadOffersList(tenderID) {
         var ctrlActions = new ControlActions();
         var urlService = ctrlActions.GetUrlApiService(
