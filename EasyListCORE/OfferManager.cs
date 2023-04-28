@@ -155,6 +155,26 @@ namespace EasyListCORE
             return offerList;
 
         }
+
+        public List<Offer> RetrieveByOffererId(int id)
+        {
+            var crudOffer = new OfferCrudFactory();
+            var crudProductOffer = new ProductOfferCrudFactory();
+            var offerList = crudOffer.RetrieveByOffererId<Offer>(id);
+
+            if (offerList == null)
+            {
+                throw new Exception("This user has no offers!");
+            }
+
+            foreach (var offer in offerList)
+            {
+                offer.ProductOffers = crudProductOffer.RetrieveByOfferId<ProductOffer>(offer.Id);
+            }
+
+            return offerList;
+
+        }
     }
 
 }

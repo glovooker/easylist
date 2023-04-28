@@ -452,8 +452,8 @@ function TenderView() {
     };
 
     this.Offers = function () {
-        var tenderID = parseInt($('#txtID').val()) || 0;
-        localStorage.setItem('tenderID', tenderID);
+        var tenderId = parseInt($('#txtID').val()) || 0;
+        localStorage.setItem('selectedTenderId', tenderId);
         window.location.href = "/OffersList";
 
 

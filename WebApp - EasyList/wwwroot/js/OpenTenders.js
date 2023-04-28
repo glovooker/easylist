@@ -9,6 +9,11 @@
     this.InitView = function () {
         this.OpenTender(localStorage.getItem('selectedTenderId'));
 
+        $('#btnCreate').click(function () {
+            var view = new OpenTendersView();
+            view.Offer();
+        });
+
     }
 
     this.OpenTender = function (id) {
@@ -31,6 +36,10 @@
             loadProducts(tender.productTenders);
         });
 
+    }
+
+    this.Offer = function () {
+        window.location.href = "/Offers";
     }
 
 }
