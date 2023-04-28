@@ -23,7 +23,7 @@ namespace EasyListCORE
 
             // Generar el código QR
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
-            QRCodeData qrCodeData = qrGenerator.CreateQrCode($"https://localhost:7110/{email}", QRCodeGenerator.ECCLevel.Q);
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode($"https://localhost:7110/?email={email}&idTender=", QRCodeGenerator.ECCLevel.Q);
             QRCode qrCode = new QRCode(qrCodeData);
 
             Bitmap qrCodeImage = qrCode.GetGraphic(20);
