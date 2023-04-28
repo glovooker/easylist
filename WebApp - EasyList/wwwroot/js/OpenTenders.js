@@ -26,7 +26,7 @@
             var formatOfferDate = offerDate.getDate() + "/" + (offerDate.getMonth() + 1) + "/" + offerDate.getFullYear();
             $('#tenderDeliverDate').html(formatDeliverDate);
             $('#tenderDeliverOffer').html(formatOfferDate);
-            $('#tenderBudget').html(tender.budget);
+            $('#tenderBudget').html("$"+tender.budget);
 
             loadProducts(tender.productTenders);
         });
