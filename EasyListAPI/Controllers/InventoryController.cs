@@ -18,7 +18,7 @@ namespace EasyListAPI.Controllers
 
                 var im = new InventoryManager();
                 im.Create(inventory);
-                return Ok("The inventory has been succesfully added.");
+                return Ok(inventory);
 
             }catch(Exception ex)
             {
@@ -35,7 +35,7 @@ namespace EasyListAPI.Controllers
 
                 var im = new InventoryManager();
                 im.Update(inventory);
-                return Ok("The inventory has been succesfully update.");
+                return Ok(inventory);
 
             }
             catch(Exception ex)
@@ -53,7 +53,7 @@ namespace EasyListAPI.Controllers
 
                 var im = new InventoryManager();
                 im.Delete(inventory);
-                return Ok("The inventory has been succesfully delete.");
+                return Ok(inventory);
 
             }
             catch(Exception ex)
@@ -63,7 +63,7 @@ namespace EasyListAPI.Controllers
         }
 
         [HttpDelete]
-        [Route("deleteAllInventorys")]
+        [Route("deleteAllInventory")]
         public async Task<IActionResult> DeleteAllInventory(int id)
         {
             try
@@ -71,7 +71,7 @@ namespace EasyListAPI.Controllers
 
                 var im = new InventoryManager();
                 im.DeleteAll(id);
-                return Ok("The inventorys has been succesfully delete.");
+                return Ok(id);
 
             }
             catch(Exception ex)
@@ -81,7 +81,7 @@ namespace EasyListAPI.Controllers
         }
 
         [HttpGet]
-        [Route("retrieveAllInventorys")]
+        [Route("retrieveAllInventory")]
         public async Task<IActionResult> RetrieveAllInventory()
         {
             try
@@ -98,8 +98,8 @@ namespace EasyListAPI.Controllers
         }
 
         [HttpGet]
-        [Route("retrieveInventorys")]
-        public async Task<IActionResult> RetrieveInventorys(int id)
+        [Route("retrieveInventory")]
+        public async Task<IActionResult> RetrieveInventory(int id)
         {
             try
             {

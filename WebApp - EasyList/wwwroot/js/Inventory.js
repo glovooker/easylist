@@ -14,32 +14,51 @@ function InventoryView() {
             view.Create();
         });
 
-
         loadProductSelect();
+
     }
 
-    this.Create = function () {
+    /*this.Delete = function () {
 
-        var ID_User = (localStorage.getItem('userId'));
-
-        var inventory = {};
-
-        inventory.user_id = ID_User;
-        inventory.product_id = $("#drpProduct").val();
-        inventory.quantity = $("#txtQuantity").val();
-        inventory.price = $("#txtPrice").val();
+        var ID_User = parseInt(localStorage.getItem('userId'));
 
         var ctrlActions = new ControlActions();
-        var serviceCreate = this.ApiService + "/createInventory";
+        var serviceCreate = this.ApiService + "/deleteInventory";
 
-        ctrlActions.PostToAPIv1(serviceCreate, inventory, function () {
+        ctrlActions.DeleteToAPI(serviceCreate, ID_User, function () {
 
-            toastr.success("Inventory created", "Success!")
             var view = new InventoryView();
 
             view.CleanForm();
 
         });
+
+    };*/
+
+    this.Create = async function () {
+
+        var inventory = {};
+
+        productsInventory.forEach(function (productInventory) {
+            inventory.user_id = productInventory.user_id;
+            inventory.product_id = productInventory.product_id;
+            inventory.quantity = productInventory.quantity;
+            inventory.price = productInventory.price;
+
+            var ctrlActions = new ControlActions();
+            var view = new InventoryView();
+            var serviceCreate = view.ApiService + "/createInventory";
+
+            ctrlActions.PostToAPIv1(serviceCreate, inventory, function () {
+
+                toastr.success("Inventory updated", "Success!")
+                var view = new InventoryView();
+
+                view.CleanForm();
+
+            });
+
+        })
 
     };
 
@@ -64,6 +83,9 @@ function InventoryView() {
     }
 
     deleteProductInventory = function (id) {
+        var ctrlActions = new ControlActions();
+        var view = new InventoryView();
+        var serviceDelete = view.ApiService + "/deleteInventory";
 
         // Find the index of the product with the matching id
         var index = productsInventory.findIndex(function (product) {
@@ -74,17 +96,28 @@ function InventoryView() {
             // Remove the product from the array
             var deletedProduct = productsInventory.splice(index, 1)[0];
 
-            // Update the display and select element
-            loadProducts(productsInventory);
+            // Set the properties of the inventory object
+            var inventory = {};
+            inventory.user_id = parseInt(localStorage.getItem('userId'));
+            inventory.product_id = deletedProduct.product_id;
+            inventory.quantity = deletedProduct.quantity;
+            inventory.price = deletedProduct.price;
 
-            // Show the option in the select element
-            $('#drpProduct option[value="' + deletedProduct.product_id + '"]').show();
+            // Call the delete API to remove the product from the database
+            ctrlActions.DeleteToAPI(serviceDelete, inventory, function () {
+
+                // Update the display and select element
+                loadProducts(productsInventory);
+
+                // Show the option in the select element
+                $('#drpProduct option[value="' + deletedProduct.product_id + '"]').show();
+            });
         }
 
+        // Clear the form fields
         $('#drpProduct').val('');
         $('#txtQuantity').val('');
         $('#txtPrice').val('');
-
     }
 
     loadProducts = function (products) {
