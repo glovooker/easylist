@@ -113,5 +113,11 @@ namespace EasyListDataAccess.CRUD
             return lstTenders;
         }
 
+        public void AwardWithOfferId(int tenderId, int offerId)
+        {
+            var sqlTender = _mapper.AwardWithOfferIdStatement(tenderId, offerId);
+            dao.ExecuteProcedure(sqlTender);
+        }
+
     }
 }

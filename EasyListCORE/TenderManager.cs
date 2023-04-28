@@ -140,6 +140,20 @@ namespace EasyListCORE
 
         }
 
+        public void AwardWithOfferId(int tenderId, int offerId)
+        {
+            var crudTender = new TenderCrudFactory();
+            var existTender = crudTender.RetrieveById<Tender>(tenderId);
+
+            if (existTender == null)
+            {
+                throw new Exception("Tender does not exist!");
+            }
+
+            crudTender.AwardWithOfferId(tenderId, offerId);
+
+        }
+
     }
 
 }
