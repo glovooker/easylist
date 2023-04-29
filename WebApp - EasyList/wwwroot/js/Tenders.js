@@ -1,4 +1,6 @@
 ﻿var productsTender = [];
+var awardOffer = [];
+var acofferId;
 
 function TenderView() {
 
@@ -362,7 +364,19 @@ function TenderView() {
                 return automaticMap[data] || data;
             },
         };
-        arrayColumnsData[7] = { 'data': 'deliverLocation' };
+        arrayColumnsData[7] = {
+            'data': 'deliverLocation',
+            'render': function (data, type, row) {
+                // Aquí se agrega el offerId al vector 'awardOffer' si no está ya presente
+                if (type === 'display') {
+                    const offerId = row.offerId || 0;
+                    if (!awardOffer.includes(offerId)) {
+                        awardOffer.push(offerId);
+                    }
+                }
+                return data;
+            },
+        };
 
         $('#tblTender').dataTable({
             'ajax': {
@@ -376,6 +390,8 @@ function TenderView() {
             var tr = $(this).closest('tr');
 
             var data = $('#tblTender').DataTable().row(tr).data();
+
+            acofferId = data.offerId || 0;
 
             productsTender = data.productTenders;
 
@@ -454,6 +470,7 @@ function TenderView() {
     this.Offers = function () {
         var tenderId = parseInt($('#txtID').val()) || 0;
         localStorage.setItem('selectedTenderId', tenderId);
+        localStorage.setItem('awardOfferId', acofferId);
         window.location.href = "/OffersList";
 
 

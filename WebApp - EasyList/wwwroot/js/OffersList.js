@@ -15,18 +15,40 @@
             view.Back2();
         });
 
+        $('#btnAward').click(function () {
+            var view = new OffersListView();
+            view.Award();
+        });
+
         $('#offerAward').hide();
 
         this.LoadTable();
 
     }
 
-    this.LoadTable = function () {
+    this.LoadTable = async function () {
+
         var ctrlActions = new ControlActions();
         var tenderId = localStorage.getItem('selectedTenderId');
-        var urlService = ctrlActions.GetUrlApiService(
-            this.ApiService + '/retrieveOffersByTenderId?id=' + tenderId
-        );
+        var acofferId = localStorage.getItem('awardOfferId');
+
+        var urlService;
+
+        if (acofferId && acofferId != 0) {
+
+            console.log(acofferId);
+
+            urlService = this.ApiService + '/retrieveOfferById?id=' + acofferId;
+
+            $('#btnAward').hide();
+
+            $('#offerTitle').text("Award Offer");
+
+        } else {
+            urlService = this.ApiService + '/retrieveOffersByTenderId?id=' + tenderId;
+        }
+
+        var finalUrlService = ctrlActions.GetUrlApiService(urlService);
 
         var arrayColumnsData = [];
         arrayColumnsData[0] = { 'data': 'id' };
@@ -57,12 +79,19 @@
             },
         };
 
+        var result = await $.ajax({
+            url: finalUrlService,
+            type: 'GET',
+            data: '',
+        });
+
+        if (acofferId && acofferId != 0) {
+            result = [result];
+        }
+
         $('#tblOffer').dataTable({
-            'ajax': {
-                'url': urlService,
-                'dataSrc': '',
-            },
-            'columns': arrayColumnsData,
+            'data': result,
+            'columns': arrayColumnsData
         });
 
         $('#tblOffer tbody').on('click', 'tr', function () {
@@ -95,6 +124,29 @@
 
         });
 
+    };
+
+    this.Award = function () {
+        var ctrlActions = new ControlActions();
+
+        var tenderId = $('#Offer_txtTenderID').text();
+        var offerId = $('#Offer_txtOfferID').text();
+
+        console.log(tenderId, offerId);
+
+        var tender = {
+            id: tenderId,
+            offerId: offerId
+        };
+
+        var serviceUpdate = 'Tender/awardTendersWithOfferId?tenderId=' + tenderId + '&offerId=' + offerId;
+
+        ctrlActions.PutToAPI(serviceUpdate, tender, function () {
+            toastr.success('We will send an email with the information to the bidder.', 'Awarded offer!');
+            setTimeout(function () {
+                location.reload();
+            }, 5000); // espera de 5 segundos antes de refrescar la página
+        });
     };
 
     this.Back = function () {

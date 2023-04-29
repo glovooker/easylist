@@ -2,7 +2,7 @@
 {
     public class Tender : BaseEntity
     {
-        public enum TenderStatus { OPEN, CLOSED, AWARD, ONGOING, FINISHED, TERMINATED }
+        public enum TenderStatus { OPEN, CLOSED, ONGOING, FINISHED, TERMINATED }
 
         public string title { get; set; }
         public string description { get; set; }
