@@ -20,7 +20,7 @@ namespace EasyListDataAccess.Mapper
                 QRcode = (string)row["CODIGOQR"],
                 automatic = (bool)row["AUTOMATICA"],
                 analistId = (int)row["ID_ANALISTA"],
-                offerId = row["ID_OFERTA"] == DBNull.Value ? 0 : (int)row["IDOFERTA"],
+                offerId = row["ID_OFERTA"] == DBNull.Value ? 0 : (int)row["ID_OFERTA"],
                 deliverLocation = (string)row["LUGARENTREGA"]
             };
             return tender;
@@ -159,6 +159,16 @@ namespace EasyListDataAccess.Mapper
             var sqlOperation = new SqlOperation { ProcedureName = "RET_LICITACION_BY_ANALISTA_ID_PR" };
 
             sqlOperation.AddIntParam("P_ID_ANALISTA", id);
+
+            return sqlOperation;
+        }
+
+        public SqlOperation AwardWithOfferIdStatement(int tenderId, int offerId)
+        {
+            var sqlOperation = new SqlOperation { ProcedureName = "ADJUDICAR_LICITACION_WITH_OFERTA_ID_PR" };
+
+            sqlOperation.AddIntParam("P_ID_LICITACION", tenderId);
+            sqlOperation.AddIntParam("P_ID_OFERTA", offerId);
 
             return sqlOperation;
         }

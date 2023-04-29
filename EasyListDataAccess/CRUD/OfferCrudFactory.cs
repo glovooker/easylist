@@ -132,5 +132,24 @@ namespace EasyListDataAccess.CRUD
 
             return lstOffers;
         }
+
+        public List<Offer> RetrieveByOffererId<Offer>(int id)
+        {
+            var lstOffers = new List<Offer>();
+            var sqlOffer = _mapper.GetRetrieveByOffererIdStatement(id);
+            var lstResults = dao.ExecuteQueryProcedure(sqlOffer);
+
+            if (lstResults.Count > 0)
+            {
+                var objsOffers = _mapper.BuildObjects(lstResults);
+
+                foreach (var op in objsOffers)
+                {
+                    lstOffers.Add((Offer)Convert.ChangeType(op, typeof(Offer)));
+                }
+            }
+
+            return lstOffers;
+        }
     }
 }

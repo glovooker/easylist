@@ -3,6 +3,7 @@
 
         var ctrlActions = new ControlActions();
         this.userId = localStorage.getItem('userId');
+        $('#offersLink').hide();
 
         if (this.userId) {
             var urlService = ctrlActions.GetUrlApiService(
@@ -36,11 +37,14 @@
                         container.find('.dropdown-menu').hide();
                     }
                 });
+
+                $('#offersLink').show();
             });
         } else {
             // Display sign up and sign in buttons
             $('#registerBtn').show();
             $('#loginBtn').show();
+            $('#offersLink').hide();
         }
     }
 }

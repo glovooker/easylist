@@ -99,6 +99,21 @@ namespace EasyListCORE
                 to: new Twilio.Types.PhoneNumber($"{phone}")
             );
         }
+        public void NotifyBySMS(string messageText, string contact)
+        {
+            string accountSid = "AC7c641af885f7e2fd0b9612ca9e9137d5";
+            string authToken = "dba9d7e75354dc63c4b96b5334d0a9d5";
+
+            TwilioClient.Init(accountSid, authToken);
+
+            var message = MessageResource.Create(
+                body: messageText,
+                from: new Twilio.Types.PhoneNumber("+17473194370"),
+                to: new Twilio.Types.PhoneNumber($"{contact}")
+            );
+        }
+
+
 
 
         private static string _sendGridApiKey = "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";

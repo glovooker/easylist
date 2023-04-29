@@ -1,4 +1,6 @@
 ﻿var productsTender = [];
+var awardOffer = [];
+var acofferId;
 
 function TenderView() {
 
@@ -336,14 +338,16 @@ function TenderView() {
                 const isoDate = new Date(data);
                 const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
                 return isoDate.toLocaleDateString('en-GB', options).replace(/\//g, '/');
-            }, };
+            },
+        };
         arrayColumnsData[4] = {
             'data': 'maxDeliverDate',
             'render': function (data) {
                 const isoDate = new Date(data);
                 const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
                 return isoDate.toLocaleDateString('en-GB', options).replace(/\//g, '/');
-            }, };
+            },
+        };
         arrayColumnsData[5] = {
             'data': 'budget',
             'render': function (data) {
@@ -358,8 +362,21 @@ function TenderView() {
                     'false': 'Manual'
                 };
                 return automaticMap[data] || data;
-            }, };
-        arrayColumnsData[7] = { 'data': 'deliverLocation' };
+            },
+        };
+        arrayColumnsData[7] = {
+            'data': 'deliverLocation',
+            'render': function (data, type, row) {
+                // Aquí se agrega el offerId al vector 'awardOffer' si no está ya presente
+                if (type === 'display') {
+                    const offerId = row.offerId || 0;
+                    if (!awardOffer.includes(offerId)) {
+                        awardOffer.push(offerId);
+                    }
+                }
+                return data;
+            },
+        };
 
         $('#tblTender').dataTable({
             'ajax': {
@@ -373,6 +390,8 @@ function TenderView() {
             var tr = $(this).closest('tr');
 
             var data = $('#tblTender').DataTable().row(tr).data();
+
+            acofferId = data.offerId || 0;
 
             productsTender = data.productTenders;
 
@@ -449,10 +468,11 @@ function TenderView() {
     };
 
     this.Offers = function () {
-        var tenderID = parseInt($('#txtID').val()) || 0;
-        localStorage.setItem('tenderID', tenderID);
+        var tenderId = parseInt($('#txtID').val()) || 0;
+        localStorage.setItem('selectedTenderId', tenderId);
+        localStorage.setItem('awardOfferId', acofferId);
         window.location.href = "/OffersList";
-      
+
 
     }
 
@@ -479,10 +499,10 @@ loadProductSelect = () => {
         .then(products => {
             const select = document.getElementById('drpProduct');
             products.forEach(product => {
-                    const option = document.createElement('option');
-                    option.value = product.id;
-                    option.text = product.name;
-                    select.appendChild(option);
+                const option = document.createElement('option');
+                option.value = product.id;
+                option.text = product.name;
+                select.appendChild(option);
             });
         })
         .catch(error => console.error(error));

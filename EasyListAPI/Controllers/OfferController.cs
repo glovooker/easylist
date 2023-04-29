@@ -160,5 +160,26 @@ namespace EasyListAPI.Controllers
 
         }
 
+        [HttpGet]
+        [Route("retrieveOffersByOffererId")]
+        public async Task<IActionResult> retrieveOffersByOffererId(int id)
+        {
+            try
+            {
+
+                var om = new OfferManager();
+
+                var offer = om.RetrieveByOffererId(id);
+
+                return Ok(offer);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+
     }
 }
