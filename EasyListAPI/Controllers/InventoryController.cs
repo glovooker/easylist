@@ -71,7 +71,7 @@ namespace EasyListAPI.Controllers
 
                 var im = new InventoryManager();
                 im.DeleteAll(id);
-                return Ok(id);
+                return Ok("Inventory eliminated");
 
             }
             catch(Exception ex)

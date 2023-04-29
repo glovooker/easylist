@@ -18,23 +18,6 @@ function InventoryView() {
 
     }
 
-    /*this.Delete = function () {
-
-        var ID_User = parseInt(localStorage.getItem('userId'));
-
-        var ctrlActions = new ControlActions();
-        var serviceCreate = this.ApiService + "/deleteInventory";
-
-        ctrlActions.DeleteToAPI(serviceCreate, ID_User, function () {
-
-            var view = new InventoryView();
-
-            view.CleanForm();
-
-        });
-
-    };*/
-
     this.Create = async function () {
 
         var inventory = {};
@@ -132,7 +115,7 @@ function InventoryView() {
 
                     // Create the product card with the updated name
                     var productCard = $(`
-                    <div class='card w-100 mt-2' id="product${productInventory.id}">
+                    <div class='card w-100 mt-2' id="product${productInventory.product_id}">
                         <div class='card-body d-flex flex-row justify-content-around align-items-center'>
                             <h5 class='card-title m-0'>${productInventory.name}</h5>
                             <div class='d-flex flex-row justify-content-around align-items-center w-50'>
