@@ -163,12 +163,13 @@ namespace EasyListDataAccess.Mapper
             return sqlOperation;
         }
 
-        public SqlOperation AwardWithOfferIdStatement(int tenderId, int offerId)
+        public SqlOperation AwardWithOfferIdStatement(int tenderId, int offerId, string codeQR)
         {
             var sqlOperation = new SqlOperation { ProcedureName = "ADJUDICAR_LICITACION_WITH_OFERTA_ID_PR" };
 
             sqlOperation.AddIntParam("P_ID_LICITACION", tenderId);
             sqlOperation.AddIntParam("P_ID_OFERTA", offerId);
+            sqlOperation.AddVarcharParam("P_CODIGOQR", codeQR);
 
             return sqlOperation;
         }

@@ -11,47 +11,6 @@ namespace EasyListCORE
 {
     public class NotificationManager
     {
-
-        public async void NotifyQrByEmail(string email)
-        {
-            var apiKey = "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";
-            var client = new SendGridClient(apiKey);
-            var from = new EmailAddress("josias.andres@hotmail.com", "EasyList");
-            var subject = "QR de verificacion";
-            var to = new EmailAddress(email);
-            var plainTextContent = $"Hola, aquí tienes tu imagen QR";
-
-            // Generar el código QR
-            QRCodeGenerator qrGenerator = new QRCodeGenerator();
-            QRCodeData qrCodeData = qrGenerator.CreateQrCode($"https://localhost:7110/?email={email}&idTender=", QRCodeGenerator.ECCLevel.Q);
-            QRCode qrCode = new QRCode(qrCodeData);
-
-            Bitmap qrCodeImage = qrCode.GetGraphic(20);
-
-            // Convertir la imagen en un arreglo de bytes
-            byte[] imageBytes;
-            using (MemoryStream stream = new MemoryStream())
-            {
-                qrCodeImage.Save(stream, ImageFormat.Png);
-                imageBytes = stream.ToArray();
-            }
-
-            // Adjuntar la imagen al correo electrónico
-            var attachment = new Attachment
-            {
-                Filename = "qrcode.png",
-                Content = Convert.ToBase64String(imageBytes),
-                Type = "image/png",
-                Disposition = "attachment"
-            };
-
-            // Crear el correo electrónico
-            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, "<p><strong>Hola, aquí tienes tu imagen QR:</strong></p>");
-            msg.AddAttachment(attachment);
-
-            // Enviar el correo electrónico
-            var response = await client.SendEmailAsync(msg);
-        }
         
         public void NotifyAccountValidation(Validation validation)
         {
@@ -128,6 +87,34 @@ namespace EasyListCORE
             var plainTextContent = message;
             var htmlContent = message;
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+
+            try
+            {
+                var response = await client.SendEmailAsync(msg);
+                Console.WriteLine("Correo electrónico enviado exitosamente a {0}", contact);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al enviar el correo electrónico: {0}", ex.Message);
+            }
+        }
+        public async Task NotifyByEmailQR(string message, string contact, byte[] imageBytes)
+        {
+            var client = new SendGridClient(_sendGridApiKey);
+            var from = _from;
+            var subject = "EasyList Notification";
+            var to = new EmailAddress(contact, "EasyList User");
+            var plainTextContent = message;
+            var htmlContent = message;
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+            var attachment = new Attachment
+            {
+                Filename = "qrcode.png",
+                Content = Convert.ToBase64String(imageBytes),
+                Type = "image/png",
+                Disposition = "attachment"
+            };
+            msg.AddAttachment(attachment);
 
             try
             {

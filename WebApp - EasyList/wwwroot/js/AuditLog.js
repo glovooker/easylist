@@ -33,6 +33,7 @@
                     'CREATE': 'Create',
                     'UPDATE': 'Update',
                     'DELETE': 'Delete',
+                    'ONGOING': 'Ongoing'
                 };
                 return actionMap[data] || data;
             }, };
