@@ -3,7 +3,6 @@
 
         var ctrlActions = new ControlActions();
         this.userId = localStorage.getItem('userId');
-        $('#offersLink').hide();
 
         if (this.userId) {
             var urlService = ctrlActions.GetUrlApiService(
@@ -11,6 +10,11 @@
             );
 
             $.getJSON(urlService, function (user) {
+                var offersButtonHtml = `
+                    <a class="nav-link active" asp-area="" asp-page="/MyOffers">
+                                My Offers
+                                <span class="visually-hidden">(current)</span>
+                            </a>`
                 var dropdownHtml = `
                     <div class="dropdown">
                       <button class="btn btn-primary bg-white text-primary dropdown-toggle" type="button" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -23,6 +27,7 @@
                     </div>
 
                 `;
+                $('#offersLink').html(offersButtonHtml);
                 $('#userDropdownContainer').html(dropdownHtml);
 
                 // Toggle dropdown menu on click
@@ -38,13 +43,11 @@
                     }
                 });
 
-                $('#offersLink').show();
             });
         } else {
             // Display sign up and sign in buttons
             $('#registerBtn').show();
             $('#loginBtn').show();
-            $('#offersLink').hide();
         }
     }
 }
