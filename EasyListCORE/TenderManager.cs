@@ -179,8 +179,15 @@ namespace EasyListCORE
             "<p>Thank you for participating in this tender and congratulations on your success.</p>" +
             "<p>Best regards,</p>" +
             "<p>The EasyList team</p></body></html>";
+            var messageText = "Hello " + existUser.name + " " + existUser.firstLastName + "," +
+            "We are pleased to inform you that your offer has been selected for award in the tender " + tenderId + "." +
+            "Additionally, we want to remind you of the importance of reviewing the terms and conditions of the contract before accepting it." +
+            "Thank you for participating in this tender and congratulations on your success." +
+            "Best regards," +
+            "The EasyList team";
 
             nm.NotifyByEmail(message, offerorEmail);
+            nm.NotifyBySMS(messageText, offerorPhone);
 
             crudTender.AwardWithOfferId(tenderId, offerId);
 
