@@ -124,14 +124,72 @@ namespace EasyListCORE
         public List<Tender> RetrieveByAnalystId(int id)
         {
             var crudTender = new TenderCrudFactory();
-            var existLicitacion = crudTender.RetrieveByAnalystId<Tender>(id);
+            var crudProductTender = new ProductTenderCrudFactory();
+            var tenderList = crudTender.RetrieveByAnalystId<Tender>(id);
 
-            if (existLicitacion == null)
+            if (tenderList == null)
             {
                 throw new Exception("The analyst has no tenders!");
             }
+            foreach (var tender in tenderList)
+            {
+                tender.ProductTenders = crudProductTender.RetrieveByTenderId<ProductTender>(tender.Id);
+            }
 
-            return existLicitacion;
+            return tenderList;
+
+        }
+
+        public void AwardWithOfferId(int tenderId, int offerId)
+        {
+            var crudTender = new TenderCrudFactory();
+            var existTender = crudTender.RetrieveById<Tender>(tenderId);
+
+            if (existTender == null)
+            {
+                throw new Exception("Tender does not exist!");
+            }
+
+            var crudOffer = new OfferCrudFactory();
+            var existOffer = crudOffer.RetrieveById<Offer>(offerId);
+
+            if (existOffer == null)
+            {
+                throw new Exception("Offer does not exist!");
+            }
+
+            var userId = existOffer.user_id;
+
+            var crudUser = new UserCrudFactory();
+            var existUser = crudUser.RetrieveById<User>(userId);
+
+            if (existUser == null)
+            {
+                throw new Exception("User does not exist!");
+            }
+
+            var offerorPhone = existUser.phone;
+            var offerorEmail = existUser.email;
+
+            var nm = new NotificationManager();
+
+            var message = "<html><body><p>Hello " + existUser.name + " " + existUser.firstLastName + ",</p>" +
+            "<p>We are pleased to inform you that your offer has been selected for award in the tender " + tenderId + ".</p>" +
+            "<p>Additionally, we want to remind you of the importance of reviewing the terms and conditions of the contract before accepting it.</p>" +
+            "<p>Thank you for participating in this tender and congratulations on your success.</p>" +
+            "<p>Best regards,</p>" +
+            "<p>The EasyList team</p></body></html>";
+            var messageText = "Hello " + existUser.name + " " + existUser.firstLastName + "," +
+            "We are pleased to inform you that your offer has been selected for award in the tender " + tenderId + "." +
+            "Additionally, we want to remind you of the importance of reviewing the terms and conditions of the contract before accepting it." +
+            "Thank you for participating in this tender and congratulations on your success." +
+            "Best regards," +
+            "The EasyList team";
+
+            nm.NotifyByEmail(message, offerorEmail);
+            nm.NotifyBySMS(messageText, offerorPhone);
+
+            crudTender.AwardWithOfferId(tenderId, offerId);
 
         }
 
