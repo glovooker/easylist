@@ -13,7 +13,7 @@ namespace EasyListDataAccess.Mapper
                 Id = (int)row["ID_OFERTA"],
                 user_id = (int)row["ID_OFERENTE"],
                 tender_id = (int)row["ID_LICITACION"],
-                chosen = (bool)row["ELEGIDA"],
+                comment = (string)row["COMENTARIO"],
                 totalCost = Convert.ToSingle(row["COSTOTOTAL"]),
                 dueDate = (DateTime)row["FECHAENTREGA"]
             };
@@ -69,7 +69,7 @@ namespace EasyListDataAccess.Mapper
             sqlOperation.ProcedureName = "CRE_OFERTA_PR";
             sqlOperation.AddIntParam("P_ID_OFERENTE", offer.user_id);
             sqlOperation.AddIntParam("P_ID_LICITACION", offer.tender_id);
-            sqlOperation.AddBoolParam("P_ELEGIDA", offer.chosen);
+            sqlOperation.AddVarcharParam("P_COMENTARIO", offer.comment);
             sqlOperation.AddFloatParam("P_COSTOTOTAL", offer.totalCost);
             sqlOperation.AddDateTimeParam("P_FECHAENTREGA", offer.dueDate);
 
@@ -85,7 +85,7 @@ namespace EasyListDataAccess.Mapper
             sqlOperation.ProcedureName = "UPD_OFERTA_PR";
             sqlOperation.AddIntParam("P_ID_OFERTA", offer.Id);
             sqlOperation.AddIntParam("P_ID_OFERENTE", offer.user_id);
-            sqlOperation.AddBoolParam("P_ELEGIDA", offer.chosen);
+            sqlOperation.AddVarcharParam("P_COMENTARIO", offer.comment);
             sqlOperation.AddFloatParam("P_COSTOTOTAL", offer.totalCost);
             sqlOperation.AddDateTimeParam("P_FECHAENTREGA", offer.dueDate);
 

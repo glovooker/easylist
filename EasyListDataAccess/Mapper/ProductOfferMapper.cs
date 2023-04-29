@@ -12,7 +12,8 @@ namespace EasyListDataAccess.Mapper
                 product_id = (int)row["ID_PRODUCTO"],
                 offer_id = (int)row["ID_OFERTA"],
                 quantity = Convert.ToSingle(row["CANTIDAD"]),
-                price = Convert.ToSingle(row["PRECIO"])
+                price = Convert.ToSingle(row["PRECIO"]),
+                verified = (Boolean)row["COMPROBADO"]
             };
             return productofferta;
         }

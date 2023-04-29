@@ -20,6 +20,13 @@
             view.Award();
         });
 
+        $('#btnValidate').click(function () {
+            var view = new OffersListView();
+            view.Validate();
+        });
+
+        $('#btnValidate').hide();
+
         $('#offerAward').hide();
 
         this.LoadTable();
@@ -41,6 +48,8 @@
             urlService = this.ApiService + '/retrieveOfferById?id=' + acofferId;
 
             $('#btnAward').hide();
+
+            $('#btnValidate').show();
 
             $('#offerTitle').text("Award Offer");
 
@@ -147,6 +156,14 @@
                 location.reload();
             }, 5000); // espera de 5 segundos antes de refrescar la página
         });
+    };
+
+    this.Validate = function () {
+
+        var tenderId = $('#Offer_txtTenderID').text();
+        var offerId = $('#Offer_txtOfferID').text();
+
+        window.location.href = '/ProductValidation/?idTender=' + tenderId + '&idOffer=' + offerId;
     };
 
     this.Back = function () {

@@ -1,40 +1,16 @@
 ﻿@page
 @model WebApp___EasyList.Pages.OffersListModel
 @{
-    ViewData["Title"] = "Offers List";
+    ViewData["Title"] = "Product Validation";
 }
-<script src="~/js/offerslist.js"></script>
+<script src="~/js/ProductValidation.js"></script>
 <div class="bs-docs-section d-flex flex-column">
-    <div id="offersList">
-        <br />
-        <div class="d-flex flex-row justify-content-between">
-            <h3 class="display-7 mb-3" id="offerTitle">Offers List</h3>
-            <div>
-                <button id="btnBack" class="btn btn-warning w-auto mx-4" type="button" tabindex="0">Back</button>
-            </div>
-        </div>
-        <div class="row" id="tblContainer">
-            <table id="tblOffer" class="display mt-5" style="width:100%">
-                <thead>
-                <th>ID</th>
-                <th>Offerer ID</th>
-                <th>Tender ID</th>
-                <th>Chosen</th>
-                <th>Total Cost</th>
-                <th>Deliver Date</th>
-                </thead>
-            </table>
-            <br />
-        </div>
-    </div>
-    
-
     <div id="offerAward">
         <br />
         <div class="d-flex flex-row justify-content-between">
-            <h3 class="display-7 mb-3">Offer Award</h3>
+            <h3 class="display-7 mb-3">Product Validation</h3>
             <div>
-                <button id="btnBack2" class="btn btn-warning w-auto mx-4" type="button" tabindex="0">Back</button>
+                <button id="btnBack" class="btn btn-warning w-auto mx-4" type="button" tabindex="0">Back</button>
             </div>
         </div>
         <div class="container my-5" id="OfferProductsContainer">
@@ -71,8 +47,7 @@
                     </form>
                     <br />
                     <div class="d-flex flex-row justify-content-around">
-                        <button id="btnAward" class="btn btn-primary w-25 mx-4" type="button" tabindex="0">Award</button>
-                        <button id="btnValidate" class="btn btn-primary w-25 mx-4" type="button" tabindex="0">Validate</button>
+                        <button id="btnSend" class="btn btn-primary w-25 mx-4" type="button" tabindex="0">Send</button>
                     </div>
                 </div>
             </div>
