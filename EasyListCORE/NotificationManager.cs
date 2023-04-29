@@ -112,10 +112,10 @@ namespace EasyListCORE
                 Filename = "qrcode.png",
                 Content = Convert.ToBase64String(imageBytes),
                 Type = "image/png",
-                Disposition = "attachment"
+                Disposition = "inline",
+                ContentId = "qr-image"
             };
             msg.AddAttachment(attachment);
-
             try
             {
                 var response = await client.SendEmailAsync(msg);

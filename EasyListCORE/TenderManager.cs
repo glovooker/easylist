@@ -183,7 +183,9 @@ namespace EasyListCORE
             "<p>Thank you for participating in this tender and congratulations on your success.</p>" +
             "<p>Best regards,</p>" +
             "<p>The EasyList team</p>" +
-             "<br /><p>The QR code is attached for validation with the analyst.</p></body></html>";
+             "<br /><p>The QR code is attached for validation with the analyst.</p>" +
+             "<img src=\"cid:qr-image\" /></body></html>";
+
 
 
             var messageText = "Hello " + existUser.name + " " + existUser.firstLastName + "," +
