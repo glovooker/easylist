@@ -45,7 +45,7 @@
 }
 
 function goBack() {
-    window.history.back();
+    window.location.href = "/Index";
 }
 loadProducts = function (products) {
     $("#productsContainer").empty();
