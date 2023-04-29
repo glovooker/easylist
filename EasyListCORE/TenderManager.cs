@@ -150,6 +150,38 @@ namespace EasyListCORE
                 throw new Exception("Tender does not exist!");
             }
 
+            var crudOffer = new OfferCrudFactory();
+            var existOffer = crudOffer.RetrieveById<Offer>(offerId);
+
+            if (existOffer == null)
+            {
+                throw new Exception("Offer does not exist!");
+            }
+
+            var userId = existOffer.user_id;
+
+            var crudUser = new UserCrudFactory();
+            var existUser = crudUser.RetrieveById<User>(userId);
+
+            if (existUser == null)
+            {
+                throw new Exception("User does not exist!");
+            }
+
+            var offerorPhone = existUser.phone;
+            var offerorEmail = existUser.email;
+
+            var nm = new NotificationManager();
+
+            var message = "<html><body><p>Hello " + existUser.name + " " + existUser.firstLastName + ",</p>" +
+            "<p>We are pleased to inform you that your offer has been selected for award in the tender " + tenderId + ".</p>" +
+            "<p>Additionally, we want to remind you of the importance of reviewing the terms and conditions of the contract before accepting it.</p>" +
+            "<p>Thank you for participating in this tender and congratulations on your success.</p>" +
+            "<p>Best regards,</p>" +
+            "<p>The EasyList team</p></body></html>";
+
+            nm.NotifyByEmail(message, offerorEmail);
+
             crudTender.AwardWithOfferId(tenderId, offerId);
 
         }
