@@ -1,5 +1,8 @@
 ﻿using DTOs;
 using EasyListDataAccess.CRUD;
+using QRCoder;
+using System.Drawing.Imaging;
+using System.Drawing;
 
 namespace EasyListCORE
 {
@@ -170,6 +173,7 @@ namespace EasyListCORE
 
             var offerorPhone = existUser.phone;
             var offerorEmail = existUser.email;
+            var codeQR= $"https://localhost:7110/ProductValidation/?idTender={existTender.Id}&idOffer={existOffer.Id}";
 
             var nm = new NotificationManager();
 
@@ -178,7 +182,12 @@ namespace EasyListCORE
             "<p>Additionally, we want to remind you of the importance of reviewing the terms and conditions of the contract before accepting it.</p>" +
             "<p>Thank you for participating in this tender and congratulations on your success.</p>" +
             "<p>Best regards,</p>" +
-            "<p>The EasyList team</p></body></html>";
+            "<p>The EasyList team</p>" +
+             "<br /><p>The QR code is attached for validation with the analyst.</p>" +
+             "<img src=\"cid:qr-image\" /></body></html>";
+
+
+
             var messageText = "Hello " + existUser.name + " " + existUser.firstLastName + "," +
             "We are pleased to inform you that your offer has been selected for award in the tender " + tenderId + "." +
             "Additionally, we want to remind you of the importance of reviewing the terms and conditions of the contract before accepting it." +
@@ -186,10 +195,24 @@ namespace EasyListCORE
             "Best regards," +
             "The EasyList team";
 
-            nm.NotifyByEmail(message, offerorEmail);
+
+
+            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode(codeQR, QRCodeGenerator.ECCLevel.Q);
+            QRCode qrCode = new QRCode(qrCodeData);
+            Bitmap qrCodeImage = qrCode.GetGraphic(20);
+
+            byte[] imageBytes;
+
+            using (MemoryStream stream = new MemoryStream())
+            {
+                qrCodeImage.Save(stream, ImageFormat.Png);
+                imageBytes = stream.ToArray();
+                nm.NotifyByEmailQR(message, offerorEmail, imageBytes); 
+            }
             nm.NotifyBySMS(messageText, offerorPhone);
 
-            crudTender.AwardWithOfferId(tenderId, offerId);
+            crudTender.AwardWithOfferId(tenderId, offerId, codeQR);
 
         }
 

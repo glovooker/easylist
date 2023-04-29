@@ -145,7 +145,8 @@
 
         var tender = {
             id: tenderId,
-            offerId: offerId
+            offerId: offerId,
+            CODIGOQR: ""
         };
 
         var serviceUpdate = 'Tender/awardTendersWithOfferId?tenderId=' + tenderId + '&offerId=' + offerId;
