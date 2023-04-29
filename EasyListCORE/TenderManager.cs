@@ -173,7 +173,7 @@ namespace EasyListCORE
 
             var offerorPhone = existUser.phone;
             var offerorEmail = existUser.email;
-            var codeQR= $"https://localhost:7110/ProductValidation/?email={existUser.email}&idTender={existTender.Id}";
+            var codeQR= $"https://localhost:7110/ProductValidation/?idTender={existTender.Id}&idOffer={existOffer.Id}";
 
             var nm = new NotificationManager();
 
