@@ -5,25 +5,78 @@
 }
 <script src="~/js/offerslist.js"></script>
 <div class="bs-docs-section d-flex flex-column">
-    <br />
-    <div class="d-flex flex-row justify-content-between">
-        <h3 class="display-7 mb-3">Offers List</h3>
-        <div>
-            <button id="btnBack" class="btn btn-warning w-auto mx-4" type="button" tabindex="0">Back</button>
+    <div id="offersList">
+        <br />
+        <div class="d-flex flex-row justify-content-between">
+            <h3 class="display-7 mb-3" id="offerTitle">Offers List</h3>
+            <div>
+                <button id="btnBack" class="btn btn-warning w-auto mx-4" type="button" tabindex="0">Back</button>
+            </div>
+        </div>
+        <div class="row" id="tblContainer">
+            <table id="tblOffer" class="display mt-5" style="width:100%">
+                <thead>
+                <th>ID</th>
+                <th>Offerer ID</th>
+                <th>Tender ID</th>
+                <th>Chosen</th>
+                <th>Total Cost</th>
+                <th>Deliver Date</th>
+                </thead>
+            </table>
+            <br />
         </div>
     </div>
-    <div class="row" id="tblContainer">
-        <table id="tblOffer" class="display mt-5" style="width:100%">
-            <thead>
-            <th>ID</th>
-            <th>Offerer ID</th>
-            <th>Tender ID</th>
-            <th>Chosen</th>
-            <th>Total Cost</th>
-            <th>Deliver Date</th>
-            </thead>
-        </table>
+    
+
+    <div id="offerAward">
         <br />
+        <div class="d-flex flex-row justify-content-between">
+            <h3 class="display-7 mb-3">Offer Award</h3>
+            <div>
+                <button id="btnBack2" class="btn btn-warning w-auto mx-4" type="button" tabindex="0">Back</button>
+            </div>
+        </div>
+        <div class="container my-5" id="OfferProductsContainer">
+            <div class="card shadow-sm mx-auto" style="max-width: 1100px; border: 1px solid #e6e6e6">
+                <div class="card-body">
+                    <h3 class="card-title text-center mb-4 fw-bold" style="font-size: 1.5rem; color: #F5805D">Offer Info</h3>
+                    <form>
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-12 form-group">
+                                    <label for="txtTenderID" class="form-label mt-1">Tender ID</label>
+                                    <p id="Offer_txtTenderID" class="form-control" aria-describedby="emailHelp" style="margin: 0 auto;"></p>
+                                    <h5 style="padding-top: 20px;">Products</h5>
+                                    <div class="d-flex flex-column justify-content-around align-items-center" id="productsOfferContainer"></div>
+                                </div>
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="row">
+                                        <div class="col-sm-12 form-group">
+                                            <label for="txtOfferID" class="form-label mt-1">Offer ID</label>
+                                            <p id="Offer_txtOfferID" class="form-control" aria-describedby="emailHelp" style="margin: 0 auto;"></p>
+                                        </div>
+                                        <div class="col-sm-12 form-group">
+                                            <label for="txtMaxDeliverDate" class="form-label pt-3">Delivery Date</label>
+                                            <p id="Offer_txtMaxDeliverDate" class="form-control"></p>
+                                        </div>
+                                        <div class="col-sm-12 form-group">
+                                            <label for="txtBudget" class="form-label pt-3">Budget</label>
+                                            <p id="Offer_txtBudget" class="form-control"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                    <br />
+                    <div class="d-flex flex-row justify-content-around">
+                        <button id="btnAward" class="btn btn-primary w-25 mx-4" type="button" tabindex="0">Award</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+   
 
 </div>

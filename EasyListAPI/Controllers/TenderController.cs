@@ -143,5 +143,27 @@ namespace EasyListAPI.Controllers
             }
 
         }
+
+        [HttpPut]
+        [Route("awardTendersWithOfferId")]
+        public async Task<IActionResult> awardTendersWithOfferId(int tenderId, int offerId)
+        {
+            try
+            {
+
+                var tm = new TenderManager();
+
+                tm.AwardWithOfferId(tenderId, offerId);
+
+                return Ok();
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+
     }
 }

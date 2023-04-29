@@ -154,6 +154,15 @@ namespace EasyListDataAccess.Mapper
 
             return sqlOperation;
         }
+
+        public SqlOperation GetRetrieveByOffererIdStatement(int id)
+        {
+            var sqlOperation = new SqlOperation { ProcedureName = "RET_OFERTAS_BY_OFFERER_ID_PR" };
+
+            sqlOperation.AddIntParam("P_ID_OFERENTE", id);
+
+            return sqlOperation;
+        }
     }
 
 }
