@@ -6,6 +6,7 @@
         public int offer_id { get; set; }
         public float quantity { get; set; }
         public float price { get; set; }
+        public bool verified { get; set; }
 
     }
 

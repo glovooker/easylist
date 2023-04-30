@@ -12,7 +12,8 @@ namespace EasyListDataAccess.Mapper
                 product_id = (int)row["ID_PRODUCTO"],
                 offer_id = (int)row["ID_OFERTA"],
                 quantity = Convert.ToSingle(row["CANTIDAD"]),
-                price = Convert.ToSingle(row["PRECIO"])
+                price = Convert.ToSingle(row["PRECIO"]),
+                verified = (Boolean)row["COMPROBADO"]
             };
             return productofferta;
         }
@@ -68,6 +69,7 @@ namespace EasyListDataAccess.Mapper
             sqlOperation.AddIntParam("P_ID_OFERTA", productoffer.offer_id);
             sqlOperation.AddFloatParam("P_CANTIDAD", productoffer.quantity);
             sqlOperation.AddFloatParam("P_PRECIO", productoffer.price);
+            sqlOperation.AddBoolParam("P_COMPROBADO", productoffer.verified);
 
             return sqlOperation;
         }
@@ -83,6 +85,7 @@ namespace EasyListDataAccess.Mapper
             sqlOperation.AddIntParam("P_ID_OFERTA", productoffer.offer_id);
             sqlOperation.AddFloatParam("P_CANTIDAD", productoffer.quantity);
             sqlOperation.AddFloatParam("P_PRECIO", productoffer.price);
+            sqlOperation.AddBoolParam("P_COMPROBADO", productoffer.verified);
 
             return sqlOperation;
         }
