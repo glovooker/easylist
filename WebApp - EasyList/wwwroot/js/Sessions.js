@@ -11,10 +11,12 @@
 
             $.getJSON(urlService, function (user) {
                 var offersButtonHtml = `
-                    <a class="nav-link active" asp-area="" asp-page="/MyOffers">
-                                My Offers
-                                <span class="visually-hidden">(current)</span>
-                            </a>`
+                <a class="nav-link active" asp-area="" href="#" onclick="redirectToMyOffers()">
+                    My Offers
+                    <span class="visually-hidden">(current)</span>
+                </a>
+                `;
+
                 var dropdownHtml = `
                     <div class="dropdown">
                       <button class="btn btn-primary bg-white text-primary dropdown-toggle" type="button" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -50,6 +52,10 @@
             $('#loginBtn').show();
         }
     }
+}
+
+function redirectToMyOffers() {
+    window.location.href = "/MyOffers";
 }
 
 function logout() {
