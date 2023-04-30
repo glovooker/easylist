@@ -46,13 +46,14 @@ function OfferView() {
         offer.id = parseInt($('#txtOfferID').val()) || 0;
         offer.user_id = localStorage.getItem('userId');
         offer.tender_id = localStorage.getItem('selectedTenderId');
-        offer.chosen = false;
+        offer.comment = 'unset';
         offer.totalCost = parseInt($('#txtBudget').val()) || 0;
         offer.dueDate = $("#txtMaxDeliverDate").val();
         offer.productOffers = productsOffer || [];
 
         offer.productOffers.forEach(function (productOffer) {
             productOffer.offer_id = offer.id;
+            productOffer.verified = false;
         })
 
         var isValid = true;

@@ -1,4 +1,6 @@
-﻿function OffersListView() {
+﻿var comment;
+
+function OffersListView() {
     this.ViewName = "OffersListView";
     this.ApiService = "Offer";
 
@@ -43,8 +45,6 @@
 
         if (acofferId && acofferId != 0) {
 
-            console.log(acofferId);
-
             urlService = this.ApiService + '/retrieveOfferById?id=' + acofferId;
 
             $('#btnAward').hide();
@@ -64,16 +64,6 @@
         arrayColumnsData[1] = { 'data': 'user_id' };
         arrayColumnsData[2] = { 'data': 'tender_id' };
         arrayColumnsData[3] = {
-            'data': 'chosen',
-            'render': function (data) {
-                const statusMap = {
-                    false: 'No',
-                    true: 'Yes',
-                };
-                return statusMap[data] || data;
-            },
-        };
-        arrayColumnsData[4] = {
             'data': 'dueDate',
             'render': function (data) {
                 const isoDate = new Date(data);
@@ -81,7 +71,7 @@
                 return isoDate.toLocaleDateString('en-GB', options).replace(/\//g, '/');
             },
         };
-        arrayColumnsData[5] = {
+        arrayColumnsData[4] = {
             'data': 'totalCost',
             'render': function (data) {
                 return `$ ${data}`;
@@ -114,9 +104,9 @@
                 return;
             }
 
-            $("#offerAward").show();
             var tr = $(this).closest('tr');
             productsOffer = data.productOffers;
+            comment = data.comment;
 
             var maxDeliverDate = new Date(data.dueDate);
             var dateDeliver = maxDeliverDate.toISOString().substring(0, 10);
@@ -128,8 +118,14 @@
             $('#Offer_txtMaxDeliverDate').text(dateDeliver);
             $('#Offer_txtBudget').text(data.totalCost);
 
-            loadOfferProducts(productsOffer);
-            $("#offersList").hide();
+            if (comment != 'unset') {
+                window.location.href = "/ProductValidation?idTender=" + data.tender_id + "&idOffer=" + data.id;
+            }
+            else {
+                loadOfferProducts(productsOffer);
+                $("#offersList").hide();
+                $("#offerAward").show();
+            }
 
         });
 
@@ -154,8 +150,8 @@
         ctrlActions.PutToAPI(serviceUpdate, tender, function () {
             toastr.success('We will send an email with the information to the bidder.', 'Awarded offer!');
             setTimeout(function () {
-                location.reload();
-            }, 5000); // espera de 5 segundos antes de refrescar la página
+                window.location.href = "/Tenders";
+            }, 5000);
         });
     };
 

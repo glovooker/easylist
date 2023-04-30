@@ -24,7 +24,20 @@
                                     <label for="txtTenderID" class="form-label mt-1">Tender ID</label>
                                     <p id="Offer_txtTenderID" class="form-control" aria-describedby="emailHelp" style="margin: 0 auto;"></p>
                                     <h5 style="padding-top: 20px;">Products</h5>
-                                    <div class="d-flex flex-column justify-content-around align-items-center" id="productsOfferContainer"></div>
+                                    <div class="table-responsive">
+                                        <table class="table text-dark">
+                                            <thead>
+                                                <tr class="table-primary">
+                                                    <th>Name</th>
+                                                    <th>Quantity</th>
+                                                    <th>Price</th>
+                                                    <th>Verified</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="productsOfferContainer">
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                                 <div class="col-lg-6 col-md-12">
                                     <div class="row">
@@ -45,6 +58,11 @@
                             </div>
                         </fieldset>
                     </form>
+                    <div class="container my-5" id="OfferCommentContainer">
+                        <label for="Offer_txtComment" class="form-label">Comment:</label>
+                        <textarea id="Offer_txtComment" class="form-control"></textarea>
+                        <div id="error-messagecomment" style="display: none; color: red; font-size:0.7rem"></div>
+                    </div>
                     <br />
                     <div class="d-flex flex-row justify-content-around">
                         <button id="btnSend" class="btn btn-primary w-25 mx-4" type="button" tabindex="0">Send</button>
@@ -53,6 +71,5 @@
             </div>
         </div>
     </div>
-   
-
 </div>
+

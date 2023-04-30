@@ -69,6 +69,7 @@ namespace EasyListDataAccess.Mapper
             sqlOperation.AddIntParam("P_ID_OFERTA", productoffer.offer_id);
             sqlOperation.AddFloatParam("P_CANTIDAD", productoffer.quantity);
             sqlOperation.AddFloatParam("P_PRECIO", productoffer.price);
+            sqlOperation.AddBoolParam("P_COMPROBADO", productoffer.verified);
 
             return sqlOperation;
         }
@@ -84,6 +85,7 @@ namespace EasyListDataAccess.Mapper
             sqlOperation.AddIntParam("P_ID_OFERTA", productoffer.offer_id);
             sqlOperation.AddFloatParam("P_CANTIDAD", productoffer.quantity);
             sqlOperation.AddFloatParam("P_PRECIO", productoffer.price);
+            sqlOperation.AddBoolParam("P_COMPROBADO", productoffer.verified);
 
             return sqlOperation;
         }
