@@ -1,8 +1,8 @@
 ﻿using DTOs;
 using EasyListDataAccess.CRUD;
 using QRCoder;
-using System.Drawing.Imaging;
 using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace EasyListCORE
 {
@@ -124,6 +124,18 @@ namespace EasyListCORE
             return crudTender.RetrieveByDate<Tender>(startDate, endDate);
         }
 
+        public List<Tender> RetrieveByStatusTender()
+        {
+            var crudTender = new TenderCrudFactory();
+            var crudProductTender = new ProductTenderCrudFactory();
+            var tenderList = crudTender.RetrieveByStatusTender<Tender>();
+            foreach (var tender in tenderList)
+            {
+                tender.ProductTenders = crudProductTender.RetrieveByTenderId<ProductTender>(tender.Id);
+            }
+            return tenderList;
+        }
+
         public List<Tender> RetrieveByAnalystId(int id)
         {
             var crudTender = new TenderCrudFactory();
@@ -173,7 +185,7 @@ namespace EasyListCORE
 
             var offerorPhone = existUser.phone;
             var offerorEmail = existUser.email;
-            var codeQR= $"https://localhost:7110/ProductValidation/?idTender={existTender.Id}&idOffer={existOffer.Id}";
+            var codeQR = $"https://localhost:7110/ProductValidation/?idTender={existTender.Id}&idOffer={existOffer.Id}";
 
             var nm = new NotificationManager();
 
@@ -208,7 +220,7 @@ namespace EasyListCORE
             {
                 qrCodeImage.Save(stream, ImageFormat.Png);
                 imageBytes = stream.ToArray();
-                nm.NotifyByEmailQR(message, offerorEmail, imageBytes); 
+                nm.NotifyByEmailQR(message, offerorEmail, imageBytes);
             }
             nm.NotifyBySMS(messageText, offerorPhone);
 

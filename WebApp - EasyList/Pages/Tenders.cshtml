@@ -9,12 +9,30 @@
     <div class="d-flex flex-row justify-content-between">
         <h3 class="display-7 mb-3">Tenders</h3>
         <div>
+            <button id="btnTendersStatus" class="btn btn-success w-auto mx-4" type="button" tabindex="0">View Tenders in Process</button>
             <button id="btnNew" class="btn btn-info w-auto mx-4" type="button" tabindex="0">New</button>
             <button id="btnBack" class="btn btn-warning w-auto mx-4" type="button" tabindex="0">Back</button>
         </div>
     </div>
+
     <div class="row" id="tblContainer">
         <table id="tblTender" class="display mt-5" style="width:100%">
+            <thead>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Max Offer Date</th>
+            <th>Max Deliver Date</th>
+            <th>Budget</th>
+            <th>Allocation</th>
+            <th>Deliver Location</th>
+            </thead>
+        </table>
+        <br/>
+    </div>
+
+    <div class="row" id="tblContainerStatus">
+        <table id="tblTenderStatus" class="display mt-5" style="width:100%">
             <thead>
             <th>ID</th>
             <th>Title</th>
