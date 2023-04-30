@@ -124,7 +124,13 @@ namespace EasyListCORE
         public List<Tender> RetrieveByStatusTender()
         {
             var crudTender = new TenderCrudFactory();
-            return crudTender.RetrieveByStatusTender<Tender>();
+            var crudProductTender = new ProductTenderCrudFactory();
+            var tenderList = crudTender.RetrieveByStatusTender<Tender>();
+            foreach (var tender in tenderList)
+            {
+                tender.ProductTenders = crudProductTender.RetrieveByTenderId<ProductTender>(tender.Id);
+            }
+            return tenderList;
         }
 
     }
