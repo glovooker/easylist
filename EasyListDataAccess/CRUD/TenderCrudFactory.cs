@@ -94,5 +94,26 @@ namespace EasyListDataAccess.CRUD
 
             return lstUsers;
         }
+
+        public List<Tender> RetrieveByStatusTender<Tender>()
+        {
+
+            var lstTender = new List<Tender>();
+            var sqlTender = _mapper.GetRetrieveByStatus();
+            var lstResults = dao.ExecuteQueryProcedure(sqlTender);
+
+            if (lstResults.Count > 0)
+            {
+                var objsTender = _mapper.BuildObjects(lstResults);
+
+                foreach (var op in objsTender)
+                {
+                    lstTender.Add((Tender)Convert.ChangeType(op, typeof(Tender)));
+                }
+            }
+
+            return lstTender;
+        }
+
     }
 }

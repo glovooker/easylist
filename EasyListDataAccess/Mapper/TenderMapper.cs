@@ -20,7 +20,7 @@ namespace EasyListDataAccess.Mapper
                 QRcode = (string)row["CODIGOQR"],
                 automatic = (bool)row["AUTOMATICA"],
                 analistId = (int)row["ID_ANALISTA"],
-                offerId = row["ID_OFERTA"] == DBNull.Value ? 0 : (int)row["IDOFERTA"],
+                offerId = row["ID_OFERTA"] == DBNull.Value ? 0 : (int)row["ID_OFERTA"],
                 deliverLocation = (string)row["LUGARENTREGA"]
             };
             return tender;
@@ -153,6 +153,14 @@ namespace EasyListDataAccess.Mapper
 
             return sqlOperation;
         }
+
+        public SqlOperation GetRetrieveByStatus()
+        {
+            var sqlOperation = new SqlOperation { ProcedureName = "RET_LICITACION_BY_ESTADO_PR" };
+
+            return sqlOperation;
+        }
+
     }
 
 }

@@ -121,6 +121,12 @@ namespace EasyListCORE
             return crudTender.RetrieveByDate<Tender>(startDate, endDate);
         }
 
+        public List<Tender> RetrieveByStatusTender()
+        {
+            var crudTender = new TenderCrudFactory();
+            return crudTender.RetrieveByStatusTender<Tender>();
+        }
+
     }
 
 }
