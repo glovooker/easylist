@@ -1,8 +1,4 @@
-﻿using DTOs;
-using EasyListCORE;
-using Microsoft.AspNetCore.Mvc;
-
-namespace EasyListAPI.Controllers
+﻿namespace EasyListAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -124,19 +120,45 @@ namespace EasyListAPI.Controllers
         }
 
         [HttpGet]
-        [Route("getTendersByStatus")]
-        public async Task<IActionResult> RetrieveTendersByStatus()
+        [Route("retrieveTendersByAnalystId")]
+        public async Task<IActionResult> retrieveTendersByAnalystId(int id)
         {
             try
             {
+
                 var tm = new TenderManager();
-                var tenders = tm.RetrieveByStatusTender();
-                return Ok(tenders);
+
+                var tender = tm.RetrieveByAnalystId(id);
+
+                return Ok(tender);
+
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
+
+        }
+
+        [HttpPut]
+        [Route("awardTendersWithOfferId")]
+        public async Task<IActionResult> awardTendersWithOfferId(int tenderId, int offerId)
+        {
+            try
+            {
+
+                var tm = new TenderManager();
+
+                tm.AwardWithOfferId(tenderId, offerId);
+
+                return Ok();
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
         }
 
     }

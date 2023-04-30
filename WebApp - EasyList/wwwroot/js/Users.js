@@ -51,7 +51,7 @@ function ManageUsers() {
 
 
         CaptureImageURL('userPic', function (imageUrl) {
-            var view = new ManagePermissions();
+            var view = new ManageUsers();
             if (imageUrl === undefined) {
                 imageUrl = document.getElementById('imgUser').src;
             }

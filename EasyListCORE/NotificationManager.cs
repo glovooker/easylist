@@ -1,6 +1,9 @@
 ﻿using DTOs;
+using QRCoder;
 using SendGrid;
 using SendGrid.Helpers.Mail;
+using System.Drawing;
+using System.Drawing.Imaging;
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
 
@@ -8,6 +11,7 @@ namespace EasyListCORE
 {
     public class NotificationManager
     {
+        
         public void NotifyAccountValidation(Validation validation)
         {
             var user = new UserManager().RetrieveById(int.Parse(validation.userId));
@@ -54,6 +58,22 @@ namespace EasyListCORE
                 to: new Twilio.Types.PhoneNumber($"{phone}")
             );
         }
+        public void NotifyBySMS(string messageText, string contact)
+        {
+            string accountSid = "AC7c641af885f7e2fd0b9612ca9e9137d5";
+            string authToken = "dba9d7e75354dc63c4b96b5334d0a9d5";
+
+            TwilioClient.Init(accountSid, authToken);
+
+            var message = MessageResource.Create(
+                body: messageText,
+                from: new Twilio.Types.PhoneNumber("+17473194370"),
+                to: new Twilio.Types.PhoneNumber($"{contact}")
+            );
+        }
+
+
+
 
         private static string _sendGridApiKey = "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";
         private static EmailAddress _from = new EmailAddress("lmongec@ucenfotec.ac.cr", "EasyList");
@@ -68,6 +88,34 @@ namespace EasyListCORE
             var htmlContent = message;
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
 
+            try
+            {
+                var response = await client.SendEmailAsync(msg);
+                Console.WriteLine("Correo electrónico enviado exitosamente a {0}", contact);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al enviar el correo electrónico: {0}", ex.Message);
+            }
+        }
+        public async Task NotifyByEmailQR(string message, string contact, byte[] imageBytes)
+        {
+            var client = new SendGridClient(_sendGridApiKey);
+            var from = _from;
+            var subject = "EasyList Notification";
+            var to = new EmailAddress(contact, "EasyList User");
+            var plainTextContent = message;
+            var htmlContent = message;
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+            var attachment = new Attachment
+            {
+                Filename = "qrcode.png",
+                Content = Convert.ToBase64String(imageBytes),
+                Type = "image/png",
+                Disposition = "inline",
+                ContentId = "qr-image"
+            };
+            msg.AddAttachment(attachment);
             try
             {
                 var response = await client.SendEmailAsync(msg);

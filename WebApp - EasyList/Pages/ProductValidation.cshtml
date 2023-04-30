@@ -1,0 +1,75 @@
+﻿@page
+@model WebApp___EasyList.Pages.OffersListModel
+@{
+    ViewData["Title"] = "Product Validation";
+}
+<script src="~/js/ProductValidation.js"></script>
+<div class="bs-docs-section d-flex flex-column">
+    <div id="offerAward">
+        <br />
+        <div class="d-flex flex-row justify-content-between">
+            <h3 class="display-7 mb-3">Product Validation</h3>
+            <div>
+                <button id="btnBack" class="btn btn-warning w-auto mx-4" type="button" tabindex="0">Back</button>
+            </div>
+        </div>
+        <div class="container my-5" id="OfferProductsContainer">
+            <div class="card shadow-sm mx-auto" style="max-width: 1100px; border: 1px solid #e6e6e6">
+                <div class="card-body">
+                    <h3 class="card-title text-center mb-4 fw-bold" style="font-size: 1.5rem; color: #F5805D">Offer Info</h3>
+                    <form>
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-12 form-group">
+                                    <label for="txtTenderID" class="form-label mt-1">Tender ID</label>
+                                    <p id="Offer_txtTenderID" class="form-control" aria-describedby="emailHelp" style="margin: 0 auto;"></p>
+                                    <h5 style="padding-top: 20px;">Products</h5>
+                                    <div class="table-responsive">
+                                        <table class="table text-dark">
+                                            <thead>
+                                                <tr class="table-primary">
+                                                    <th>Name</th>
+                                                    <th>Quantity</th>
+                                                    <th>Price</th>
+                                                    <th>Verified</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="productsOfferContainer">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="row">
+                                        <div class="col-sm-12 form-group">
+                                            <label for="txtOfferID" class="form-label mt-1">Offer ID</label>
+                                            <p id="Offer_txtOfferID" class="form-control" aria-describedby="emailHelp" style="margin: 0 auto;"></p>
+                                        </div>
+                                        <div class="col-sm-12 form-group">
+                                            <label for="txtMaxDeliverDate" class="form-label pt-3">Delivery Date</label>
+                                            <p id="Offer_txtMaxDeliverDate" class="form-control"></p>
+                                        </div>
+                                        <div class="col-sm-12 form-group">
+                                            <label for="txtBudget" class="form-label pt-3">Budget</label>
+                                            <p id="Offer_txtBudget" class="form-control"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                    <div class="container my-5" id="OfferCommentContainer">
+                        <label for="Offer_txtComment" class="form-label">Comment:</label>
+                        <textarea id="Offer_txtComment" class="form-control"></textarea>
+                        <div id="error-messagecomment" style="display: none; color: red; font-size:0.7rem"></div>
+                    </div>
+                    <br />
+                    <div class="d-flex flex-row justify-content-around">
+                        <button id="btnSend" class="btn btn-primary w-25 mx-4" type="button" tabindex="0">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

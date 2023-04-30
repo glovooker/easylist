@@ -1,19 +1,23 @@
-﻿namespace EasyListDataAccess.CRUD
+﻿using DTOs;
+using EasyListDataAccess.DAOs;
+using EasyListDataAccess.Mapper;
+
+namespace EasyListDataAccess.CRUD
 {
-    public class TenderCrudFactory : CrudFactory
+    public class OfferCrudFactory : CrudFactory
     {
 
-        private TenderMapper _mapper;
-        public TenderCrudFactory()
+        private OfferMapper _mapper;
+        public OfferCrudFactory()
         {
-            _mapper = new TenderMapper();
+            _mapper = new OfferMapper();
             dao = SqlDao.GetInstance();
         }
 
         public override void Create(BaseEntity dto)
         {
-            var tender = (Tender)dto;
-            var sqlTender = _mapper.GetCreateStatement(tender);
+            var offer = (Offer)dto;
+            var sqlTender = _mapper.GetCreateStatement(offer);
             dao.ExecuteProcedure(sqlTender);
         }
 
@@ -60,16 +64,16 @@
 
         public override void Update(BaseEntity dto)
         {
-            var tender = (Tender)dto;
-            var sqlTender = _mapper.GetUpdateStatement(tender);
-            dao.ExecuteProcedure(sqlTender);
+            var offer = (Offer)dto;
+            var sqlOperation = _mapper.GetUpdateStatement(offer);
+            dao.ExecuteProcedure(sqlOperation);
         }
 
         public override void Delete(BaseEntity dto)
         {
-            var tender = (Tender)dto;
-            var sqlTender = _mapper.GetDeleteStatement(tender);
-            dao.ExecuteProcedure(sqlTender);
+            var offer = (Offer)dto;
+            var sqlOperation = _mapper.GetDeleteStatement(offer);
+            dao.ExecuteProcedure(sqlOperation);
         }
 
         public List<T> RetrieveByDate<T>(string startDate, string endDate)
@@ -90,30 +94,62 @@
 
             return lstUsers;
         }
-        public List<Tender> RetrieveByAnalystId<Tender>(int id)
+
+        public List<T> CheckExistingOffers<T>(int tender, int user)
         {
-            var lstTenders = new List<Tender>();
-            var sqlTender = _mapper.GetRetrieveByAnalystIdStatement(id);
-            var lstResults = dao.ExecuteQueryProcedure(sqlTender);
+            var lstUsers = new List<T>();
+            var sqlUser = _mapper.GetRetrieveCheckExistingOffers(tender, user);
+            var lstResults = dao.ExecuteQueryProcedure(sqlUser);
 
             if (lstResults.Count > 0)
             {
-                var objsTenders = _mapper.BuildObjects(lstResults);
+                var objsUsers = _mapper.BuildObjects(lstResults);
 
-                foreach (var op in objsTenders)
+                foreach (var op in objsUsers)
                 {
-                    lstTenders.Add((Tender)Convert.ChangeType(op, typeof(Tender)));
+                    lstUsers.Add((T)Convert.ChangeType(op, typeof(T)));
                 }
             }
 
-            return lstTenders;
+            return lstUsers;
         }
 
-        public void AwardWithOfferId(int tenderId, int offerId, string codeQR)
+        public List<Offer> RetrieveByTenderId<Offer>(int id)
         {
-            var sqlTender = _mapper.AwardWithOfferIdStatement(tenderId, offerId, codeQR);
-            dao.ExecuteProcedure(sqlTender);
+            var lstOffers = new List<Offer>();
+            var sqlOffer = _mapper.GetRetrieveByTenderIdStatement(id);
+            var lstResults = dao.ExecuteQueryProcedure(sqlOffer);
+
+            if (lstResults.Count > 0)
+            {
+                var objsOffers = _mapper.BuildObjects(lstResults);
+
+                foreach (var op in objsOffers)
+                {
+                    lstOffers.Add((Offer)Convert.ChangeType(op, typeof(Offer)));
+                }
+            }
+
+            return lstOffers;
         }
 
+        public List<Offer> RetrieveByOffererId<Offer>(int id)
+        {
+            var lstOffers = new List<Offer>();
+            var sqlOffer = _mapper.GetRetrieveByOffererIdStatement(id);
+            var lstResults = dao.ExecuteQueryProcedure(sqlOffer);
+
+            if (lstResults.Count > 0)
+            {
+                var objsOffers = _mapper.BuildObjects(lstResults);
+
+                foreach (var op in objsOffers)
+                {
+                    lstOffers.Add((Offer)Convert.ChangeType(op, typeof(Offer)));
+                }
+            }
+
+            return lstOffers;
+        }
     }
 }

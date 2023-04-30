@@ -1,7 +1,4 @@
-﻿using DTOs;
-using EasyListDataAccess.DAOs;
-
-namespace EasyListDataAccess.Mapper
+﻿namespace EasyListDataAccess.Mapper
 {
     public class TenderMapper : ISqlStatements, IObjectMapper
     {
@@ -161,6 +158,25 @@ namespace EasyListDataAccess.Mapper
             return sqlOperation;
         }
 
+        public SqlOperation GetRetrieveByAnalystIdStatement(int id)
+        {
+            var sqlOperation = new SqlOperation { ProcedureName = "RET_LICITACION_BY_ANALISTA_ID_PR" };
+
+            sqlOperation.AddIntParam("P_ID_ANALISTA", id);
+
+            return sqlOperation;
+        }
+
+        public SqlOperation AwardWithOfferIdStatement(int tenderId, int offerId, string codeQR)
+        {
+            var sqlOperation = new SqlOperation { ProcedureName = "ADJUDICAR_LICITACION_WITH_OFERTA_ID_PR" };
+
+            sqlOperation.AddIntParam("P_ID_LICITACION", tenderId);
+            sqlOperation.AddIntParam("P_ID_OFERTA", offerId);
+            sqlOperation.AddVarcharParam("P_CODIGOQR", codeQR);
+
+            return sqlOperation;
+        }
     }
 
 }
