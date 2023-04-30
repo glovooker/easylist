@@ -1,4 +1,8 @@
-﻿namespace EasyListDataAccess.CRUD
+﻿using DTOs;
+using EasyListDataAccess.DAOs;
+using EasyListDataAccess.Mapper;
+
+namespace EasyListDataAccess.CRUD
 {
     public class TenderCrudFactory : CrudFactory
     {
@@ -90,6 +94,27 @@
 
             return lstUsers;
         }
+
+        public List<Tender> RetrieveByStatusTender<Tender>()
+        {
+
+            var lstTender = new List<Tender>();
+            var sqlTender = _mapper.GetRetrieveByStatus();
+            var lstResults = dao.ExecuteQueryProcedure(sqlTender);
+
+            if (lstResults.Count > 0)
+            {
+                var objsTender = _mapper.BuildObjects(lstResults);
+
+                foreach (var op in objsTender)
+                {
+                    lstTender.Add((Tender)Convert.ChangeType(op, typeof(Tender)));
+                }
+            }
+
+            return lstTender;
+        }
+
         public List<Tender> RetrieveByAnalystId<Tender>(int id)
         {
             var lstTenders = new List<Tender>();

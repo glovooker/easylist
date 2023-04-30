@@ -39,6 +39,11 @@ function TenderView() {
             view.Back();
         });
 
+        $("#btnTendersStatus").click(function () {
+            var view = new TenderView();
+            view.TendersStatus();
+        });
+
         $('#btnOffers').click(function () {
             var view = new TenderView();
             view.Offers();
@@ -432,6 +437,110 @@ function TenderView() {
             $('#btnTendersStatus').hide();
             $('#btnBack').show();
             $('#btnOffers').show();
+            $('#btnCreate').prop('disabled', true);
+            $('#btnDelete').prop('disabled', false);
+            $('#btnUpdate').prop('disabled', false);
+        });
+
+    };
+
+    this.LoadTableStatus = function () {
+        var ctrlActions = new ControlActions();
+
+        var urlService = ctrlActions.GetUrlApiService(
+            this.ApiService + '/getTendersByStatus'
+        );
+
+        var arrayColumnsData = [];
+        arrayColumnsData[0] = { 'data': 'id' };
+        arrayColumnsData[1] = { 'data': 'title' };
+        arrayColumnsData[2] = {
+            'data': 'tenderStatus',
+            'render': function (data) {
+                const statusMap = {
+                    0: 'Open',
+                    1: 'Closed',
+                    2: 'Ongoing',
+                    3: 'Finished',
+                    4: 'Terminated',
+                };
+                return statusMap[data] || data;
+            },
+        };
+        arrayColumnsData[3] = {
+            'data': 'maxOfferDate',
+            'render': function (data) {
+                const isoDate = new Date(data);
+                const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+                return isoDate.toLocaleDateString('en-GB', options).replace(/\//g, '/');
+            },
+        };
+        arrayColumnsData[4] = {
+            'data': 'maxDeliverDate',
+            'render': function (data) {
+                const isoDate = new Date(data);
+                const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+                return isoDate.toLocaleDateString('en-GB', options).replace(/\//g, '/');
+            },
+        };
+        arrayColumnsData[5] = {
+            'data': 'budget',
+            'render': function (data) {
+                return `$ ${data}`;
+            },
+        };
+        arrayColumnsData[6] = {
+            'data': 'automatic',
+            'render': function (data) {
+                const automaticMap = {
+                    'true': 'Automatic',
+                    'false': 'Manual'
+                };
+                return automaticMap[data] || data;
+            },
+        };
+        arrayColumnsData[7] = { 'data': 'deliverLocation' };
+
+        $('#tblTenderStatus').dataTable({
+            'ajax': {
+                'url': urlService,
+                'dataSrc': '',
+            },
+            'columns': arrayColumnsData,
+        });
+
+        $('#tblTenderStatus tbody').on('click', 'tr', function () {
+            var tr = $(this).closest('tr');
+
+            var data = $('#tblTenderStatus').DataTable().row(tr).data();
+
+            productsTender = data.productTenders;
+
+            var maxOfferDate = new Date(data.maxOfferDate);
+            var maxDeliverDate = new Date(data.maxDeliverDate);
+            var dateOffer = maxOfferDate.toISOString().substring(0, 10);
+            var dateDeliver = maxDeliverDate.toISOString().substring(0, 10);
+
+            $('#txtID').val(data.id);
+            $('#txtTitle').val(data.title);
+            $('#txtDescription').val(data.description);
+            $('#drpStatus').val(data.tenderStatus);
+            $('#txtMaxOfferDate').val(dateOffer);
+            $('#txtMaxDeliverDate').val(dateDeliver);
+            $('#txtBudget').val(data.budget);
+            $('#drpAutomatic').val(Number(data.automatic));
+            $('#txtDeliverLocation').val(data.deliverLocation);
+
+            loadProducts(productsTender);
+
+            $('#tblContainerStatus').hide();
+            $('#tblContainer').hide();
+            $('#formContainer').show();
+            $('#btnNew').hide();
+            $('#btnTendersStatus').hide();
+            $('#btnBack').show();
+            $('#btnCreate').hide();
+            $('#btnUpdate').hide();
             $('#btnCreate').prop('disabled', true);
             $('#btnDelete').prop('disabled', false);
             $('#btnUpdate').prop('disabled', false);

@@ -1,4 +1,10 @@
-﻿namespace EasyListCORE
+﻿using DTOs;
+using EasyListDataAccess.CRUD;
+using QRCoder;
+using System.Drawing;
+using System.Drawing.Imaging;
+
+namespace EasyListCORE
 {
     public class TenderManager
     {
@@ -116,6 +122,18 @@
         {
             var crudTender = new TenderCrudFactory();
             return crudTender.RetrieveByDate<Tender>(startDate, endDate);
+        }
+
+        public List<Tender> RetrieveByStatusTender()
+        {
+            var crudTender = new TenderCrudFactory();
+            var crudProductTender = new ProductTenderCrudFactory();
+            var tenderList = crudTender.RetrieveByStatusTender<Tender>();
+            foreach (var tender in tenderList)
+            {
+                tender.ProductTenders = crudProductTender.RetrieveByTenderId<ProductTender>(tender.Id);
+            }
+            return tenderList;
         }
 
         public List<Tender> RetrieveByAnalystId(int id)

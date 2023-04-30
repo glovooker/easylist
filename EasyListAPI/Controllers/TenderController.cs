@@ -1,4 +1,8 @@
-﻿namespace EasyListAPI.Controllers
+﻿using DTOs;
+using EasyListCORE;
+using Microsoft.AspNetCore.Mvc;
+
+namespace EasyListAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -111,6 +115,22 @@
             {
                 var um = new TenderManager();
                 var tenders = um.RetrieveByDate(startDate, endDate);
+                return Ok(tenders);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("getTendersByStatus")]
+        public async Task<IActionResult> RetrieveTendersByStatus()
+        {
+            try
+            {
+                var tm = new TenderManager();
+                var tenders = tm.RetrieveByStatusTender();
                 return Ok(tenders);
             }
             catch (Exception ex)
