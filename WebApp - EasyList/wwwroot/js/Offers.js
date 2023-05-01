@@ -1,316 +1,105 @@
-﻿var productsOffer = [];
-
-function OfferView() {
+﻿function OfferView() {
 
     this.ViewOffers = "OfferView";
     this.ApiService = "Offer";
 
     this.InitView = function () {
         console.log("Tender init");
-        //$('#formContainer').hide();
-        //$('#btnBack').hide();
+
+        this.LoadDataProductsTender(localStorage.getItem('selectedTenderId'));
 
         $("#btnCreate").click(function () {
             var view = new OfferView();
             view.Create();
         });
 
-        //$("#btnUpdate").click(function () {
-        //    var view = new OfferView();
-        //    view.Update();
-        //});
-
-        //$("#btnDelete").click(function () {
-        //    var view = new OfferView();
-        //    view.Delete();
-        //});
-
-        //$("#btnNew").click(function () {
-        //    var view = new OfferView();
-        //    view.New();
-        //});
-
         $('#btnBack').click(function () {
             var view = new OfferView();
             view.Back();
         });
-
-        /*this.LoadTable();*/
-
-        loadProductSelect();
     };
 
     this.Create = function () {
-
-        var offer = {};
-        offer.id = parseInt($('#txtOfferID').val()) || 0;
-        offer.user_id = localStorage.getItem('userId');
-        offer.tender_id = localStorage.getItem('selectedTenderId');
-        offer.comment = 'unset';
-        offer.totalCost = parseInt($('#txtBudget').val()) || 0;
-        offer.dueDate = $("#txtMaxDeliverDate").val();
-        offer.productOffers = productsOffer || [];
-
-        offer.productOffers.forEach(function (productOffer) {
-            productOffer.offer_id = offer.id;
-            productOffer.verified = false;
-        })
-
-        var isValid = true;
-
-        if (offer.maxDeliverDate === '') {
-            $("#error-messageMaxDeliverDate").html("MaxDeliverDate is required");
-            $("#error-messageMaxDeliverDate").show();
-            isValid = false;
-        } else {
-            $("#error-messageMaxDeliverDate").hide();
-        }
-
-        if (offer.budget === '') {
-            $("#error-messageBudget").html("Budget is required");
-            $("#error-messageBudget").show();
-            isValid = false;
-        } else {
-            $("#error-messageBudget").hide();
-        }
-
-        if (!isValid) {
-            return;
-        }
-
+        var productsOffer = [];
         var ctrlActions = new ControlActions();
-        var serviceCreate = this.ApiService + "/createOffer";
+        var serviceGetProductTender = "controller" + "/retrieveProductTenders?id=" + localStorage.getItem('selectedTenderId');
+        ctrlActions.GetToApi(serviceGetProductTender, function (result) {
+            productTender = result.response;
+            productsOffer = createProductOffer(productTender);
 
-        var serviceCheck = this.ApiService + '/checkUserOffer';
-        var url = `${serviceCheck}?tender=${offer.tender_id}&user=${offer.user_id}`;
-        toastr.options = {
-            "positionClass": "toast-top-center",
-            "showDuration": "100"
-        };
+            var offer = {};
+            offer.id = parseInt($('#txtOfferID').val()) || 0;
+            offer.user_id = localStorage.getItem('userId');
+            offer.tender_id = localStorage.getItem('selectedTenderId');
+            offer.comment = 'unset';
+            offer.totalCost = parseInt($('#txtBudget').val()) || 0;
+            offer.dueDate = $("#txtMaxDeliverDate").val();
+            offer.productOffers = productsOffer;
 
-        ctrlActions.GetToApi(url, function (result) {
+            offer.productOffers.forEach(function (productOffer) {
+                productOffer.offer_id = offer.id;
+                productOffer.verified = false;
+            })
 
-            if (result.status === 400) {
-                toastr.error('The user has already created an offer for this tender', 'Error!');
+            var isValid = true;
+
+            if (offer.dueDate === '') {
+                $("#error-messageMaxDeliverDate").html("MaxDeliverDate is required");
+                $("#error-messageMaxDeliverDate").show();
+                isValid = false;
             } else {
-                ctrlActions.PostToAPIv1(serviceCreate, offer, function () {
-                    toastr.success('Offer created', 'Success!');
-                });
+                $("#error-messageMaxDeliverDate").hide();
             }
-        });
 
-        this.CleanForm();
+            if (offer.totalCost <= 0 || isNaN(offer.totalCost)) {
+                $("#error-messageBudget").html("Budget is required");
+                $("#error-messageBudget").show();
+                isValid = false;
+            } else {
+                $("#error-messageBudget").hide();
+            }
+            if (offer.productOffers.length != productTender.length) {
+                isValid = false;
+            }
 
+            if (!isValid) {
+                return;
+            }
+
+            var serviceCreate = this.ApiService + "/createOffer";
+
+            var serviceCheck = this.ApiService + '/checkUserOffer';
+            var url = `${serviceCheck}?tender=${offer.tender_id}&user=${offer.user_id}`;
+            toastr.options = {
+                "positionClass": "toast-top-center",
+                "showDuration": "100"
+            };
+
+            ctrlActions.GetToApi(url, function (result) {
+
+                if (result.status === 400) {
+                    toastr.error('The user has already created an offer for this tender', 'Error!');
+                } else {
+                    ctrlActions.PostToAPIv1(serviceCreate, offer, function () {
+                        toastr.success('Offer created', 'Success!');
+                    });
+                }
+            });
+
+            this.CleanForm();
+        }.bind(this));
     };
 
-    //this.Update = function () {
-    //    var offer = {};
-    //    offer.id = parseInt($('#txtOfferID').val()) || 0;
-    //    offer.user_id = 5;
-    //    offer.tender_id = parseInt($('#txtTenderID').val()) || 0;
-    //    offer.chosen = false;
-    //    offer.totalCost = parseInt($('#txtBudget').val()) || 0;
-    //    offer.dueDate = $("#txtMaxDeliverDate").val();
-    //    offer.productOffers = productsOffer || [];
-
-    //    offer.productOffers.forEach(function (productOffer) {
-    //        productOffer.offer_id = offer.id;
-    //    })
-
-    //    var isValid = true;
-
-    //    if (offer.maxDeliverDate === '') {
-    //        $("#error-messageMaxDeliverDate").html("MaxDeliverDate is required");
-    //        $("#error-messageMaxDeliverDate").show();
-    //        isValid = false;
-    //    } else {
-    //        $("#error-messageMaxDeliverDate").hide();
-    //    }
-
-    //    if (offer.budget === '') {
-    //        $("#error-messageBudget").html("Budget is required");
-    //        $("#error-messageBudget").show();
-    //        isValid = false;
-    //    } else {
-    //        $("#error-messageBudget").hide();
-    //    }
-
-    //    if (!isValid) {
-    //        return;
-    //    }
-
-    //    var ctrlActions = new ControlActions();
-    //    var serviceUpdate = this.ApiService + "/updateOffer";
-
-    //    ctrlActions.PutToAPI(serviceUpdate, offer, function () {
-    //        toastr.success('Offer updated', 'Success!');
-    //        var view = new OfferView();
-
-    //        $('#tblContainer').show();
-    //        $('#formContainer').hide();
-    //        $('#btnNew').show();
-    //        $('#btnBack').hide();
-    //        view.ReloadTable();
-    //        view.CleanForm();
-    //    });
-    //};
-
-    //this.Delete = function () {
-
-    //    var offer = {};
-    //    offer.id = parseInt($('#txtOfferID').val()) || 0;
-    //    offer.user_id = 5;
-    //    offer.tender_id = parseInt($('#txtTenderID').val()) || 0;
-    //    offer.chosen = false;
-    //    offer.totalCost = parseInt($('#txtBudget').val()) || 0;
-    //    offer.dueDate = $("#txtMaxDeliverDate").val();
-    //    offer.productOffers = productsOffer || [];
-
-    //    offer.productOffers.forEach(function (productOffer) {
-    //        productOffer.offer_id = offer.id;
-    //    })
-
-    //    var isValid = true;
-
-    //    if (offer.maxDeliverDate === '') {
-    //        $("#error-messageMaxDeliverDate").html("MaxDeliverDate is required");
-    //        $("#error-messageMaxDeliverDate").show();
-    //        isValid = false;
-    //    } else {
-    //        $("#error-messageMaxDeliverDate").hide();
-    //    }
-
-    //    if (offer.budget === '') {
-    //        $("#error-messageBudget").html("Budget is required");
-    //        $("#error-messageBudget").show();
-    //        isValid = false;
-    //    } else {
-    //        $("#error-messageBudget").hide();
-    //    }
-
-    //    if (!isValid) {
-    //        return;
-    //    }
-
-    //    var ctrlActions = new ControlActions();
-    //    var serviceDelete = this.ApiService + "/deleteOffer";
-
-    //    ctrlActions.DeleteToAPI(serviceDelete, offer, function () {
-    //        toastr.success('Offer deleted', 'Success!');
-    //        var view = new OfferView();
-
-    //        $('#tblContainer').show();
-    //        $('#formContainer').hide();
-    //        $('#btnNew').show();
-    //        $('#btnBack').hide();
-    //        view.ReloadTable();
-    //        view.CleanForm();
-    //    });
-    //};
-
-    //this.LoadTable = function () {
-    //    var ctrlActions = new ControlActions();
-
-    //    var urlService = ctrlActions.GetUrlApiService(
-    //        this.ApiService + '/retrieveAllOffers'
-    //    );
-
-    //    var arrayColumnsData = [];
-    //    arrayColumnsData[0] = { 'data': 'id' };
-    //    arrayColumnsData[1] = { 'data': 'user_id' };
-    //    arrayColumnsData[2] = { 'data': 'tender_id' };
-    //    arrayColumnsData[3] = {
-    //        'data': 'chosen',
-    //        'render': function (data) {
-    //            const statusMap = {
-    //                false: 'No',
-    //                true: 'Yes',
-    //            };
-    //            return statusMap[data] || data;
-    //        },
-    //    };
-    //    arrayColumnsData[4] = {
-    //        'data': 'dueDate',
-    //        'render': function (data) {
-    //            const isoDate = new Date(data);
-    //            const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
-    //            return isoDate.toLocaleDateString('en-GB', options).replace(/\//g, '/');
-    //        }, };
-    //    arrayColumnsData[5] = {
-    //        'data': 'totalCost',
-    //        'render': function (data) {
-    //            return `$ ${data}`;
-    //        },
-    //    };
-
-    //    $('#tblOffer').dataTable({
-    //        'ajax': {
-    //            'url': urlService,
-    //            'dataSrc': '',
-    //        },
-    //        'columns': arrayColumnsData,
-    //    });
-
-    //    $('#tblOffer tbody').on('click', 'tr', function () {
-
-    //        var tr = $(this).closest('tr');
-
-    //        var data = $('#tblOffer').DataTable().row(tr).data();
-
-    //        productsOffer = data.productOffers;
-
-    //        var maxDeliverDate = new Date(data.dueDate);
-    //        var dateDeliver = maxDeliverDate.toISOString().substring(0, 10);
-
-    //        $('#txtOfferID').val(data.id);
-    //        $('#txtTenderID').val(data.id);
-    //        $('#txtUserID').val(data.id);
-    //        $('#txtTitle').val(data.title);
-    //        $('#txtMaxDeliverDate').val(dateDeliver);
-    //        $('#txtBudget').val(data.totalCost);
-
-    //        loadProducts(productsOffer);
-
-    //        $('#tblContainer').hide();
-    //        $('#formContainer').show();
-    //        $('#btnNew').hide();
-    //        $('#btnBack').show();
-    //        $('#txtTenderID').prop('disabled', true);
-    //        $('#txtOfferID').prop('disabled', true);
-    //        $('#btnCreate').prop('disabled', true);
-    //        $('#btnDelete').prop('disabled', false);
-    //        $('#btnUpdate').prop('disabled', false);
-    //    });
-
-    //};
-
-    //this.ReloadTable = () => {
-    //    $('#tblOffer').DataTable().ajax.reload();
-    //};
-
-    //this.New = function () {
-    //    $('#tblContainer').hide();
-    //    $('#formContainer').show();
-    //    $('#btnNew').hide();
-    //    $('#btnBack').show();
-    //    $('#txtTenderID').prop('disabled', false);
-    //    $('#txtOfferID').prop('disabled', false);
-    //    $('#btnCreate').prop('disabled', false);
-    //    $('#btnDelete').prop('disabled', true);
-    //    $('#btnUpdate').prop('disabled', true);
-
-    //    this.CleanForm();
-    //};
+    this.LoadDataProductsTender = function (id) {
+        var ctrlActions = new ControlActions();
+        var urlService = "Tender" + "/retrieveTenderById?id=" + id;
+        ctrlActions.GetToApi(urlService, function (result) {
+            tender = result.response;
+            loadProductsCards(tender.productTenders);
+        });
+    }
 
     this.Back = function () {
-        //$('#formContainer').hide();
-        //$('#tblContainer').show();
-        //$('#btnNew').show();
-        //$('#btnBack').hide();
-        //$('#btnCreate').prop('disabled', true);
-        //$('#btnDelete').prop('disabled', false);
-        //$('#btnUpdate').prop('disabled', false);
-
         this.CleanForm();
         window.location.href = "/OpenTenders";
     };
@@ -318,7 +107,6 @@ function OfferView() {
     this.CleanForm = function () {
         $("#txtMaxDeliverDate").val("");
         $("#txtBudget").val("");
-        $("#productsContainer").empty();
     };
 
     var inputBudget = document.getElementById("txtBudget");
@@ -338,86 +126,28 @@ function OfferView() {
 
 }
 
-loadProductSelect = () => {
-    fetch('https://localhost:7103/api/Product/getAllProducts')
-        .then(response => response.json())
-        .then(products => {
-            const select = document.getElementById('drpProduct');
-            products.forEach(product => {
-                    const option = document.createElement('option');
-                    option.value = product.id;
-                    option.text = product.name;
-                    select.appendChild(option);
-            });
-        })
-        .catch(error => console.error(error));
-}
-
-createProductOffer = function () {
-
-    var productOffer = {};
-
-    productOffer.id = $("#drpProduct").val();
-    productOffer.offer_id = $("#txtOfferID").val();
-    productOffer.name = $("#drpProduct option:selected").text();
-    productOffer.price = $("#txtPrice").val();
-    productOffer.quantity = $("#txtQuantity").val();
-    productOffer.product_id = $("#drpProduct").val();
-
-    productsOffer.push(productOffer);
-    loadProducts(productsOffer);
-
-    $('#drpProduct').val('');
-    $('#txtQuantity').val('');
-    $('#txtPrice').val('');
-}
-
-deleteProductOffer = function (id) {
-    // Find the index of the product with the matching id
-    var index = productsOffer.findIndex(function (product) {
-        return product.id == id;
-    });
-
-    if (index !== -1) {
-        // Remove the product from the array
-        var deletedProduct = productsOffer.splice(index, 1)[0];
-
-        // Update the display and select element
-        loadProducts(productsOffer);
-
-        // Show the option in the select element
-        $('#drpProduct option[value="' + deletedProduct.product_id + '"]').show();
-    }
-    $('#drpProduct').val('');
-    $('#txtQuantity').val('');
-    $('#txtPrice').val('');
-
-}
-
-
-loadProducts = function (products) {
+loadProductsCards = function (products) {
     $("#productsContainer").empty();
 
-    products.forEach(function (productOffer) {
+    products.forEach(function (productTender) {
         // Fetch the product name from a URL
-        fetch('https://localhost:7103/api/Product/getProductById?id=' + productOffer.product_id)
+        fetch("https://localhost:7103/api/Product/getProductById?id=" + productTender.product_id)
             .then(response => response.json())
             .then(product => {
-                productOffer.name = product.name;
+                productTender.name = product.name;
 
                 // Create the product card with the updated name
                 var productCard = $(`
-                    <div class='card w-100 mt-2' id="product${productOffer.id}">
-                        <div class='card-body d-flex flex-row justify-content-around align-items-center'>
-                            <h5 class='card-title m-0'>${productOffer.name}</h5>
-                            <div class='d-flex flex-row justify-content-around align-items-center w-50'>
-                                <p class='card-text m-0'>${productOffer.quantity} items</p>
-                                <p class='card-text m-0'>$${productOffer.price}</p>
-                            </div>
-                            <button type="button" class="btn btn-primary w-25 delete-btn" onclick="deleteProductOffer(${productOffer.id})" style="width:100%"><i class="bi bi-trash-fill text-white"></i></button>
+                <div class="card w-100 mt-2" id="product${productTender.product_id}">
+                    <div class='card-body d-flex flex-row justify-content-around align-items-center'>
+                        <h5 class='card-title m-0'>${productTender.name}</h5>
+                        <div class ='d-flex flex-row justify-content-around align-items-center w-50'>
+                            <input type="number" class="form-control mx-2" id="txtQuantity${productTender.product_id}" placeholder="${productTender.quantity} items" required>
+                            <input type="number" class="form-control mx-2" id="txtPrice${productTender.product_id}" placeholder="$${productTender.price}" required>
                         </div>
                     </div>
-                `);
+                </div>
+            `);
 
                 $("#productsContainer").append(productCard);
             })
@@ -425,7 +155,51 @@ loadProducts = function (products) {
     });
 }
 
+createProductOffer = function (product) {
+    var listProducts = [];
 
+    var productOffer;
+
+    product.forEach(function (productTender) {
+        // Agregar validación de campos vacíos antes de agregar el producto a la lista
+        validateFields(productTender);
+
+        if ($("#txtPrice" + productTender.product_id).val().length > 0 && $("#txtQuantity" + productTender.product_id).val().length > 0) {
+            productOffer = {};
+            productOffer.id = productTender.product_id;
+            productOffer.offer_id = $("#txtOfferID").val();
+            productOffer.price = $("#txtPrice" + productTender.product_id).val();
+            productOffer.quantity = $("#txtQuantity" + productTender.product_id).val();
+            productOffer.product_id = productTender.product_id;
+            productOffer.verified = false;
+            listProducts.push(productOffer);
+
+            $("#txtPrice" + productTender.product_id).val('');
+            $("#txtQuantity" + productTender.product_id).val('');
+        }
+    });
+    if (listProducts.length == product.length) {
+        console.log(JSON.stringify(listProducts));
+        return listProducts;
+    }
+}
+
+function validateFields(productTender) {
+    var quantityInput = $("#txtQuantity" + productTender.product_id);
+    var priceInput = $("#txtPrice" + productTender.product_id);
+
+    if (quantityInput.val() === "") {
+        quantityInput.addClass("red-border");
+    } else {
+        quantityInput.removeClass("red-border");
+    }
+
+    if (priceInput.val() === "") {
+        priceInput.addClass("red-border");
+    } else {
+        priceInput.removeClass("red-border");
+    }
+}
 
 $(document).ready(function () {
     var view = new OfferView();
