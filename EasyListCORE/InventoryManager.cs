@@ -54,6 +54,12 @@ namespace EasyListCORE
             return inventoryFactory.RetrieveByInventoryId<Inventory>(id);
         }
 
+        public List<Inventory> RetrieveInventoryByUser(int id)
+        {
+            var inventoryFactory = new InventoryCrudFactory();
+            return inventoryFactory.RetrieveInventoryByUser<Inventory>(id);
+        }
+
     }
 
 }

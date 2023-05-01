@@ -84,6 +84,26 @@ namespace EasyListDataAccess.CRUD
             return lstInventory;
         }
 
+        public List<Inventory> RetrieveInventoryByUser<Inventory>(int id)
+        {
+
+            var lstInventory = new List<Inventory>();
+            var sqlInventory = _mapper.GetRetrieveByUserStatement(id);
+            var lstResults = dao.ExecuteQueryProcedure(sqlInventory);
+
+            if (lstResults.Count > 0)
+            {
+                var objsInventory = _mapper.BuildObjects(lstResults);
+
+                foreach (var op in objsInventory)
+                {
+                    lstInventory.Add((Inventory)Convert.ChangeType(op, typeof(Inventory)));
+                }
+            }
+
+            return lstInventory;
+        }
+
         public override T RetrieveById<T>(int id)
         {
             throw new NotImplementedException();

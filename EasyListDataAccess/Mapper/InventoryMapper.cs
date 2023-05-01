@@ -91,7 +91,7 @@ namespace EasyListDataAccess.Mapper
         {
             var sqlOperation = new SqlOperation();
 
-            var inventory = (Inventory )entity;
+            var inventory = (Inventory)entity;
 
             sqlOperation.ProcedureName = "DEL_INVENTARIO_PR";
             sqlOperation.AddIntParam("P_ID_USUARIO", inventory.user_id);
@@ -112,13 +112,22 @@ namespace EasyListDataAccess.Mapper
         public SqlOperation GetRetrieveAllStatement()
         {
             var sqlOperation = new SqlOperation { ProcedureName = "RET_ALL_INVENTARIO_PR" };
-            
+
             return sqlOperation;
         }
 
         public SqlOperation GetRetrieveByIdStatement(int id)
         {
             var sqlOperation = new SqlOperation { ProcedureName = "RET_INVENTARIO_BY_ID_PR" };
+
+            sqlOperation.AddIntParam("P_ID_USUARIO", id);
+
+            return sqlOperation;
+        }
+
+        public SqlOperation GetRetrieveByUserStatement(int id)
+        {
+            var sqlOperation = new SqlOperation { ProcedureName = "RET_PRODUCTO_INVENTARIO_BY_ID_PR" };
 
             sqlOperation.AddIntParam("P_ID_USUARIO", id);
 

@@ -369,16 +369,6 @@ function TenderView() {
         arrayColumnsData[1] = { 'data': 'user_id' };
         arrayColumnsData[2] = { 'data': 'tender_id' };
         arrayColumnsData[3] = {
-            'data': 'chosen',
-            'render': function (data) {
-                const statusMap = {
-                    false: 'No',
-                    true: 'Yes',
-                };
-                return statusMap[data] || data;
-            },
-        };
-        arrayColumnsData[4] = {
             'data': 'dueDate',
             'render': function (data) {
                 const isoDate = new Date(data);
@@ -386,7 +376,7 @@ function TenderView() {
                 return isoDate.toLocaleDateString('en-GB', options).replace(/\//g, '/');
             },
         };
-        arrayColumnsData[5] = {
+        arrayColumnsData[4] = {
             'data': 'totalCost',
             'render': function (data) {
                 return `$ ${data}`;
