@@ -1,23 +1,23 @@
 ﻿using DTOs;
 using EasyListDataAccess.DAOs;
 
-
 namespace EasyListDataAccess.Mapper
 {
-    public class MembershipMapper : ISqlStatements, IObjectMapper
+    public class SuscriptionMapper : ISqlStatements, IObjectMapper
     {
         public BaseEntity BuildObject(Dictionary<string, object> row)
         {
-            var membership = new Membership()
+            var suscription = new Suscription()
             {
-                Id = (int)row["ID_PLAN"],
-                name = (string)row["NOMBRE"],
-                description = (string)row["DESCRIPCION"],
-                membershipType = (Membership.MembershipType)Enum.Parse(typeof(Membership.MembershipType), (string)row["TIPO"]),
-                cost = Convert.ToSingle(row["COSTO"]),
+                Id = (int)row["ID_SUSCRIPCION"],
+                userId = (int)row["ID_USUARIO"],
+                startDate = (DateTime)row["FECHAINICIO"],
+                endDate = (DateTime)row["FECHAFIN"],
+                membershipId = (int)row["ID_PLAN"],
+                suscriptionStatus = (Suscription.SuscriptionStatus)Enum.Parse(typeof(Suscription.SuscriptionStatus), (string)row["ESTADO"]),
             };
 
-            return membership;
+            return suscription;
         }
 
         public List<BaseEntity> BuildObjects(List<Dictionary<string, object>> lstRows)
@@ -25,8 +25,8 @@ namespace EasyListDataAccess.Mapper
             var lstResults = new List<BaseEntity>();
             foreach (var row in lstRows)
             {
-                var membership = BuildObject(row);
-                lstResults.Add(membership);
+                var suscription = BuildObject(row);
+                lstResults.Add(suscription);
             }
             return lstResults;
         }
@@ -61,12 +61,13 @@ namespace EasyListDataAccess.Mapper
         public SqlOperation GetCreateStatement(BaseEntity entity)
         {
             var sqlOperation = new SqlOperation();
-            var membership = (Membership)entity;
-            sqlOperation.ProcedureName = "CRE_PLAN_PR";
-            sqlOperation.AddVarcharParam("P_NOMBRE", membership.name);
-            sqlOperation.AddVarcharParam("P_DESCRIPCION", membership.description);
-            sqlOperation.AddVarcharParam("P_TIPO", membership.membershipType.ToString());
-            sqlOperation.AddFloatParam("P_COSTO", membership.cost);
+            var suscription = (Suscription)entity;
+            sqlOperation.ProcedureName = "CRE_SUSCRIPCION_PR";
+            sqlOperation.AddIntParam("P_ID_USUARIO", suscription.userId);
+            sqlOperation.AddDateTimeParam("P_FECHAINICIO", suscription.startDate);
+            sqlOperation.AddDateTimeParam("P_FECHAFIN", suscription.endDate);
+            sqlOperation.AddIntParam("P_ID_PLAN", suscription.membershipId);
+            sqlOperation.AddVarcharParam("P_ESTADO", suscription.suscriptionStatus.ToString());
 
             return sqlOperation;
         }
@@ -74,10 +75,10 @@ namespace EasyListDataAccess.Mapper
         public SqlOperation GetDeleteStatement(BaseEntity entity)
         {
             var sqlOperation = new SqlOperation();
-            var membership = (Membership)entity;
+            var suscription = (Suscription)entity;
 
-            sqlOperation.ProcedureName = "DEL_PLAN_PR";
-            sqlOperation.AddIntParam("P_ID_PLAN", membership.Id);
+            sqlOperation.ProcedureName = "DEL_SUSCRIPCION_PR";
+            sqlOperation.AddIntParam("P_ID_SUSCRIPCION", suscription.Id);
 
             return sqlOperation;
         }
@@ -86,7 +87,7 @@ namespace EasyListDataAccess.Mapper
         {
             var sqlOperation = new SqlOperation();
 
-            sqlOperation.ProcedureName = "RET_ALL_PLAN_PR";
+            sqlOperation.ProcedureName = "RET_ALL_SUSCRIPCION_PR";
 
             return sqlOperation;
         }
@@ -100,8 +101,8 @@ namespace EasyListDataAccess.Mapper
         {
             var sqlOperation = new SqlOperation();
 
-            sqlOperation.ProcedureName = "RET_PLAN_BY_ID_PR";
-            sqlOperation.AddIntParam("P_ID_PLAN", id);
+            sqlOperation.ProcedureName = "RET_SUSCRIPCION_BY_ID_PR";
+            sqlOperation.AddIntParam("P_ID_USUARIO", id);
 
             return sqlOperation;
         }
@@ -110,14 +111,15 @@ namespace EasyListDataAccess.Mapper
         {
             var sqlOperation = new SqlOperation();
 
-            var membership = (Membership)entity;
+            var suscription = (Suscription)entity;
 
-            sqlOperation.ProcedureName = "UPD_PLAN_PR";
-            sqlOperation.AddIntParam("P_ID_PLAN", membership.Id);
-            sqlOperation.AddVarcharParam("P_NOMBRE", membership.name);
-            sqlOperation.AddVarcharParam("P_DESCRIPCION", membership.description);
-            sqlOperation.AddVarcharParam("P_TIPO", membership.membershipType.ToString());
-            sqlOperation.AddFloatParam("P_COSTO", membership.cost);
+            sqlOperation.ProcedureName = "UPD_SUSCRIPCION_PR";
+            sqlOperation.AddIntParam("P_ID_SUSCRIPCION", suscription.Id);
+            sqlOperation.AddIntParam("P_ID_USUARIO", suscription.userId);
+            sqlOperation.AddDateTimeParam("P_FECHAINICIO", suscription.startDate);
+            sqlOperation.AddDateTimeParam("P_FECHAFIN", suscription.endDate);
+            sqlOperation.AddIntParam("P_ID_PLAN", suscription.membershipId);
+            sqlOperation.AddVarcharParam("P_ESTADO", suscription.suscriptionStatus.ToString());
 
             return sqlOperation;
         }

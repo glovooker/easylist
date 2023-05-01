@@ -1,0 +1,35 @@
+﻿@page
+@model WebApp___EasyList.Pages.SuscriptionsModel
+@{
+    ViewData["Title"] = "Suscriptions";
+}
+<script src="~/js/suscriptions.js"></script>
+<div class="bs-docs-section d-flex flex-column mt-5">
+    <br />
+    <div class="d-flex flex-row justify-content-between">
+        <h3 class="display-7 mb-3">Upgrade your account</h3>
+        <div>
+            <button id="btnBack" class="btn btn-warning w-auto mx-4" type="button" tabindex="0">Back</button>
+        </div>
+    </div>
+    <div class="container my-5">
+        <div class="row" id="memberhipsContainer">
+            <div class="col-md-4">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-header">
+                        <h4 class="my-0 fw-normal">Free Plan</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1 class="card-title pricing-card-title">$00<small class="text-muted fw-light">/ month</small></h1>
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li>Explore tenders</li>
+                            <li>Offer to manually awarded tenders</li>
+                            <li>Real time updates through email and SMS</li>
+                        </ul>
+                        <button type="button" class="w-100 btn btn-lg btn-outline-secondary disabled">Current</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
