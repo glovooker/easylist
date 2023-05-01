@@ -14,7 +14,7 @@ namespace EasyListCORE
         public void Update(Suscription suscription)
         {
             var crudSuscription = new SuscriptionCrudFactory();
-            var existMembersip = crudSuscription.RetrieveById<Suscription>(suscription.Id);
+            var existMembersip = crudSuscription.RetrieveById<Suscription>(suscription.userId);
             if (existMembersip == null)
             {
                 throw new Exception("Suscription does not exist!");
@@ -26,7 +26,7 @@ namespace EasyListCORE
         public void Delete(Suscription suscription)
         {
             var crudSuscription = new SuscriptionCrudFactory();
-            var existSuscription = crudSuscription.RetrieveById<Suscription>(suscription.Id);
+            var existSuscription = crudSuscription.RetrieveById<Suscription>(suscription.userId);
 
             if (existSuscription == null)
             {

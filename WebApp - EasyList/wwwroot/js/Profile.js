@@ -1,4 +1,6 @@
-﻿
+﻿var currentSuscription = {};
+var currentMembership = {};
+
 function ProfileView() {
     this.ViewName = 'ProfileView';
     this.ApiService = 'User';
@@ -81,6 +83,9 @@ function ProfileView() {
             })
             .then(data => {
                     fetch('https://localhost:7103/api/Membership/retrieveMembershipById?id=' + data.membershipId).then(response => response.json().then(membership => {
+                        currentSuscription = data
+                        currentMembership = membership
+
                         $('#premiumFeatures').empty();
                         var premiumFeatures = `
                             <div class="col-6" id="suscriptionModule" style="max-width: 425px;">
@@ -88,10 +93,16 @@ function ProfileView() {
                                 <div class="card-body d-flex flex-row justify-content-between align-content-center">
                                   <div>
                                     <h5 class="card-title"><i class="bi bi-star-fill text-primary"></i> ${membership.name}</h5>
-                                    <p class="card-text">${membership.membershipType === 0 ? 'Montly Payment' : 'Yearly Payment'}</p>
+                                    <p class="card-text mb-0">${membership.membershipType === 0 ? 'Monthly Payment' : 'Yearly Payment'} </p>
+                                    <small class="text-muted fw-light">Next payement: ${new Date(data.endDate).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '/')}</small>
                                   </div>
-                                  <div class="d-flex align-items-center">
-                                    <a href="/Suscriptions" class="btn btn-secondary disabled"><i class="bi bi-check-circle-fill"></i></a>
+                                  <div class="d-flex flex-row justify-content-between w-25">
+                                      <div class="d-flex align-items-center">
+                                        <a href="/Suscriptions" class="btn btn-secondary disabled"><i class="bi bi-check-circle-fill"></i></a>
+                                      </div>
+                                      <div class="d-flex align-items-center">
+                                        <button onclick="cancelSuscription()" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Cancel suscription"><i class="bi bi-x-circle-fill"></i></button>
+                                      </div>
                                   </div>
                                 </div>
                               </div>
@@ -111,6 +122,7 @@ function ProfileView() {
                             </div>
                           `
                         $('#premiumFeatures').append(premiumFeatures);
+                        $('[data-bs-toggle="tooltip"]').tooltip()
                     }))
             })
             .catch(error => {
@@ -122,7 +134,6 @@ function ProfileView() {
 
 
     };
-
 
     function CaptureImageURL(fileId, callback) {
         let file = document.getElementById(fileId).files[0];
@@ -139,6 +150,25 @@ function ProfileView() {
         }
     }
 }
+
+cancelSuscription = function () {
+    var suscription = {};
+
+    suscription.id = currentSuscription.id;
+    suscription.userId = currentSuscription.userId;
+    suscription.startDate = currentSuscription.startDate;
+    suscription.endDate = currentMembership.membershipType == 0 ? new Date(new Date().setMonth(new Date().getMonth() + 1)) : new Date(new Date().setFullYear(new Date().getFullYear() + 1));
+    suscription.membershipId = currentMembership.id;
+    suscription.suscriptionStatus = 2;
+
+    var ctrlActions = new ControlActions();
+    var serviceCreate = 'Suscription/updateSuscription';
+
+    ctrlActions.PutToAPI(serviceCreate, suscription, function () {
+        toastr.warning('Warning!', 'Account unsuscribed!')
+        window.location.href = "/Profile";
+    });
+};
 
 $(document).ready(function () {
     var view = new ProfileView();
