@@ -22,7 +22,7 @@
     this.Create = function () {
         var productsOffer = [];
         var ctrlActions = new ControlActions();
-        var serviceGetProductTender = "controller" + "/retrieveProductTenders?id=" + localStorage.getItem('selectedTenderId');
+        var serviceGetProductTender = "ProductTender" + "/retrieveProductTenders?id=" + localStorage.getItem('selectedTenderId');
         ctrlActions.GetToApi(serviceGetProductTender, function (result) {
             productTender = result.response;
             productsOffer = createProductOffer(productTender);
