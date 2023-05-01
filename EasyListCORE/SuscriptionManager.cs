@@ -9,6 +9,24 @@ namespace EasyListCORE
         {
             var crudSuscription = new SuscriptionCrudFactory();
             crudSuscription.Create(suscription);
+
+            var crudBilling = new BillingCrudFactory();
+            var crudMembership = new MembershipCrudFactory();
+            var existSuscription = crudSuscription.RetrieveById<Suscription>(suscription.userId);
+            var receipt = new Billing();
+
+            receipt.Id = 0;
+            receipt.userId = suscription.userId;
+            receipt.suscriptionId = existSuscription.Id;
+            receipt.billingDate = DateTime.Now;
+            receipt.amount = crudMembership.RetrieveById<Membership>(suscription.membershipId).cost;
+
+            if (existSuscription == null)
+            {
+                throw new Exception("Suscription doesn't exist!");
+            }
+
+            crudBilling.Create(receipt);
         }
 
         public void Update(Suscription suscription)

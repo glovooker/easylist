@@ -31,8 +31,6 @@ this.Pay = async function () {
         return membership;
     }))
 
-    console.log(membershipToPay);
-
     var paypalConfig = {
         env: 'sandbox',
         createOrder: function (data, actions) {
@@ -72,7 +70,6 @@ createSuscription = async function () {
 
     ctrlActions.PostToAPIv1(serviceCreate, suscription, function () {
         toastr.success('Success!', 'Account upgraded!')
-        window.location.href = "/Profile";
     });
 }
 
