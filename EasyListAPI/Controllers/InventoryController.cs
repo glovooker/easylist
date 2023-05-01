@@ -20,7 +20,8 @@ namespace EasyListAPI.Controllers
                 im.Create(inventory);
                 return Ok(inventory);
 
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -38,7 +39,7 @@ namespace EasyListAPI.Controllers
                 return Ok(inventory);
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -56,7 +57,7 @@ namespace EasyListAPI.Controllers
                 return Ok(inventory);
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -74,7 +75,7 @@ namespace EasyListAPI.Controllers
                 return Ok("Inventory eliminated");
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -91,7 +92,7 @@ namespace EasyListAPI.Controllers
                 return Ok(im.RetrieveAll());
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -109,7 +110,25 @@ namespace EasyListAPI.Controllers
                 return Ok(inventory);
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("retrieveInventoryByUser")]
+        public async Task<IActionResult> RetrieveInventoryByUser(int id)
+        {
+            try
+            {
+
+                var im = new InventoryManager();
+                var inventory = im.RetrieveInventoryByUser(id);
+                return Ok(inventory);
+
+            }
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }

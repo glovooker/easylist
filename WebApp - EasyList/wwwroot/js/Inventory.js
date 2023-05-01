@@ -14,6 +14,7 @@ function InventoryView() {
             view.Create();
         });
 
+        loadInventoryProducts()
         loadProductSelect();
 
     }
@@ -44,6 +45,20 @@ function InventoryView() {
         })
 
     };
+
+    loadInventoryProducts = function () {
+
+        var ID_User = (localStorage.getItem('userId'));
+
+        fetch('https://localhost:7103/api/Inventory/retrieveInventoryByUser?id=' + ID_User).then(response => {
+            response.json()
+                .then(data => {
+                    productsInventory = data;
+                    loadProducts(productsInventory);
+                })
+        })
+
+    }
 
     createProductInventory = function () {
 
@@ -182,6 +197,10 @@ function InventoryView() {
             .catch(error => console.error(error));
     }
 
+}
+
+function goBack() {
+    window.location.href = "/Profile";
 }
 
 $(document).ready(function () {
