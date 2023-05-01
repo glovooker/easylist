@@ -58,6 +58,9 @@
             } else {
                 $("#error-messageBudget").hide();
             }
+            if (offer.productOffers.length != productTender.length) {
+                isValid = false;
+            }
 
             if (!isValid) {
                 return;
@@ -140,9 +143,7 @@ loadProductsCards = function (products) {
                         <h5 class='card-title m-0'>${productTender.name}</h5>
                         <div class ='d-flex flex-row justify-content-around align-items-center w-50'>
                             <input type="number" class="form-control mx-2" id="txtQuantity${productTender.product_id}" placeholder="${productTender.quantity} items" required>
-                            <div id="error-messageQuantity${productTender.product_id}" style="display: none; color: red; font-size:0.7rem">Please enter a quantity</div>
                             <input type="number" class="form-control mx-2" id="txtPrice${productTender.product_id}" placeholder="$${productTender.price}" required>
-                            <div id="error-messagePrice${productTender.product_id}" style="display: none; color: red; font-size:0.7rem">Please enter a price</div>
                         </div>
                     </div>
                 </div>
@@ -160,9 +161,10 @@ createProductOffer = function (product) {
     var productOffer;
 
     product.forEach(function (productTender) {
+        // Agregar validación de campos vacíos antes de agregar el producto a la lista
+        validateFields(productTender);
+
         if ($("#txtPrice" + productTender.product_id).val().length > 0 && $("#txtQuantity" + productTender.product_id).val().length > 0) {
-            $(`#error-messagePrice${productTender.product_id}`).hide();
-            $(`#error-messageQuantity${productTender.product_id}`).hide();
             productOffer = {};
             productOffer.id = productTender.product_id;
             productOffer.offer_id = $("#txtOfferID").val();
@@ -174,20 +176,28 @@ createProductOffer = function (product) {
 
             $("#txtPrice" + productTender.product_id).val('');
             $("#txtQuantity" + productTender.product_id).val('');
-        } else {
-            if ($("#txtPrice" + productTender.product_id).val() === '') {
-                $(`#error-messagePrice${productTender.product_id}`).html("Required");
-                $(`#error-messagePrice${productTender.product_id}`).show();
-            }
-            if ($("#txtQuantity" + productTender.product_id).val() === '') {
-                $(`#error-messageQuantity${productTender.product_id}`).html("Required");
-                $(`#error-messageQuantity${productTender.product_id}`).show();
-            }
         }
     });
-    if (listProducts.length > 0) {
+    if (listProducts.length == product.length) {
         console.log(JSON.stringify(listProducts));
         return listProducts;
+    }
+}
+
+function validateFields(productTender) {
+    var quantityInput = $("#txtQuantity" + productTender.product_id);
+    var priceInput = $("#txtPrice" + productTender.product_id);
+
+    if (quantityInput.val() === "") {
+        quantityInput.addClass("red-border");
+    } else {
+        quantityInput.removeClass("red-border");
+    }
+
+    if (priceInput.val() === "") {
+        priceInput.addClass("red-border");
+    } else {
+        priceInput.removeClass("red-border");
     }
 }
 
