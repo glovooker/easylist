@@ -203,14 +203,18 @@ function TenderView() {
                             }
                         }
                         console.log(cheapestInventory);
-                        //var offer = {};
-                        //offer.id = "";
-                        //offer.user_id = cheapestInventory.user_id;
-                        //offer.tender_id = tender.id;
-                        //offer.comment = '';
-                        //offer.totalCost = tender.budget;
-                        //offer.dueDate = tender.maxDeliverDate;
-                        //offer.productOffers = productsOffer;
+
+                        var productsOffer = [];
+                        cheapestInventory.map((inventoryProduct) =>)                              
+
+                        var offer = {};
+                        offer.id = "";
+                        offer.user_id = cheapestInventory.user_id;
+                        offer.tender_id = tender.id;
+                        offer.comment = '';
+                        offer.totalCost = tender.budget;
+                        offer.dueDate = tender.maxDeliverDate;
+                        offer.productOffers = productsOffer;
                     }
 
 
