@@ -49,6 +49,8 @@ function TenderView() {
             view.Offers();
         });
 
+
+
         this.LoadTable();
 
         this.LoadTableStatus();
@@ -70,10 +72,9 @@ function TenderView() {
         tender.automatic = Boolean(parseInt($("#drpAutomatic").val()));
         tender.deliverLocation = $("#txtDeliverLocation").val();
         tender.productTenders = productsTender || [];
-
         tender.productTenders.forEach(function (productTender) {
             productTender.tender_id = tender.id;
-        })
+        });
 
         var isValid = true;
 
@@ -134,8 +135,11 @@ function TenderView() {
 
         ctrlActions.PostToAPIv1(serviceCreate, tender, function () {
             toastr.success('Tender created', 'Success!')
+            if (tender.automatic === true) {
+                automaticaAward(tender);
+            }
+               
             var view = new TenderView();
-
             $('#tblContainer').show();
             $('#formContainer').hide();
             $('#btnNew').show();
@@ -149,6 +153,84 @@ function TenderView() {
         });
 
     };
+    function automaticaAward(tender) {
+        var ctrlActions = new ControlActions();
+        var serviceRetrieveSuscription = "Suscription/retrieveAllSuscriptionByStatus";
+        ctrlActions.GetToApi(serviceRetrieveSuscription, function (resultSubs) {
+            var suscriptions = resultSubs.response;
+            var validInventories = [];
+            var productTenders = tender.productTenders;
+
+            suscriptions.forEach(function (suscription) {
+                var serviceRetrieveInventory = "Inventory/retrieveInventoryByUser?id=" + suscription.userId;
+                ctrlActions.GetToApi(serviceRetrieveInventory, function (resultInventory) {
+                    var inventories = resultInventory.response;
+                    var hasAllProducts = true;
+                    var hasSomeProducts = false;
+                    var validInventory = [];
+
+                    productTenders.forEach(function (productTender) {
+                        // Buscar el producto en el inventario del usuario
+                        var inventoryProduct = inventories.find(function (p) {
+                            return p.productId == productTender.productId;
+                        });
+
+                        // Verificar que el usuario tiene suficiente cantidad y precio adecuado del producto
+                        if (!inventoryProduct || inventoryProduct.price > productTender.price || inventoryProduct.quantity < productTender.quantity) {
+                            hasAllProducts = false;
+                        } else {
+                            hasSomeProducts = true;
+                            validInventory.push(inventoryProduct);
+                        }
+                    });
+
+                    // Si el usuario tiene todos los productos necesarios, almacenar su inventario en el arreglo de inventarios válidos
+                    if (hasAllProducts) {
+                        validInventories.push(validInventory);
+                    }
+
+                    if (validInventories.length === suscriptions.length) {
+                        // Si todos los usuarios han sido evaluados, comparar los precios de los inventarios válidos
+                        var cheapestInventory = validInventories[0];
+                        var cheapestPrice = getInventoryPrice(cheapestInventory, productTenders);
+
+                        for (var i = 1; i < validInventories.length; i++) {
+                            var inventoryPrice = getInventoryPrice(validInventories[i], productTenders);
+
+                            if (inventoryPrice < cheapestPrice) {
+                                cheapestInventory = validInventories[i];
+                                cheapestPrice = inventoryPrice;
+                            }
+                        }
+                        console.log(cheapestInventory);
+                        //var offer = {};
+                        //offer.id = "";
+                        //offer.user_id = cheapestInventory.user_id;
+                        //offer.tender_id = tender.id;
+                        //offer.comment = '';
+                        //offer.totalCost = tender.budget;
+                        //offer.dueDate = tender.maxDeliverDate;
+                        //offer.productOffers = productsOffer;
+                    }
+
+
+                });
+            });
+
+        });
+    }
+    function getInventoryPrice(inventory, productTenders) {
+        var totalPrice = 0;
+        inventory.forEach(function (product) {
+            var productTender = productTenders.find(function (p) {
+                return p.productId == product.productId;
+            });
+            if (productTender) {
+                totalPrice += productTender.price * product.quantity;
+            }
+        });
+        return totalPrice;
+    }
 
     this.Update = function () {
         var tender = {};
@@ -224,6 +306,9 @@ function TenderView() {
         ctrlActions.PutToAPI(serviceUpdate, tender, function () {
             toastr.success('Tender updated', 'Success!');
             var view = new TenderView();
+            if (tender.automatic === true) {
+                automaticaAward(tender);
+            }
 
             $('#tblContainer').show();
             $('#formContainer').hide();
@@ -328,6 +413,7 @@ function TenderView() {
     };
 
     this.LoadTable = function () {
+
         var ctrlActions = new ControlActions();
 
         var urlService = ctrlActions.GetUrlApiService(
@@ -440,6 +526,7 @@ function TenderView() {
             $('#btnCreate').prop('disabled', true);
             $('#btnDelete').prop('disabled', false);
             $('#btnUpdate').prop('disabled', false);
+
         });
 
     };

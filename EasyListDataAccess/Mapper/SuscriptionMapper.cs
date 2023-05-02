@@ -106,6 +106,13 @@ namespace EasyListDataAccess.Mapper
 
             return sqlOperation;
         }
+        public SqlOperation GetRetrieveByStatusStatement()
+        {
+            var sqlOperation = new SqlOperation();
+
+            sqlOperation.ProcedureName = "RET_SUSCRIPCION_BY_STATUS_PR";
+            return sqlOperation;
+        }
 
         public SqlOperation GetUpdateStatement(BaseEntity entity)
         {
