@@ -11,7 +11,7 @@ namespace EasyListDataAccess.DAOs
 
         private SqlDao()
         {
-            _connectionString = "Data Source=srv-lmonge-db01.database.windows.net;Initial Catalog=202301-easylist-db;Persist Security Info=True;User ID=system;Password=Cenfotec123!";
+            _connectionString = "Data Source=srv-lmonge-db02.database.windows.net;Initial Catalog=202301-easylist-db;Persist Security Info=True;User ID=system;Password=Cenfotec123!";
         }
 
         public static SqlDao GetInstance()

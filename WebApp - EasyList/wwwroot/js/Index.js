@@ -13,6 +13,7 @@
 
         $.getJSON(urlService, function (tenders) {
             addCardsToContainer(tenders);
+
         });
     }
 
@@ -37,7 +38,7 @@
                 <p class="card-text m-0 small">Deliver at <strong>${tender.deliverLocation}</strong></p>
                 <p class="card-text m-0 small">before <strong>${formatDate(tender.maxDeliverDate)}</strong></p>
               </div>
-              ${localStorage.getItem('userId') ? `<a href="#" class="btn btn-secondary">View</a>` : `<a href="/Login" class="btn btn-secondary">Sign in to Offer</a>`}
+                ${localStorage.getItem('userId') ? `<button class="btn btn-secondary" value="${tender.id}">View</button>` : `<a href="/Login" class="btn btn-secondary">Sign in to Offer</a>`}
             </div>
             <div class="position-absolute" style="top: 10px; right: 10px;">
               <span class="badge badge-pill bg-primary p-2">$${tender.budget}</span>
@@ -58,6 +59,15 @@
         }
 
         container.innerHTML = cardsHtml;
+
+        const viewButtons = document.querySelectorAll('button[value]');
+        viewButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const tenderId = this.value;
+                localStorage.setItem('selectedTenderId', tenderId);
+                window.location.href = '/OpenTenders';
+            });
+        });
     }
 }
 

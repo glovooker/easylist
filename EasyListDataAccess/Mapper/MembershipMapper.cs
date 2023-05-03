@@ -1,11 +1,10 @@
 ﻿using DTOs;
 using EasyListDataAccess.DAOs;
-using System.Reflection;
 
 
 namespace EasyListDataAccess.Mapper
 {
-    internal class MembershipMapper : ISqlStatements, IObjectMapper
+    public class MembershipMapper : ISqlStatements, IObjectMapper
     {
         public BaseEntity BuildObject(Dictionary<string, object> row)
         {
@@ -14,7 +13,7 @@ namespace EasyListDataAccess.Mapper
                 Id = (int)row["ID_PLAN"],
                 name = (string)row["NOMBRE"],
                 description = (string)row["DESCRIPCION"],
-                membershipType = (Membership.MembershipType)Enum.Parse(typeof(Membership.MembershipType),(string)row["TIPO"]),
+                membershipType = (Membership.MembershipType)Enum.Parse(typeof(Membership.MembershipType), (string)row["TIPO"]),
                 cost = Convert.ToSingle(row["COSTO"]),
             };
 
@@ -23,7 +22,7 @@ namespace EasyListDataAccess.Mapper
 
         public List<BaseEntity> BuildObjects(List<Dictionary<string, object>> lstRows)
         {
-            var lstResults= new List<BaseEntity>();
+            var lstResults = new List<BaseEntity>();
             foreach (var row in lstRows)
             {
                 var membership = BuildObject(row);
@@ -62,11 +61,11 @@ namespace EasyListDataAccess.Mapper
         public SqlOperation GetCreateStatement(BaseEntity entity)
         {
             var sqlOperation = new SqlOperation();
-            var membership=(Membership)entity;
+            var membership = (Membership)entity;
             sqlOperation.ProcedureName = "CRE_PLAN_PR";
             sqlOperation.AddVarcharParam("P_NOMBRE", membership.name);
             sqlOperation.AddVarcharParam("P_DESCRIPCION", membership.description);
-            sqlOperation.AddVarcharParam("P_TIPO",membership.membershipType.ToString());
+            sqlOperation.AddVarcharParam("P_TIPO", membership.membershipType.ToString());
             sqlOperation.AddFloatParam("P_COSTO", membership.cost);
 
             return sqlOperation;
@@ -85,7 +84,7 @@ namespace EasyListDataAccess.Mapper
 
         public SqlOperation GetRetrieveAllStatement()
         {
-            var sqlOperation= new SqlOperation();
+            var sqlOperation = new SqlOperation();
 
             sqlOperation.ProcedureName = "RET_ALL_PLAN_PR";
 
@@ -109,9 +108,9 @@ namespace EasyListDataAccess.Mapper
 
         public SqlOperation GetUpdateStatement(BaseEntity entity)
         {
-            var sqlOperation= new SqlOperation();
+            var sqlOperation = new SqlOperation();
 
-            var membership= (Membership)entity;
+            var membership = (Membership)entity;
 
             sqlOperation.ProcedureName = "UPD_PLAN_PR";
             sqlOperation.AddIntParam("P_ID_PLAN", membership.Id);

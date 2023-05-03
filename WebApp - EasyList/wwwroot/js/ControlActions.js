@@ -1,6 +1,6 @@
 ﻿function ControlActions() {
 
-    this.URL_API = "https://localhost:7103/api/";
+    this.URL_API = "https://jhidalgou-mathapi.azurewebsites.net/api/";
 
     this.GetUrlApiService = function (service) {
         return this.URL_API + service;

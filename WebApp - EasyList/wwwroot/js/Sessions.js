@@ -10,6 +10,13 @@
             );
 
             $.getJSON(urlService, function (user) {
+                var offersButtonHtml = `
+                <a class="nav-link active" asp-area="" href="#" onclick="redirectToMyOffers()">
+                    My Offers
+                    <span class="visually-hidden">(current)</span>
+                </a>
+                `;
+
                 var dropdownHtml = `
                     <div class="dropdown">
                       <button class="btn btn-primary bg-white text-primary dropdown-toggle" type="button" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -17,11 +24,13 @@
                       </button>
                       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                         <a class="dropdown-item" href="/Settings" asp-area="" asp-page="/Settings">Settings</a>
+                        <a class="dropdown-item" href="/Billing" asp-area="" asp-page="/Billing">Billing</a>
                         <a class="dropdown-item" href="#" onclick="logout()">Logout</a>
                       </div>
                     </div>
 
                 `;
+                $('#offersLink').html(offersButtonHtml);
                 $('#userDropdownContainer').html(dropdownHtml);
 
                 // Toggle dropdown menu on click
@@ -36,6 +45,7 @@
                         container.find('.dropdown-menu').hide();
                     }
                 });
+
             });
         } else {
             // Display sign up and sign in buttons
@@ -43,6 +53,10 @@
             $('#loginBtn').show();
         }
     }
+}
+
+function redirectToMyOffers() {
+    window.location.href = "/MyOffers";
 }
 
 function logout() {

@@ -1,0 +1,31 @@
+﻿@page
+@model WebApp___EasyList.Pages.MyOffersModel
+@{
+    ViewData["Title"] = "My Offers";
+}
+<script src="~/js/myoffers.js"></script>
+<div class="bs-docs-section d-flex flex-column">
+    <br />
+    <div class="d-flex flex-row justify-content-between">
+        <h3 class="display-7 mb-3">My Offers</h3>
+        <div>
+            <button id="btnBack" class="btn btn-warning w-auto mx-4" type="button" tabindex="0">Back</button>
+        </div>
+    </div>
+    <div class="row" id="tblContainer">
+        <table id="tblOffer" class="display mt-5" style="width:100%">
+            <thead>
+            <th>ID</th>
+            <th>Offerer ID</th>
+            <th>Tender ID</th>
+            <th>Deliver Date</th>
+            <th>Total Cost</th>
+            </thead>
+        </table>
+        <br />
+    </div>
+    <br />
+    <div id="noOffersContainer" class="d-none text-center p-5 border rounded" style="border-color: #ccc;">
+        <h3 class="card-title text-center mb-4 fw-bold" style="font-size: 1.5rem; color: #F5805D">No offers pending</h3>
+    </div>
+</div>

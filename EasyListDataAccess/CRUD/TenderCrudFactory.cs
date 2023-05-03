@@ -94,5 +94,51 @@ namespace EasyListDataAccess.CRUD
 
             return lstUsers;
         }
+
+        public List<Tender> RetrieveByStatusTender<Tender>()
+        {
+
+            var lstTender = new List<Tender>();
+            var sqlTender = _mapper.GetRetrieveByStatus();
+            var lstResults = dao.ExecuteQueryProcedure(sqlTender);
+
+            if (lstResults.Count > 0)
+            {
+                var objsTender = _mapper.BuildObjects(lstResults);
+
+                foreach (var op in objsTender)
+                {
+                    lstTender.Add((Tender)Convert.ChangeType(op, typeof(Tender)));
+                }
+            }
+
+            return lstTender;
+        }
+
+        public List<Tender> RetrieveByAnalystId<Tender>(int id)
+        {
+            var lstTenders = new List<Tender>();
+            var sqlTender = _mapper.GetRetrieveByAnalystIdStatement(id);
+            var lstResults = dao.ExecuteQueryProcedure(sqlTender);
+
+            if (lstResults.Count > 0)
+            {
+                var objsTenders = _mapper.BuildObjects(lstResults);
+
+                foreach (var op in objsTenders)
+                {
+                    lstTenders.Add((Tender)Convert.ChangeType(op, typeof(Tender)));
+                }
+            }
+
+            return lstTenders;
+        }
+
+        public void AwardWithOfferId(int tenderId, int offerId, string codeQR)
+        {
+            var sqlTender = _mapper.AwardWithOfferIdStatement(tenderId, offerId, codeQR);
+            dao.ExecuteProcedure(sqlTender);
+        }
+
     }
 }
