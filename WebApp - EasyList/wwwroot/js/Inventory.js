@@ -50,7 +50,7 @@ function InventoryView() {
 
         var ID_User = (localStorage.getItem('userId'));
 
-        fetch('https://localhost:7103/api/Inventory/retrieveInventoryByUser?id=' + ID_User).then(response => {
+        fetch('https://jhidalgou-mathapi.azurewebsites.net/api/Inventory/retrieveInventoryByUser?id=' + ID_User).then(response => {
             response.json()
                 .then(data => {
                     productsInventory = data;
@@ -123,7 +123,7 @@ function InventoryView() {
 
         products.forEach(function (productInventory) {
             // Fetch the product name from a URL
-            fetch('https://localhost:7103/api/Product/getProductById?id=' + productInventory.product_id)
+            fetch('https://jhidalgou-mathapi.azurewebsites.net/api/Product/getProductById?id=' + productInventory.product_id)
                 .then(response => response.json())
                 .then(product => {
                     productInventory.name = product.name;
@@ -183,7 +183,7 @@ function InventoryView() {
     };
 
     loadProductSelect = () => {
-        fetch('https://localhost:7103/api/Product/getAllProducts')
+        fetch('https://jhidalgou-mathapi.azurewebsites.net/api/Product/getAllProducts')
             .then(response => response.json())
             .then(products => {
                 const select = document.getElementById('drpProduct');

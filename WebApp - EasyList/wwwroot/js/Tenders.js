@@ -813,7 +813,7 @@ function TenderView() {
 }
 
 loadProductSelect = () => {
-  fetch('https://localhost:7103/api/Product/getAllProducts')
+    fetch('https://jhidalgou-mathapi.azurewebsites.net/api/Product/getAllProducts')
     .then((response) => response.json())
     .then((products) => {
       const select = document.getElementById('drpProduct');
@@ -873,7 +873,7 @@ loadProducts = function (products) {
   products.forEach(function (productTender) {
     // Fetch the product name from a URL
     fetch(
-      'https://localhost:7103/api/Product/getProductById?id=' +
+      'https://jhidalgou-mathapi.azurewebsites.net/api/Product/getProductById?id=' +
         productTender.product_id
     )
       .then((response) => response.json())

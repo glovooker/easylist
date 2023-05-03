@@ -74,7 +74,7 @@ function ProfileView() {
 
         });
 
-        fetch('https://localhost:7103/api/Suscription/retrieveSuscriptionById?id=' + userId)
+        fetch('https://jhidalgou-mathapi.azurewebsites.net/api/Suscription/retrieveSuscriptionById?id=' + userId)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Failed to retrieve subscription');
@@ -82,7 +82,7 @@ function ProfileView() {
                 return response.json();
             })
             .then(data => {
-                    fetch('https://localhost:7103/api/Membership/retrieveMembershipById?id=' + data.membershipId).then(response => response.json().then(membership => {
+                fetch('https://jhidalgou-mathapi.azurewebsites.net/api/Membership/retrieveMembershipById?id=' + data.membershipId).then(response => response.json().then(membership => {
                         currentSuscription = data
                         currentMembership = membership
 

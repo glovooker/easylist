@@ -185,7 +185,7 @@ namespace EasyListCORE
 
             var offerorPhone = existUser.phone;
             var offerorEmail = existUser.email;
-            var codeQR = $"https://localhost:7110/ProductValidation/?idTender={existTender.Id}&idOffer={existOffer.Id}";
+            var codeQR = $"https://easylistapi20230428145106.azurewebsites.net/ProductValidation/?idTender={existTender.Id}&idOffer={existOffer.Id}";
 
             var nm = new NotificationManager();
 
