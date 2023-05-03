@@ -75,5 +75,11 @@ namespace EasyListCORE
             return crudSuscription.RetrieveAll<Suscription>();
 
         }
+        public List<Suscription> RetrieveAllStatus()
+        {
+            var crudSuscription = new SuscriptionCrudFactory();
+            return crudSuscription.RetrieveAllStatus<Suscription>();
+
+        }
     }
 }

@@ -55,6 +55,21 @@ namespace EasyListAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpGet]
+        [Route("retrieveAllSuscriptionByStatus")]
+        public async Task<IActionResult> RetrieveAllSuscriptionByStatus()
+        {
+            try
+            {
+                var mm = new SuscriptionManager();
+                var suscriptions = mm.RetrieveAllStatus();
+                return Ok(suscriptions);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
         [HttpPut]
         [Route("updateSuscription")]

@@ -27,7 +27,7 @@ this.Pay = async function () {
     const searchParams = new URLSearchParams(window.location.search);
     const membershipId = searchParams.get('id');
 
-    membershipToPay = await fetch('https://localhost:7103/api/Membership/retrieveMembershipById?id=' + membershipId).then(response => response.json().then(membership => {
+    membershipToPay = await fetch('https://jhidalgou-mathapi.azurewebsites.net/api/Membership/retrieveMembershipById?id=' + membershipId).then(response => response.json().then(membership => {
         return membership;
     }))
 

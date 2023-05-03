@@ -179,7 +179,7 @@ loadOfferProducts = function (products) {
 
     products.forEach(function (productOffer) {
         // Fetch the product name from a URL
-        fetch('https://localhost:7103/api/Product/getProductById?id=' + productOffer.product_id)
+        fetch('https://jhidalgou-mathapi.azurewebsites.net/api/Product/getProductById?id=' + productOffer.product_id)
             .then(response => response.json())
             .then(product => {
                 productOffer.name = product.name;

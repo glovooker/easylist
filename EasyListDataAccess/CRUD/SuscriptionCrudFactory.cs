@@ -68,6 +68,25 @@ namespace EasyListDataAccess.CRUD
             return default(T);
 
         }
+        public List<T> RetrieveAllStatus<T>()
+        {
+            var lstMemberships = new List<T>();
+            var sqlOperationToRetrieve = _mapper.GetRetrieveByStatusStatement();
+            var lstResults = dao.ExecuteQueryProcedure(sqlOperationToRetrieve);
+
+            if (lstResults.Count > 0)
+            {
+                var objsMemberships = _mapper.BuildObjects(lstResults);
+
+                foreach (var mem in objsMemberships)
+                {
+                    lstMemberships.Add((T)Convert.ChangeType(mem, typeof(T)));
+
+                }
+            }
+
+            return lstMemberships;
+        }
 
         public override void Update(BaseEntity dto)
         {

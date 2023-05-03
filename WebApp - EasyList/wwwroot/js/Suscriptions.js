@@ -19,7 +19,7 @@
 
     loadMemberships = function () {
 
-        fetch('https://localhost:7103/api/Membership/retrieveAllMembership')
+        fetch('https://jhidalgou-mathapi.azurewebsites.net/api/Membership/retrieveAllMembership')
             .then(response => response.json()
                 .then(memberships => {
                 memberships.forEach(function (membership) {
